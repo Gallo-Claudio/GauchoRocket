@@ -36,8 +36,8 @@ if (isset($_POST['enviar'])) {
            Nombre: <input type="text" name="usuario"><br><br>
            Contraseña: <input type="password" name="clave"><br><br>
            <button type="submit" name="enviar">Entrar</button>
-        </form>
-
+        </form><br>
+        <button type="submit" name="registro"><a href="registro.php">Registrarse</a></button>
     </center>
 
 </body>
