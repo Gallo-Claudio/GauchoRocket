@@ -8,14 +8,16 @@ if (isset($_POST['enviar'])) {
 
     $sql = "SELECT COUNT(*) as contar FROM usuarios WHERE usuario = '$usuario' AND clave = '$clave'";
     $consulta = mysqli_query($conexion, $sql);
-    $array = mysqli_fetch_array($consulta); /*Todos los datos que trae los guardo aca*/
+    $array = mysqli_fetch_assoc($consulta); /*Todos los datos que trae los guardo aca*/
 
-    if ($array['contar'] > 0) {
+    if(empty($_POST['usuario'] == $usuario && $_POST['clave'] == $clave)){
         $_SESSION['username'] = $usuario;
         header("location:inicio.php");
-    } else {
-        echo "Datos incorrectos";
+        exit();
+    }else{
+        echo "error al iniciar sesion";
     }
+
 }
 
 ?>
