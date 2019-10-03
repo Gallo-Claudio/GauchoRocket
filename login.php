@@ -22,6 +22,8 @@ if (isset($_POST['enviar'])) {
 
 ?>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,14 +34,21 @@ if (isset($_POST['enviar'])) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
-
+<div class="w3-container">
+<div class="w3-container w3-teal">
+    <center><h1 class="w3-center w3-animate-bottom">Bienvenidos a Gaucho Rocket</h1></center>
+</div></div>
     <center>
-        <form method="POST" action="login.php" >
-           Nombre: <input type="text" name="usuario"><br><br>
-           Contraseña: <input type="password" name="clave"><br><br>
-           <button type="submit" name="enviar">Entrar</button>
+        <form class="w3-container w3-card-4" method="POST" action="login.php" >
+            <label class="w3-text-blue"><b>Nombre:</b></label>
+            <input class="w3-input w3-border" type="text" name="usuario"><br><br>
+
+            <label class="w3-text-blue"><b>Contraseña</b></label>
+            <input class="w3-input w3-border" type="password" name="clave"><br><br>
+           <button class="w3-button w3-black w3-round-xlarge" type="submit" name="enviar">Entrar</button><br><br>
+            <button class="w3-button w3-black w3-round-xlarge" type="submit" name="registro"><a href="registro.php">Registrarse</a></button>
         </form><br>
-        <button type="submit" name="registro"><a href="registro.php">Registrarse</a></button>
+
     </center>
 
 </body>
