@@ -15,9 +15,8 @@ if (isset($_POST['enviar'])) {
         header("location:inicio.php");
         exit();
     }else{
-        echo "error al iniciar sesion";
+        echo "Error al iniciar sesion";
     }
-
 }
 
 ?>
@@ -47,7 +46,7 @@ if (isset($_POST['enviar'])) {
 
     <center>
         <form class="w3-container w3-card-4" method="POST" action="login.php" >
-            
+
             <label class="w3-xlarge"><b>Nombre:</b></label>
             <input class="w3-xlarge" type="text" name="usuario"><br><br>
 

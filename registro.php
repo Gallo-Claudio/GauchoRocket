@@ -30,20 +30,40 @@ if ($array['user'] > 0) {
     <meta charset="UTF-8">
     <title>Iniciar sesion</title>
 </head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+<style>
+    .w3-lobster {
+        font-family: "Lobster", serif;
+    }
+</style>
 <body>
 
+<body>
+    <div class="w3-container w3-lobster">
+        <center> <p class="w3-xxxlarge">Bienvenido al registro</p></center>
+
 <center>
-    <form method="POST" action="registro.php" >
-        Nombre: <input type="text" name="usuario" placeholder="Usuario"><br><br>
-        Contraseña: <input type="password" name="clave" placeholder="Contraseña"><br><br>
-        Repita su contraseña: <input type="password" name="clave2" placeholder="Confirmar contraseña"><br><br>
-        <button type="button" onclick="login.submit()" name="enviar">Registrate</button>
+
+    <form class="w3-container w3-card-4" method="POST" action="registro.php" >
+
+        <label class="w3-xlarge"><b>Nombre:</b></label>
+        <input class="w3-xlarge" type="text" name="usuario"><br><br>
+
+        <label class="w3-xlarge"><b>Contraseña:</b></label>
+        <input class="w3-xlarge" type="password" name="clave"><br><br>
+
+        <label class="w3-xlarge"><b>Repita su contraseña:</b></label>
+        <input class="w3-xlarge" type="password" name="clave2"><br><br>
+
+        <button class="w3-xlarge" type="button" name="enviar"><a href="login.php">Registrarse</a></button><br><br>
+        <button class="w3-xlarge" type="submit" onclick="login.submit()" name="iniciosesion"><a href="login.php">Iniciar sesion</button>
     </form><br>
-    <button type="submit" name="registro"><a href="login.php">Iniciar sesion</a></button>
+
 
 </center>
-
+</div>
 </body>
 </html>
