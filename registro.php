@@ -12,12 +12,7 @@ $sql = "SELECT * FROM usuarios as user WHERE usuario = '$usuario' AND clave = '$
 $consulta = mysqli_query($conexion,$sql);
 $array = mysqli_fetch_array($consulta);
 
-if ($array['user'] > 0) {
-    $_SESSION['username'] = $usuario;
-    header("location:registro.php");
-} else {
-    echo "Datos incorrectos";
-}
+
 }
 
 
@@ -58,8 +53,8 @@ if ($array['user'] > 0) {
         <label class="w3-xlarge"><b>Repita su contraseña:</b></label>
         <input class="w3-xlarge" type="password" name="clave2"><br><br>
 
-        <button class="w3-xlarge" type="button" name="enviar"><a href="login.php">Registrarse</a></button><br><br>
-        <button class="w3-xlarge" type="submit" onclick="login.submit()" name="iniciosesion"><a href="login.php">Iniciar sesion</button>
+        <button class="w3-button w3-black w3-round-xlarge" type="button" name="enviar"><a href="login.php">Registrarse</a></button><br><br>
+        <button class="w3-button w3-black w3-round-xlarge" name="iniciosesion"><a href="login.php">Iniciar sesion</button>
     </form><br>
 
 
