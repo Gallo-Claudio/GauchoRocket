@@ -31,25 +31,33 @@ if (isset($_POST['enviar'])) {
     <meta charset="UTF-8">
     <title>Iniciar sesion</title>
 </head>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+<style>
+    .w3-lobster {
+        font-family: "Lobster", serif;
+    }
+</style>
 <body>
-<div class="w3-container">
-<div class="w3-container w3-teal">
-    <center><h1 class="w3-center w3-animate-bottom">Bienvenidos a Gaucho Rocket</h1></center>
-</div></div>
+
+<div class="w3-container w3-lobster">
+   <center> <p class="w3-xxxlarge">Bienvenido a Gaucho Rocket</p></center>
+
     <center>
         <form class="w3-container w3-card-4" method="POST" action="login.php" >
-            <label class="w3-text-blue"><b>Nombre:</b></label>
-            <input class="w3-input w3-border" type="text" name="usuario"><br><br>
+            
+            <label class="w3-xlarge"><b>Nombre:</b></label>
+            <input class="w3-xlarge" type="text" name="usuario"><br><br>
 
-            <label class="w3-text-blue"><b>Contraseña</b></label>
-            <input class="w3-input w3-border" type="password" name="clave"><br><br>
+            <label class="w3-xlarge"><b>Contraseña:</b></label>
+            <input class="w3-xlarge" type="password" name="clave"><br><br>
            <button class="w3-button w3-black w3-round-xlarge" type="submit" name="enviar">Entrar</button><br><br>
             <button class="w3-button w3-black w3-round-xlarge" type="submit" name="registro"><a href="registro.php">Registrarse</a></button>
         </form><br>
 
     </center>
-
+</div>
 </body>
 </html>
