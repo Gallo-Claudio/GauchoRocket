@@ -26,3 +26,46 @@ button a {
     margin-right: 80px;
     margin-top: 60px;
 }
+footer {
+    height: 150px;
+    margin-top: 90px;
+    width: 100%;
+    background-color: #5f8fe4;
+    color: #fff;
+    font-size: 13px;
+    border-top: 4px solid #185ad0;
+}
+.docentes {
+    float: left;
+    margin-left: 50px;
+    margin-top: 14px;
+}
+.alumnos {
+    float: right;
+    margin-right: 50px;
+    margin-top: 14px;
+}
+footer img {
+    width: 90px;
+    margin-top: 20px;
+    float: left;
+    margin-right: 20px;
+}
+.iso-logo {
+    margin-left: 50px;
+    float: left;
+    font-size: 22px;
+    width: 510px;
+    line-height: 5px;
+    margin-right: 200px;
+}
+.iso-logo .titulo span {
+    display: block;
+    line-height: 54px;
+    font-size: 30px;
+}
+.docentes p, .alumnos p {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 3px;
+}

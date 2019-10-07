@@ -24,5 +24,6 @@ if(!isset($usuario)){
 </div>
 
 
-</body>
-</html>
+<?php
+include "pie.html";
+?>

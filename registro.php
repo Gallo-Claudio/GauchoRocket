@@ -1,6 +1,8 @@
 <?php
     $error="";
     $usuario="";
+    $clase="";
+
     require 'conexion.php';
 
     if (isset($_POST['enviar'])) {
@@ -10,6 +12,7 @@
 
         if(empty($usuario) or empty($clave)){
             $error = "<div class='w3-panel w3-red'><p>Nombre/Contraseña<br>NO pueden estar vacios</p></div>";
+            $clase ="animated shake";
         }else{
 
             $sql= "SELECT * FROM usuarios WHERE usuario = '$usuario'";
@@ -18,6 +21,7 @@
 
             if(!empty($lista)){
                 $error = "<div class='w3-panel w3-red'><p>El nombre de usuario ya existe</p></div>";
+                $clase ="animated shake";
             }else {
 
                 if ($clave == $clave2) {
@@ -26,6 +30,7 @@
 
                     if (!$consulta) {
                         $error = "<div class='w3-panel w3-red'><p>ERROR<br>No se pudieron guardar los datos</p></div>";
+                        $clase ="animated shake";
                     } else {
                         $usuario = "";
                         $error = "<div class='w3-panel w3-light-green'><p>Usuario ingresado!!</p></div>";
@@ -33,6 +38,7 @@
 
                 } else {
                     $error = "<div class='w3-panel w3-red'><p>La contraseña no coincide<br>Vuelva a tipearla</p></div>";
+                    $clase ="animated shake";
                 }
             }
         }
@@ -47,16 +53,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <link rel="stylesheet" href="css/gr.css">
 </head>
 <body>
 
 <body>
 <div class="w3-container w3-lobster banda">
-    <p class="w3-xxxlarge w3-center">Registro a Gaucho Rocket</p><img src="img/cohete-espacial-mini.png"></div>
+    <p class="w3-xxxlarge w3-center">Registro a Gaucho Rocket</p><img src="img/cohete-espacial-mini.png" class="animated bounceInUp">
+</div>
 
 <div class="w3-display-container">
-        <form class="w3-container w3-card-4 w3-content login" method="POST" action="registro.php" >
+        <form class="w3-container w3-card-4 w3-content login <?php echo $clase; ?>" method="POST" action="registro.php" >
 
             <?php echo $error; ?>
             <label class="w3-xlarge w3-lobster">Nombre:</label>
@@ -72,5 +80,6 @@
             <button class="w3-button w3-round-xlarge w3-dark-grey derecha" name="iniciosesion"><a href="login.php">Iniciar sesion</button>
         </form>
 </div>
-</body>
-</html>
+<?php
+include "pie.html";
+?>
