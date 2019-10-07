@@ -1,0 +1,28 @@
+.w3-lobster {
+    font-family: "Lobster", serif;
+}
+.login {
+    width: 361px;
+    padding: 25px;
+}
+button.w3-button.w3-black.w3-round-xlarge {
+    float: right;
+}
+.derecha {
+    float: right;
+    margin-top: 35px;
+    clear: both;
+}
+button a {
+    text-decoration: none;
+}
+.banda {
+    text-align: center;
+}
+.banda p, .banda img {
+    display: inline-block;
+}
+.banda a {
+    margin-right: 80px;
+    margin-top: 60px;
+}
