@@ -29,4 +29,4 @@ insert into roles value
 insert into usuarios value
 (1,"Tomas","1234","1"),
 (2,"Sebastian","1234","2"),
-(3,"Julieta","123","2");
+(3,"Julieta","1234","2");
