@@ -16,7 +16,7 @@ if (isset($_POST['enviar'])) {
     $hora_salida_final = $_POST['hora_salida_final'];
     $tipo_viajes = $_POST['tipo_viajes'];
     if ($fecha_salida == "" && $fecha_salida < $fecha_minimo) {
-        $error_fecha = "<center><p class=\"w3-xxlarge w3-lobster\">Ingrese una fecha valida</p></center>";
+        $error_fecha = "<center><p class=\"w3-xlarge w3-lobster\">Ingrese una fecha valida</p></center>";
     } else {
         $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
                     inner join tipo_viajes
@@ -57,10 +57,10 @@ if (empty($lista)) {
     <?php include "header.php" ?>
 </head>
 <body>
+
 <div class="w3-container w3-lobster banda">
     <p class="w3-xxxlarge w3-center">Buscador de vuelos</p><img src="img/cohete-espacial-mini.png" class="animated bounceInUp">
 </div>
-
 
 <form method="POST" action="buscador-viajes.php">
     <?php echo "<p>$error_fecha</p>"; ?>
@@ -69,7 +69,7 @@ if (empty($lista)) {
 
         <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
 
-    </div></center><br>
+    </div></center>
 
    <center> <div class="selector"><label class="w3-xlarge w3-lobster">Hora salida:</label>
         <select name="hora_salida_inicial">
@@ -127,7 +127,7 @@ if (empty($lista)) {
             <option value="23:00">23:00</option>
             <option value="23:59">23:59</option>
         </select>
-    </div></center><br>
+    </div></center>
 
     <center><div class="selector"><label class="w3-xlarge w3-lobster" for='tipo_viajes'>Tipo de viaje:</label>
         <select name='tipo_viajes'>
@@ -142,7 +142,7 @@ if (empty($lista)) {
         </select></div></center><br>
 
 
-   <center> <button class="w3-button w3-round-xlarge w3-red" type="submit" name="enviar">Buscar</button></center>
+    <center><button class="w3-button w3-round-xlarge w3-red" type="submit" name="enviar">Buscar</button></center>
 </form>
 <?php
 if ($error_fecha == "") {
