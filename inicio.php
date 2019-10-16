@@ -15,6 +15,7 @@ if(!isset($usuario)){
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
         <link rel="stylesheet" href="css/gr.css">
+        <?php include "header.php" ?>
     </head>
 <body>
 
