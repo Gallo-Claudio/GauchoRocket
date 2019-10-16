@@ -4,11 +4,49 @@
         echo "<p>ERROR de conexion a la BD</p>";
         die;
     }
-    $error = "";
     $sql_tipo_viajes= "select * from tipo_viajes";
     $resultado_tipo_viajes = mysqli_query($conexion, $sql_tipo_viajes);
     $registro_tipo_viajes = mysqli_fetch_all($resultado_tipo_viajes);
-    $hoy = date("Y-m-d");
+    $fecha_actual = date("Y-m-d");
+    $fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
+    $error_fecha = "";
+
+    if (isset($_POST['enviar'])) {
+        $fecha_salida = $_POST['fecha_salida'];
+        $hora_salida_inicial = $_POST['hora_salida_inicial'];
+        $hora_salida_final = $_POST['hora_salida_final'];
+        $tipo_viajes = $_POST['tipo_viajes'];
+
+        if ($fecha_salida == "" && $fecha_salida < $fecha_minimo) {
+            $error_fecha = "Ingrese una fecha valida";
+        } else {
+            $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
+                    inner join tipo_viajes
+                    on v.tipo_viaje = tipo_viajes.id
+                    WHERE v.fecha_salida = '$fecha_salida'";
+            if ($hora_salida_inicial != "-" && $hora_salida_final == "-") {
+                $sql = $sql . " AND hora_salida >= '$hora_salida_inicial'";
+            } else if ($hora_salida_inicial != "-" && $hora_salida_final != "-") {
+                if ($hora_salida_inicial < $hora_salida_final) {
+                    $sql = $sql . " AND hora_salida between '$hora_salida_inicial' and '$hora_salida_final'";
+                }
+
+            }
+            if($tipo_viajes != "-"){
+                $sql = $sql . " AND v.tipo_viaje = '$tipo_viajes'";
+            }
+            $resultado = mysqli_query($conexion, $sql);
+        }
+    }
+
+    /*  where v.dia = '$dias' and v.hora='$horas' and v.tipo_viaje = '$tipo_viajes'";
+    $resultado = mysqli_query($conexion, $sql);
+    $lista = mysqli_fetch_all($resultado);
+
+    if (empty($lista)) {
+     $error = "<p class='error animated shake'>No se ha encontrado ningún viaje</p>";
+    }*/
+
 ?>
 
 <!DOCTYPE html>
@@ -26,11 +64,11 @@
 </head>
 <body>
 <form method="POST" action="buscador-viajes.php">
-    <?php echo $error; ?>
+    <?php echo "<p>$error_fecha</p>"; ?>
 
     <div class="selector"><label for='fecha_salida'>Fecha Salida:</label>
 
-        <input name="fecha_salida"type="date" min="<?php echo $hoy?>">
+        <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
 
     </div>
 
@@ -95,6 +133,7 @@
 
     <div class="selector"><label for='tipo_viajes'>Tipo de viaje:</label>
         <select name='tipo_viajes'>
+            <option value="-">-</option>
             <?php
             $tv=0;
             while($tv < count($registro_tipo_viajes)) {
@@ -109,40 +148,9 @@
 </form>
 <?php
 
-    if (isset($_POST['enviar'])) {
-        $fecha_salida = $_POST['fecha_salida'];
-        $hora_salida_inicial = $_POST['hora_salida_inicial'];
-        $hora_salida_final = $_POST['hora_salida_final'];
-        $tipo_viajes = $_POST['tipo_viajes'];
-
-
-        $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
-                inner join tipo_viajes
-                on v.tipo_viaje = tipo_viajes.id
-                WHERE v.fecha_salida = '$fecha_salida'";
-        if($hora_salida_inicial != "-" && $hora_salida_final == "-"){
-            $sql = $sql." AND hora_salida >= '$hora_salida_inicial'";
-        }else if ($hora_salida_inicial != "-" && $hora_salida_final != "-"){
-            if ($hora_salida_inicial < $hora_salida_final) {
-                $sql = $sql . " AND hora_salida between '$hora_salida_inicial' and '$hora_salida_final'";
-            }
-
-        }
-
-        $resultado = mysqli_query($conexion, $sql);
-
-
-
-        /*  where v.dia = '$dias' and v.hora='$horas' and v.tipo_viaje = '$tipo_viajes'";
-     $resultado = mysqli_query($conexion, $sql);
-     $lista = mysqli_fetch_all($resultado);
-
-     if (empty($lista)) {
-         $error = "<p class='error animated shake'>No se ha encontrado ningún viaje</p>";
-     }*/
-
-
-        echo "<table>
+    if ($error_fecha == "") {
+        if (mysqli_affected_rows($conexion) > 0) {
+            echo "<table>
                 <thead>
                   <tr>
                     <td>Fecha</td>
@@ -154,21 +162,24 @@
                  <tbody>";
 
 
+            while ($lista = mysqli_fetch_assoc($resultado)) {
 
-        while ($lista = mysqli_fetch_assoc($resultado)) {
 
-
-            echo "<tr>
+                echo "<tr>
                     <td>" . $lista['fecha_salida'] . "</td>
                     <td>" . $lista['hora_salida'] . "</td>
                     <td>" . $lista['tipo_viaje'] . "</td>
                     <td>" . $lista['duracion'] . "</td>
                    </tr>";
 
+            }
+            echo "</tbody></table>";
+        } else {
+            echo "<p>No se encontraron vuelos disponibles</p>";
         }
-        echo "</tbody></table>";
     }
 ?>
+
 </body>
 
 <?php    include "pie.html";?>
