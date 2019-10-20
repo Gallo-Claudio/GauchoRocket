@@ -67,79 +67,79 @@ if (empty($lista)) {
 
     <center><div class="selector"><label class="w3-xlarge w3-lobster" for='fecha_salida'>Fecha Salida:</label>
 
-        <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
+            <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
 
-    </div></center>
+        </div></center>
 
-   <center> <div class="selector"><label class="w3-xlarge w3-lobster">Hora salida:</label>
-        <select name="hora_salida_inicial">
-            <option value="-">--:--</option>
-            <option value="00:00">00:00</option>
-            <option value="01:00">01:00</option>
-            <option value="02:00">02:00</option>
-            <option value="03:00">03:00</option>
-            <option value="04:00">04:00</option>
-            <option value="05:00">05:00</option>
-            <option value="06:00">06:00</option>
-            <option value="07:00">07:00</option>
-            <option value="08:00">08:00</option>
-            <option value="09:00">09:00</option>
-            <option value="10:00">10:00</option>
-            <option value="11:00">11:00</option>
-            <option value="12:00">12:00</option>
-            <option value="13:00">13:00</option>
-            <option value="14:00">14:00</option>
-            <option value="15:00">15:00</option>
-            <option value="16:00">16:00</option>
-            <option value="17:00">17:00</option>
-            <option value="18:00">18:00</option>
-            <option value="19:00">19:00</option>
-            <option value="20:00">20:00</option>
-            <option value="21:00">21:00</option>
-            <option value="22:00">22:00</option>
-            <option value="23:00">23:00</option>
-        </select>
+    <center> <div class="selector"><label class="w3-xlarge w3-lobster">Hora salida:</label>
+            <select name="hora_salida_inicial">
+                <option value="-">--:--</option>
+                <option value="00:00">00:00</option>
+                <option value="01:00">01:00</option>
+                <option value="02:00">02:00</option>
+                <option value="03:00">03:00</option>
+                <option value="04:00">04:00</option>
+                <option value="05:00">05:00</option>
+                <option value="06:00">06:00</option>
+                <option value="07:00">07:00</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+                <option value="21:00">21:00</option>
+                <option value="22:00">22:00</option>
+                <option value="23:00">23:00</option>
+            </select>
 
-        <select name="hora_salida_final">
-            <option value="-">--:--</option>
-            <option value="01:00">01:00</option>
-            <option value="02:00">02:00</option>
-            <option value="03:00">03:00</option>
-            <option value="04:00">04:00</option>
-            <option value="05:00">05:00</option>
-            <option value="06:00">06:00</option>
-            <option value="07:00">07:00</option>
-            <option value="08:00">08:00</option>
-            <option value="09:00">09:00</option>
-            <option value="10:00">10:00</option>
-            <option value="11:00">11:00</option>
-            <option value="12:00">12:00</option>
-            <option value="13:00">13:00</option>
-            <option value="14:00">14:00</option>
-            <option value="15:00">15:00</option>
-            <option value="16:00">16:00</option>
-            <option value="17:00">17:00</option>
-            <option value="18:00">18:00</option>
-            <option value="19:00">19:00</option>
-            <option value="20:00">20:00</option>
-            <option value="21:00">21:00</option>
-            <option value="22:00">22:00</option>
-            <option value="23:00">23:00</option>
-            <option value="23:59">23:59</option>
-        </select>
-    </div></center>
+            <select name="hora_salida_final">
+                <option value="-">--:--</option>
+                <option value="01:00">01:00</option>
+                <option value="02:00">02:00</option>
+                <option value="03:00">03:00</option>
+                <option value="04:00">04:00</option>
+                <option value="05:00">05:00</option>
+                <option value="06:00">06:00</option>
+                <option value="07:00">07:00</option>
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+                <option value="19:00">19:00</option>
+                <option value="20:00">20:00</option>
+                <option value="21:00">21:00</option>
+                <option value="22:00">22:00</option>
+                <option value="23:00">23:00</option>
+                <option value="23:59">23:59</option>
+            </select>
+        </div></center>
 
     <center><div class="selector"><label class="w3-xlarge w3-lobster" for='tipo_viajes'>Tipo de viaje:</label>
-        <select name='tipo_viajes'>
-            <option value="-">-</option>
-            <?php
-            $tv=0;
-            while($tv < count($registro_tipo_viajes)) {
-                echo"<option value='".$registro_tipo_viajes[$tv][0]."'>".$registro_tipo_viajes[$tv][1]."</option>";
-                $tv++;
-            }
-            ?>
-        </select></div></center><br>
+            <select name='tipo_viajes'>
+                <option value="-">-</option>
+                <?php
+                $tv=0;
+                while($tv < count($registro_tipo_viajes)) {
+                    echo"<option value='".$registro_tipo_viajes[$tv][0]."'>".$registro_tipo_viajes[$tv][1]."</option>";
+                    $tv++;
+                }
+                ?>
+            </select></div></center><br>
 
 
     <center><button class="w3-button w3-round-xlarge w3-red" type="submit" name="enviar">Buscar</button></center>
@@ -150,20 +150,24 @@ if ($error_fecha == "") {
         echo "<table>
                 <thead>
                   <tr>
-                    <td>Fecha</td>
-                    <td>Hora</td>
-                    <td>Tipo de viaje</td>
-                    <td>Duracion</td>
+                    <td class=\"w3-xlarge w3-lobster\">Fecha</td>
+                    <td class=\"w3-xlarge w3-lobster\">Hora</td>
+                    <td class=\"w3-xlarge w3-lobster\">Tipo de viaje</td>
+                    <td class=\"w3-xlarge w3-lobster\">Duracion</td>
                   </tr>
                  </thead>
+                 
                  <tbody>";
         while ($lista = mysqli_fetch_assoc($resultado)) {
             echo "<tr>
-                    <td>" . $lista['fecha_salida'] . "</td>
-                    <td>" . $lista['hora_salida'] . "</td>
-                    <td>" . $lista['tipo_viaje'] . "</td>
-                    <td>" . $lista['duracion'] . "</td>
+                    <td class=\"w3-large w3-lobster\">" . $lista['fecha_salida'] . "</td>
+                    <td class=\"w3-large w3-lobster\">" . $lista['hora_salida'] . "</td>
+                    <td class=\"w3-large w3-lobster\">" . $lista['tipo_viaje'] . "</td>
+                    <td class=\"w3-large w3-lobster\">" . $lista['duracion'] . "</td>
+                    <td><center><button class=\"w3-button w3-round-xlarge w3-green\" type='submit' name='aceptar'><a href=\"reservas.php\">Reservar</button></center></td>
+
                    </tr>";
+
         }
         echo "</tbody></table>";
     } else {

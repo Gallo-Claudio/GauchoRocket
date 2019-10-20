@@ -315,6 +315,13 @@ ALTER TABLE `circutios_estaciones`
   ADD CONSTRAINT `circutios_estaciones_ibfk_2` FOREIGN KEY (`estacion_id`) REFERENCES `estaciones` (`id`);
 
 --
+-- Filtros para la tabla `usuario_reserva`
+--
+ALTER TABLE `usuario_reserva`
+  ADD CONSTRAINT `usuario_reserva_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `usuario_reserva_ibfk_2` FOREIGN KEY (`reserva_id`) REFERENCES `reservas` (`id`);
+
+--
 -- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`

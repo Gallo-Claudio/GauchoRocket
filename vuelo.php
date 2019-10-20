@@ -20,7 +20,7 @@
 </div>
 
 
-<form action="vuelo.php" method="post" target="_blank">
+<form action="vuelo.php" method="post">
 
     <center>Origen:  <select name="selectO">
             <option value="value1">Buenos Aires</option>
@@ -61,17 +61,8 @@
             <option value="value2" selected>Orbital</option>
             <option value="value2" selected>Entre destino</option>
         </select></center><br>
-    <center><p class="w3-xxxlarge w3-center"><h3>Cantidad de adultos: <input type="number" name="cantidada" min="1" max="20" step="1"></h3></p></center>
-    <center><p class="w3-xxxlarge w3-center"><h3>Cantidad de menores: <input type="number" name="cantidadm" min="1" max="20" step="1"></h3></p></center>
 
-
-
-    <center><input class="w3-button w3-round-xlarge w3-dark-grey" type="submit" value="aceptar"></center>
-
-
-
-
-
+    <center><button class="w3-button w3-round-xlarge w3-dark-grey" type="submit" name="aceptar">Aceptar</button><br><br></center>
 </form>
 
 
