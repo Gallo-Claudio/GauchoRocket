@@ -1,5 +1,5 @@
 <?php
-$conexion = mysqli_connect("127.0.0.1","root","46598842","gauchorocket");
+$conexion = mysqli_connect("127.0.0.1","pw2","pw22019","gauchorocket");
 if(!$conexion){
     echo "<p>ERROR de conexion a la BD</p>";
     die;
@@ -7,6 +7,12 @@ if(!$conexion){
 $sql_tipo_viajes= "select * from tipo_viajes";
 $resultado_tipo_viajes = mysqli_query($conexion, $sql_tipo_viajes);
 $registro_tipo_viajes = mysqli_fetch_all($resultado_tipo_viajes);
+
+$sql_estaciones = "select * from estaciones";
+$resultado_estaciones = mysqli_query($conexion,$sql_estaciones);
+$registro_estaciones = mysqli_fetch_all($resultado_estaciones);
+
+
 $fecha_actual = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
 $error_fecha = "";
@@ -15,13 +21,20 @@ if (isset($_POST['enviar'])) {
     $hora_salida_inicial = $_POST['hora_salida_inicial'];
     $hora_salida_final = $_POST['hora_salida_final'];
     $tipo_viajes = $_POST['tipo_viajes'];
+    $origen = $_POST['origen'];
+    $destino = $_POST['destino'];
     if ($fecha_salida == "" && $fecha_salida < $fecha_minimo) {
         $error_fecha = "<center><p class=\"w3-xlarge w3-lobster\">Ingrese una fecha valida</p></center>";
     } else {
         $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
                     inner join tipo_viajes
-                    on v.tipo_viaje = tipo_viajes.id
-                    WHERE v.fecha_salida = '$fecha_salida'";
+                    on v.tipo_viaje = tipo_viajes.id";
+                    if($origen != "-" || $destino != "-"){
+                        $sql = $sql . " INNER JOIN circuitos on v.circuito_id = circuitos.id
+                                        INNER JOIN circutios_estaciones on circuitos.id = circutios_estaciones.circuito_id
+                                        INNER JOIN estaciones on circutios_estaciones.estacion_id = estaciones.id";
+                    }
+                    $sql = $sql." WHERE v.fecha_salida = '$fecha_salida'";
         if ($hora_salida_inicial != "-" && $hora_salida_final == "-") {
             $sql = $sql . " AND hora_salida >= '$hora_salida_inicial'";
         } else if ($hora_salida_inicial != "-" && $hora_salida_final != "-") {
@@ -32,8 +45,20 @@ if (isset($_POST['enviar'])) {
         if($tipo_viajes != "-"){
             $sql = $sql . " AND v.tipo_viaje = '$tipo_viajes'";
         }
+        if($origen != "-"){
+            $sql = $sql . " AND estaciones.nombre LIKE '$origen'";
+        }
+        if($destino != "-"){
+            $sql = $sql . " AND estaciones.id = '$destino'";
+        }
+
+
         $resultado = mysqli_query($conexion, $sql);
     }
+
+
+
+
 }
 /*  where v.dia = '$dias' and v.hora='$horas' and v.tipo_viaje = '$tipo_viajes'";
 $resultado = mysqli_query($conexion, $sql);
@@ -141,6 +166,30 @@ if (empty($lista)) {
                 ?>
             </select></div></center><br>
 
+    <center><div class="selector"><label class="w3-xlarge w3-lobster" for='origen'>Origen:</label>
+            <select name='origen'>
+                <option value="-">-</option>
+                <?php
+                $tv=0;
+                while($tv < count($registro_estaciones)) {
+                    echo"<option value='".$registro_estaciones[$tv][1]."'>".$registro_estaciones[$tv][1]."</option>";
+                    $tv++;
+                }
+                ?>
+            </select></div></center><br>
+
+    <center><div class="selector"><label class="w3-xlarge w3-lobster" for='destino'>Destino:</label>
+            <select name='destino'>
+                <option value="-">-</option>
+                <?php
+                $tv=0;
+                while($tv < count($registro_estaciones)) {
+                    echo"<option value='".$registro_estaciones[$tv][0]."'>".$registro_estaciones[$tv][1]."</option>";
+                    $tv++;
+                }
+                ?>
+            </select></div></center><br>
+
 
     <center><button class="w3-button w3-round-xlarge w3-red" type="submit" name="enviar">Buscar</button></center>
 </form>
@@ -164,7 +213,7 @@ if ($error_fecha == "") {
                     <td class=\"w3-large w3-lobster\">" . $lista['hora_salida'] . "</td>
                     <td class=\"w3-large w3-lobster\">" . $lista['tipo_viaje'] . "</td>
                     <td class=\"w3-large w3-lobster\">" . $lista['duracion'] . "</td>
-                    <td><center><button class=\"w3-button w3-round-xlarge w3-green\" type='submit' name='aceptar'><a href=\"reservas.php\">Reservar</button></center></td>
+                    <td><center><button class=\"w3-button w3-round-xlarge w3-green\" type='submit' name='aceptar' value=".$lista['fecha_salida']."><a href=\"reservas.php\">Reservar</button></center></td>
 
                    </tr>";
 

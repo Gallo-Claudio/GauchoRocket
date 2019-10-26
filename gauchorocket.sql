@@ -133,8 +133,8 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `usuario`, `clave`, `rol`) VALUES
 (1, 'Tomas', '1234', 1),
 (2, 'Sebastian', '1234', 2),
-(4, 'facu', 'facu', 2);
-
+(4, 'facu', 'facu', 2),
+(5, 'Julieta', '1234', 2);
 -- --------------------------------------------------------
 
 --
@@ -155,10 +155,10 @@ CREATE TABLE `viajes` (
 --
 
 INSERT INTO `viajes` (`id`, `tipo_viaje`, `duracion`, `fecha_salida`, `hora_salida`, `circuito_id`) VALUES
-(1, 1, '35 dias', '2019-10-23', '16:00:00', NULL),
-(2, 2, '8 horas', '2019-10-23', '03:00:00', NULL),
-(3, 2, '8 horas', '2019-10-23', '22:00:00', NULL),
-(4, 2, '8 horas', '2019-10-23', '15:00:00', NULL),
+(1, 1, '35 dias', '2019-10-27', '16:00:00', NULL),
+(2, 2, '8 horas', '2019-10-27', '03:00:00', NULL),
+(3, 2, '8 horas', '2019-10-27', '22:00:00', NULL),
+(4, 2, '8 horas', '2019-10-27', '15:00:00', NULL),
 (5, 2, '8 horas', '0000-00-00', '00:00:00', NULL),
 (6, 2, '8 horas', '0000-00-00', '00:00:00', NULL),
 (7, 2, '8 horas', '0000-00-00', '00:00:00', NULL),

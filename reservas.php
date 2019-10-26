@@ -7,20 +7,26 @@ if(!$conexion){
     die;
 }
 
+$sql_id_viajes = "SELECT id FROM viajes";
+$resultado_id_viajes = mysqli_query($conexion,$sql);
+$registro_id_viajes = mysqli_fetch_all($resultado_id_viajes);
+
+$error = "";
 if(isset($_POST['enviar'])){
     $cant = $_POST['cant'];
 
-
-    if($cant>0){
-        $sql = "insert into reservas (cantidad) value ('$cant')";
+if($cant >0){
+    for($i=0;$i<$cant;$i++){
+        $sql = "INSERT INTO reservas (cantidad) VALUES ('$cant')";
         $consulta = mysqli_query($conexion,$sql);
-
-
-    }else{
-        $error = "<div class='w3-panel w3-red'><p>Cantidad de pasajes invalida</p></div>";
-
     }
 }
+    else {
+        $error = "<div class='w3-panel w3-red'><p>La reserva no se pudo realizar</div>";
+        $clase ="animated shake";
+}
+}
+
 ?>
 
 
@@ -46,7 +52,7 @@ if(isset($_POST['enviar'])){
 <div class="w3-display-container">
 
     <form class="w3-container w3-card-4 w3-content" method="POST" action="reservas.php" >
-           <center>Cantidad de pasajes a reservar: <input type="number" name="cant" min="0"></center><br><br>
+        <center>Cantidad de pasajes a reservar: <input type="number" name="cant" min="0"></center><br><br>
         <center><button class="w3-button w3-round-xlarge w3-red" type="submit" name="enviar">Aceptar</button></center>
     </form>
 </div>
