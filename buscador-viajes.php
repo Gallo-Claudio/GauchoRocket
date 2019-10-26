@@ -29,12 +29,12 @@ if (isset($_POST['enviar'])) {
         $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
                     inner join tipo_viajes
                     on v.tipo_viaje = tipo_viajes.id";
-                    if($origen != "-" || $destino != "-"){
-                        $sql = $sql . " INNER JOIN circuitos on v.circuito_id = circuitos.id
+        if($origen != "-" || $destino != "-"){
+            $sql = $sql . " INNER JOIN circuitos on v.circuito_id = circuitos.id
                                         INNER JOIN circutios_estaciones on circuitos.id = circutios_estaciones.circuito_id
                                         INNER JOIN estaciones on circutios_estaciones.estacion_id = estaciones.id";
-                    }
-                    $sql = $sql." WHERE v.fecha_salida = '$fecha_salida'";
+        }
+        $sql = $sql." WHERE v.fecha_salida = '$fecha_salida'";
         if ($hora_salida_inicial != "-" && $hora_salida_final == "-") {
             $sql = $sql . " AND hora_salida >= '$hora_salida_inicial'";
         } else if ($hora_salida_inicial != "-" && $hora_salida_final != "-") {
