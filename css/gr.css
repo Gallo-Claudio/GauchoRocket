@@ -51,6 +51,15 @@ footer img {
     float: left;
     margin-right: 20px;
 }
+.tab-content {
+     border: 1px solid #ccc;
+     margin-bottom: 50px;
+     padding: 0px 30px 15px 30px;
+     border-top: 1px solid #fff;
+ }
+header {
+    margin-bottom: 60px;
+}
 .iso-logo {
     margin-left: 50px;
     float: left;
@@ -68,4 +77,32 @@ footer img {
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 3px;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    background-color: #a2d0f5 !important;
+}
+.tab-pane p.descripcion {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 35px;
+    padding-bottom: 8px;
+}
+.selector {
+    margin-bottom: 13px;
+}
+input, select {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    height: 23px;
+}
+.w3-green a {
+    color: #fff;
+    font-weight: bold;
+}
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #e6e5e5 !important;
+}
+.reserva {
+    height: 25px;
+    padding-top: 2px;
 }

@@ -1,9 +1,6 @@
 <?php
-$conexion = mysqli_connect("127.0.0.1","pw2","pw22019","gauchorocket");
-if(!$conexion){
-    echo "<p>ERROR de conexion a la BD</p>";
-    die;
-}
+    require_once "conexion.php";
+
 $sql_tipo_viajes= "select * from tipo_viajes";
 $resultado_tipo_viajes = mysqli_query($conexion, $sql_tipo_viajes);
 $registro_tipo_viajes = mysqli_fetch_all($resultado_tipo_viajes);
@@ -74,7 +71,6 @@ if (empty($lista)) {
     <meta charset="UTF-8">
     <title>Busca tu vuelo</title>
     <meta charset="UTF-8">
-    <title>Inicio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
@@ -224,7 +220,8 @@ if ($error_fecha == "") {
     }
 }
 ?>
-
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/selector_viajes.js"></script>
 </body>
 
 <?php    include "pie.html";?>
