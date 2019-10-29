@@ -1,7 +1,5 @@
 <?php
 ?>
-
-<!DOCTYPE html>
 <header>
     <div class="w3-container w3-blue w3-bottombar w3-border-indigo w3-fixed">
         <a href="inicio.php"><img class="w3-left" src="img/cohete-espacial-mini.png"></a>
