@@ -19,6 +19,7 @@ if (isset($_POST['enviar'])) {
             if ($resultado['clave'] == $clave) {
                 session_start();
                 $_SESSION['username'] = $usuario;
+                $_SESSION['id'] = $resultado['id'];
                 header("location:inicio.php");
                 exit();
             } else {

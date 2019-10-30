@@ -1,4 +1,5 @@
 <?php
+session_start();
 $error="";
 $conexion = mysqli_connect("127.0.0.1:3307","pw2","pw22019","gauchorocket");
 
@@ -6,20 +7,20 @@ if(!$conexion){
     echo "<p>ERROR de conexion a la BD</p>";
     die;
 }
-
-$sql_id_viajes = "SELECT id FROM viajes";
-$resultado_id_viajes = mysqli_query($conexion,$sql);
-$registro_id_viajes = mysqli_fetch_all($resultado_id_viajes);
+$id_viaje = $_GET['viaje'];
+$id_usuario = $_SESSION['id'];
+// $sql_id_viajes = "SELECT id FROM viajes";
+// $resultado_id_viajes = mysqli_query($conexion,$sql);
+// $registro_id_viajes = mysqli_fetch_all($resultado_id_viajes);
 
 $error = "";
 if(isset($_POST['enviar'])){
     $cant = $_POST['cant'];
 
 if($cant >0){
-    for($i=0;$i<$cant;$i++){
-        $sql = "INSERT INTO reservas (cantidad) VALUES ('$cant')";
+        $sql = "INSERT INTO reservas (cod_vuelo,cantidad,id_usuario) VALUES ('$id_viaje','$cant','$id_usuario')";
         $consulta = mysqli_query($conexion,$sql);
-    }
+        echo "Reserva realizada con exito";
 }
     else {
         $error = "<div class='w3-panel w3-red'><p>La reserva no se pudo realizar</div>";
@@ -51,8 +52,8 @@ if($cant >0){
 
 <div class="w3-display-container">
 
-    <form class="w3-container w3-card-4 w3-content" method="POST" action="reservas.php" >
-        <center>Cantidad de pasajes a reservar: <input type="number" name="cant" min="0"></center><br><br>
+    <form class="w3-container w3-card-4 w3-content" method="POST" action="reservas.php?viaje=<?php echo ($id_viaje)?>" >
+        <center>Cantidad de pasajes a reservar: <input type="number" name="cant" min="0" value=""></center><br><br>
         <center><button class="w3-button w3-round-xlarge w3-red" type="submit" name="enviar">Aceptar</button></center>
     </form>
 </div>

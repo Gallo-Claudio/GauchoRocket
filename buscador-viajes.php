@@ -23,7 +23,7 @@ if (isset($_POST['enviar'])) {
     if ($fecha_salida == "" && $fecha_salida < $fecha_minimo) {
         $error_fecha = "<center><p class=\"w3-xlarge w3-lobster\">Ingrese una fecha valida</p></center>";
     } else {
-        $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
+        $sql = "select v.id,fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
                     inner join tipo_viajes
                     on v.tipo_viaje = tipo_viajes.id";
         if($origen != "-" || $destino != "-"){
@@ -209,7 +209,7 @@ if ($error_fecha == "") {
                     <td class=\"w3-large w3-lobster\">" . $lista['hora_salida'] . "</td>
                     <td class=\"w3-large w3-lobster\">" . $lista['tipo_viaje'] . "</td>
                     <td class=\"w3-large w3-lobster\">" . $lista['duracion'] . "</td>
-                    <td><center><button class=\"w3-button w3-round-xlarge w3-green\" type='submit' name='aceptar' value=".$lista['fecha_salida']."><a href=\"reservas.php\">Reservar</button></center></td>
+                    <td><center><button class=\"w3-button w3-round-xlarge w3-green\" type='submit' name='aceptar' value=".$lista['fecha_salida']."><a href='reservas.php?viaje=".$lista['id']."'>Reservar</button></center></td>
 
                    </tr>";
 
