@@ -1,5 +1,5 @@
 <?php
-    require_once "conexion.php";
+require_once "conexion.php";
 
 $sql_tipo_viajes= "select * from tipo_viajes";
 $resultado_tipo_viajes = mysqli_query($conexion, $sql_tipo_viajes);

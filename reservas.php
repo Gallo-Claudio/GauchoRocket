@@ -1,7 +1,7 @@
 <?php
 session_start();
 $error="";
-$conexion = mysqli_connect("127.0.0.1:3307","pw2","pw22019","gauchorocket");
+require_once "conexion.php";
 
 if(!$conexion){
     echo "<p>ERROR de conexion a la BD</p>";
