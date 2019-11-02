@@ -1,9 +1,10 @@
+
 --
 -- Base de datos: `gauchorocket`
 --
 CREATE DATABASE gauchorocket;
-
 USE gauchorocket;
+
 -- --------------------------------------------------------
 
 --
@@ -54,6 +55,28 @@ INSERT INTO `circuitos_estaciones` (`circuito_id`, `estacion_id`) VALUES
 (2, 9),
 (2, 10),
 (2, 11);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `credenciales`
+--
+
+CREATE TABLE `credenciales` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(30) NOT NULL,
+  `rol` int(11) DEFAULT NULL,
+  `clave` varchar(50) DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `credenciales`
+--
+
+INSERT INTO `credenciales` (`id`, `usuario`, `rol`, `clave`, `id_usuario`) VALUES
+(1, 'Tomas', 1, '81dc9bdb52d04dc20036dbd8313ed055', 1),
+(2, 'Sebastian', 2, '81dc9bdb52d04dc20036dbd8313ed055', 2);
 
 -- --------------------------------------------------------
 
@@ -212,11 +235,11 @@ INSERT INTO `reservas` (`id`, `cod_vuelo`, `cantidad`, `id_usuario`, `cod_reserv
 (19, 38, 1, 2, NULL, NULL, NULL),
 (34, 40, 3, 1, NULL, 1, 4),
 (35, 40, 7, 2, NULL, 3, 6),
-(36, 40, 6, 4, NULL, 3, 5),
-(37, 40, 1, 4, NULL, 1, 5),
+(36, 40, 6, 2, NULL, 3, 5),
+(37, 40, 1, 1, NULL, 1, 5),
 (38, 40, 3, 1, NULL, 1, 6),
 (39, 40, 2, 1, NULL, 4, 5),
-(40, 40, 1, 4, NULL, 5, 6);
+(40, 40, 1, 2, NULL, 5, 6);
 
 -- --------------------------------------------------------
 
@@ -265,19 +288,18 @@ INSERT INTO `tipo_viajes` (`id`, `tipo_viaje`) VALUES
 
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
-  `usuario` varchar(30) NOT NULL,
-  `clave` varchar(15) NOT NULL,
-  `rol` int(11) DEFAULT NULL
+  `nombre` varchar(15) DEFAULT NULL,
+  `apellido` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `usuario`, `clave`, `rol`) VALUES
-(1, 'Tomas', '1234', 1),
-(2, 'Sebastian', '1234', 2),
-(4, 'facu', 'facu', 2);
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `email`) VALUES
+(1, 'Tomas', 'Seijas', 'tomas.seijas10@gmail.com'),
+(2, 'Sebastian', 'Dominikow', 'sebidomi@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -737,6 +759,14 @@ ALTER TABLE `circuitos_estaciones`
   ADD KEY `estacion_id` (`estacion_id`);
 
 --
+-- Indices de la tabla `credenciales`
+--
+ALTER TABLE `credenciales`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `rol` (`rol`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
 -- Indices de la tabla `estaciones`
 --
 ALTER TABLE `estaciones`
@@ -781,8 +811,7 @@ ALTER TABLE `tipo_viajes`
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `rol` (`rol`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `viajes`
@@ -814,6 +843,12 @@ ALTER TABLE `circuitos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `credenciales`
+--
+ALTER TABLE `credenciales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `estaciones`
 --
 ALTER TABLE `estaciones`
@@ -835,7 +870,7 @@ ALTER TABLE `naves`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -853,7 +888,7 @@ ALTER TABLE `tipo_viajes`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `viajes`
@@ -879,6 +914,12 @@ ALTER TABLE `circuitos_estaciones`
   ADD CONSTRAINT `circuitos_estaciones_ibfk_2` FOREIGN KEY (`estacion_id`) REFERENCES `estaciones` (`id`);
 
 --
+-- Filtros para la tabla `credenciales`
+--
+ALTER TABLE `credenciales`
+  ADD CONSTRAINT `credenciales_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
+
+--
 -- Filtros para la tabla `naves`
 --
 ALTER TABLE `naves`
@@ -889,7 +930,7 @@ ALTER TABLE `naves`
 --
 ALTER TABLE `reservas`
   ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`cod_vuelo`) REFERENCES `viajes` (`id`),
-  ADD CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `credenciales` (`id`),
   ADD CONSTRAINT `reservas_ibfk_3` FOREIGN KEY (`estacion_origen`) REFERENCES `estaciones` (`id`),
   ADD CONSTRAINT `reservas_ibfk_4` FOREIGN KEY (`estacion_destino`) REFERENCES `estaciones` (`id`);
 
