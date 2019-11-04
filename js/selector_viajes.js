@@ -14,6 +14,9 @@ $(document).ready(function() {
 
 				resultados.forEach(resultado => {
 					listado += `<tr><td>
+								${resultado.codigo_vuelo}												
+								</td>
+								<td>
 								${resultado.fecha}												
 								</td>
 								<td>
@@ -46,7 +49,7 @@ $(document).ready(function() {
 	$('#orbital').submit(function(event) {
 		event.preventDefault();
 		form_data = $(this).serialize();
-	//	console.log(form_data);
+		console.log(form_data);
 		ejecutajax();
 	})
 
@@ -55,7 +58,7 @@ $(document).ready(function() {
 	$('#tours').submit(function(event) {
 		event.preventDefault();
 		form_data = $(this).serialize();
-		//	console.log(form_data);
+			console.log(form_data);
 		ejecutajax();
 	})
 
@@ -64,8 +67,34 @@ $(document).ready(function() {
 	$('#destinos').submit(function(event) {
 		event.preventDefault();
 		form_data = $(this).serialize();
-		//	console.log(form_data);
+			console.log(form_data);
 		ejecutajax();
 	})
+
+
+
+    $('#origen').on('change', function(event) {
+        event.preventDefault();
+		let origen = $('#origen').val();
+		console.log(origen);
+
+		$.ajax({
+			url: 'estacion_circuito.php',
+			type: 'POST',
+			data: {origen},
+			success: function (response) {
+				//	console.log(response);
+
+				let resultados = JSON.parse(response);
+				let listado = '';
+
+				resultados.forEach(resultado => {
+					listado += `<option value='${resultado.id}'>${resultado.nombre}</option>`
+				})
+				$('#estaciones').html(listado);
+	}
+
+		})
+    })
 
 });

@@ -64,6 +64,8 @@ if (isset($_POST['enviar'])) {
     <!-- Lenguetas -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="about">
+
+            <!-- ORBITALES -->
             <h2>Vuelos Orbitales</h2>
             <p class="descripcion">Los vuelos Orbitales salen todos los días de la semana, desde dos localidades diferentes.</p>
 
@@ -76,8 +78,8 @@ if (isset($_POST['enviar'])) {
                     <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
                 </div>
                 <div class="selector">
-                    <label for='origen'>Lugar de Salida:</label>
-                    <select name='origen'>
+                    <label for='destino'>Lugar de Salida:</label>
+                    <select name='destino'>
                         <?php
                         $es=0;
                         for ($es;$es<2;$es++) {
@@ -91,6 +93,7 @@ if (isset($_POST['enviar'])) {
             </form>
         </div>
 
+        <!-- ENTRE DESTINOS -->
         <div role="tabpanel" class="tab-pane fade" id="specs">
             <h2>Vuelos entre Destinos</h2>
             <p class="descripcion">Estos vuelos se realizán todos los días de la semana.</p>
@@ -104,7 +107,7 @@ if (isset($_POST['enviar'])) {
                 </div>
                 <div class="selector">
                     <label for='origen'>Lugar de Salida:</label>
-                    <select name='origen'>
+                    <select name='origen' id="origen">
                         <?php
                         $es=0;
                         while($es < count($registro_estaciones)) {
@@ -114,16 +117,11 @@ if (isset($_POST['enviar'])) {
                         ?>
                     </select>
                 </div>
+                <div id="estac"></div>
                 <div class="selector">
                     <label for='destino'>Lugar de Destino:</label>
-                    <select name='destino'>
-                        <?php
-                        $ed=0;
-                        while($ed < count($registro_estaciones)) {
-                            echo"<option value='".$registro_estaciones[$ed][0]."'>".$registro_estaciones[$ed][1]."</option>";
-                            $ed++;
-                        }
-                        ?>
+                    <select name='destino' id="estaciones">
+
                     </select>
                 </div>
 
@@ -131,6 +129,7 @@ if (isset($_POST['enviar'])) {
             </form>
         </div>
 
+        <!-- TOURS -->
         <div role="tabpanel" class="tab-pane fade" id="reviews">
             <h2>Tours</h2>
             <p class="descripcion">Estos vuelos se realizan solamente los días domingos</p>
@@ -138,6 +137,7 @@ if (isset($_POST['enviar'])) {
                 <?php echo "<p>$error_fecha</p>"; ?>
 
                 <input name="tipo_viajes" type="hidden" value="1">
+                <input name="destino" type="hidden" value="1">
                 <div class="selector"><label for='fecha_salida'>Fecha Salida:</label>
                     <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
                 </div>
@@ -153,6 +153,7 @@ if (isset($_POST['enviar'])) {
             echo "<table class='table table-striped table-bordered table-hover table-condensed'>
                 <thead>
                   <tr>
+                    <td>Código de Vuelo</td>
                     <td>Fecha</td>
                     <td>Hora</td>
                     <td>Origen</td>
