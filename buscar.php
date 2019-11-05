@@ -9,7 +9,7 @@ require_once "conexion.php";
 
     $sql = "select viajes_t.id, fecha, hora, duracion, modelos_naves.nombre, codigo_vuelo from viajes_t
             left outer join naves
-            on viajes_t.nave = naves.id  
+            on viajes_t.nave = naves.id
             left outer join modelos_naves
             on naves.modelo = modelos_naves.id
             where fecha = '$fecha_salida'
