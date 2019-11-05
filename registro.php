@@ -1,36 +1,63 @@
 <?php
 $error="";
+$nombre = "";
+$apellido = "";
+$email = "";
 $usuario="";
 $clase="";
 require 'conexion.php';
 if (isset($_POST['enviar'])) {
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $email = $_POST['email'];
     $usuario = $_POST['usuario'];
-    $clave = $_POST['clave'];
-    $clave2 = $_POST['clave2'];
+    $clave = md5($_POST['clave']);
+    $clave2 = md5($_POST['clave2']);
     if(empty($usuario) or empty($clave)){
         $error = "<div class='w3-panel w3-red'><p>Nombre/Contraseña<br>NO pueden estar vacios</p></div>";
         $clase ="animated shake";
     }else{
-        $sql= "SELECT * FROM usuarios WHERE usuario = '$usuario'";
+        $sql= "SELECT * FROM credenciales as c INNER JOIN usuarios as u 
+                ON c.id_usuario = u.id     
+                WHERE c.usuario = '$usuario'";
         $resultado = mysqli_query($conexion,$sql);
         $lista = mysqli_fetch_all($resultado);
         if(!empty($lista)){
             $error = "<div class='w3-panel w3-red'><p>El nombre de usuario ya existe</p></div>";
             $clase ="animated shake";
         }else {
-            if ($clave == $clave2) {
-                $sql = "INSERT INTO usuarios (usuario, clave, rol) VALUES ('$usuario','$clave','2')";
-                $consulta = mysqli_query($conexion, $sql);
-                if (!$consulta) {
-                    $error = "<div class='w3-panel w3-red'><p>ERROR<br>No se pudieron guardar los datos</p></div>";
-                    $clase ="animated shake";
-                } else {
-                    $usuario = "";
-                    $error = "<div class='w3-panel w3-light-green'><p>Usuario ingresado!!</p></div>";
+            $sql_email = "SELECT email FROM usuarios WHERE email = '$email'";
+            $resultado_email = mysqli_query($conexion,$sql_email);
+            $lista_email = mysqli_fetch_all($resultado_email);
+            if(!empty($lista_email)){
+                $error = "<div class='w3-panel w3-red'><p>ERROR<br>El Email ingresado ya existe</p></div>";
+                $clase = "animated shake";
+            }else {
+                if ($clave == $clave2) {
+                    $sql_usuario = "INSERT INTO usuarios (nombre, apellido,email) VALUES ('$nombre','$apellido','$email')";
+                    $consulta_usuario = mysqli_query($conexion, $sql_usuario);
+                    if (!$consulta_usuario) {
+                        $error = "<div class='w3-panel w3-red'><p>ERROR<br>No se pudieron guardar los datos</p></div>";
+                        $clase = "animated shake";
+                    } else {
+                        $sql_idUsuario = "SELECT id FROM usuarios WHERE email = '$email'";
+                        $resultado_idUsuario = mysqli_query($conexion,$sql_idUsuario);
+                        $filaIdUsuario = mysqli_fetch_assoc($resultado_idUsuario);
+                        $idUsuario = $filaIdUsuario['id'];
+
+                        $sql_credenciales = "INSERT INTO credenciales(usuario,rol,clave,id_usuario) VALUES ('$usuario',2,'$clave','$idUsuario')";
+                        $resultado_credenciales = mysqli_query($conexion,$sql_credenciales);
+
+                        $nombre = "";
+                        $apellido = "";
+                        $email = "";
+                        $usuario="";
+                        $error = "<div class='w3-panel w3-light-green'><p>Usuario ingresado!!</p></div>";
                 }
-            } else {
-                $error = "<div class='w3-panel w3-red'><p>La contraseña no coincide<br>Vuelva a tipearla</p></div>";
-                $clase ="animated shake";
+                } else {
+                    $error = "<div class='w3-panel w3-red'><p>La contraseña no coincide<br>Vuelva a tipearla</p></div>";
+                    $clase = "animated shake";
+                }
             }
         }
     }
@@ -60,6 +87,15 @@ if (isset($_POST['enviar'])) {
 
         <?php echo $error; ?>
         <label class="w3-xlarge w3-lobster">Nombre:</label>
+        <input class="w3-input w3-margin-bottom w3-hover-gray" type="text" name="nombre" value="<?php echo$nombre; ?>">
+
+        <label class="w3-xlarge w3-lobster">Apellido:</label>
+        <input class="w3-input w3-margin-bottom w3-hover-gray" type="text" name="apellido" value="<?php echo$apellido; ?>">
+
+        <label class="w3-xlarge w3-lobster">Email:</label>
+        <input class="w3-input w3-margin-bottom w3-hover-gray" type="email" name="email" value="<?php echo$email; ?>">
+
+        <label class="w3-xlarge w3-lobster">Nombre de Usuario:</label>
         <input class="w3-input w3-margin-bottom w3-hover-gray" type="text" name="usuario" value="<?php echo$usuario; ?>">
 
         <label class="w3-xlarge w3-lobster">Contraseña:</label>

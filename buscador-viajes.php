@@ -1,5 +1,5 @@
 <?php
-    require_once "conexion.php";
+require_once "conexion.php";
 
 $sql_tipo_viajes= "select * from tipo_viajes";
 $resultado_tipo_viajes = mysqli_query($conexion, $sql_tipo_viajes);
@@ -13,6 +13,7 @@ $registro_estaciones = mysqli_fetch_all($resultado_estaciones);
 $fecha_actual = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
 $error_fecha = "";
+$buscoVuelo = false;
 if (isset($_POST['enviar'])) {
     $fecha_salida = $_POST['fecha_salida'];
     $hora_salida_inicial = $_POST['hora_salida_inicial'];
@@ -20,10 +21,10 @@ if (isset($_POST['enviar'])) {
     $tipo_viajes = $_POST['tipo_viajes'];
     $origen = $_POST['origen'];
     $destino = $_POST['destino'];
-    if ($fecha_salida == "" && $fecha_salida < $fecha_minimo) {
+    if ($fecha_salida == "" || $fecha_salida < $fecha_minimo) {
         $error_fecha = "<center><p class=\"w3-xlarge w3-lobster\">Ingrese una fecha valida</p></center>";
     } else {
-        $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
+        $sql = "select v.id,fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
                     inner join tipo_viajes
                     on v.tipo_viaje = tipo_viajes.id";
         if($origen != "-" || $destino != "-"){
@@ -42,15 +43,16 @@ if (isset($_POST['enviar'])) {
         if($tipo_viajes != "-"){
             $sql = $sql . " AND v.tipo_viaje = '$tipo_viajes'";
         }
-        if($origen != "-"){
+       /* if($origen != "-"){
             $sql = $sql . " AND estaciones.nombre LIKE '$origen'";
         }
         if($destino != "-"){
             $sql = $sql . " AND estaciones.id = '$destino'";
-        }
+        }*/
 
 
         $resultado = mysqli_query($conexion, $sql);
+        $buscoVuelo = true;
     }
 
 
@@ -190,7 +192,7 @@ if (empty($lista)) {
     <center><button class="w3-button w3-round-xlarge w3-red" type="submit" name="enviar">Buscar</button></center>
 </form>
 <?php
-if ($error_fecha == "") {
+if ($buscoVuelo == true) {
     if (mysqli_affected_rows($conexion) > 0) {
         echo "<table>
                 <thead>
@@ -209,7 +211,7 @@ if ($error_fecha == "") {
                     <td class=\"w3-large w3-lobster\">" . $lista['hora_salida'] . "</td>
                     <td class=\"w3-large w3-lobster\">" . $lista['tipo_viaje'] . "</td>
                     <td class=\"w3-large w3-lobster\">" . $lista['duracion'] . "</td>
-                    <td><center><button class=\"w3-button w3-round-xlarge w3-green\" type='submit' name='aceptar' value=".$lista['fecha_salida']."><a href=\"reservas.php\">Reservar</button></center></td>
+                    <td><center><button class=\"w3-button w3-round-xlarge w3-green\" type='submit' name='aceptar' value=".$lista['fecha_salida']."><a href='reservas.php?viaje=".$lista['id']."'>Reservar</button></center></td>
 
                    </tr>";
 

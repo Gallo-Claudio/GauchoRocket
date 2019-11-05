@@ -4,12 +4,12 @@ $clase="";
 require 'conexion.php';
 if (isset($_POST['enviar'])) {
     $usuario = $_POST['usuario'];
-    $clave = $_POST['clave'];
+    $clave = md5($_POST['clave']);
     if(empty($usuario) or empty($clave)){
         $error = "<div class='w3-panel w3-red'><p>Los datos ingresados son incorrectos</p></div>";
         $clase ="animated shake";
     }else {
-        $sql = "SELECT * FROM usuarios WHERE usuario = '" . $usuario . "' AND clave = '" . $clave . "'";
+        $sql = "SELECT * FROM credenciales WHERE usuario = '" . $usuario . "' AND clave = '" . $clave . "'";
         $consulta = mysqli_query($conexion, $sql);
         if (!$consulta) {
             $error = "<div class='w3-panel w3-red'><p>Los datos ingresados son incorrectos</p></div>";
@@ -19,6 +19,7 @@ if (isset($_POST['enviar'])) {
             if ($resultado['clave'] == $clave) {
                 session_start();
                 $_SESSION['username'] = $usuario;
+                $_SESSION['id'] = $resultado['id'];
                 header("location:inicio.php");
                 exit();
             } else {
