@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 	var ejecutajax = function(){
 		$.ajax({
-			url: 'buscar.php',
+			url: 'buscar-f.php',
 			type: 'POST',
 			data: form_data,
 			success: function (response) {

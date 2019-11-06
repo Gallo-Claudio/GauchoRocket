@@ -10,11 +10,12 @@ $hoy = date("Y-m-d");
 $sql_turno = "SELECT fecha FROM turnos WHERE id_usuario = '$id_usuario'";
 $resultado_turno = mysqli_query($conexion,$sql_turno);
 $fila_turno = mysqli_fetch_assoc($resultado_turno);
-
-if($fila_turno['fecha']<=$hoy){
-    $codigo_generado = random_int(0,3);
-    $sql_nivel_de_vuelo = "UPDATE usuarios SET nivel_vuelo = '$codigo_generado', se_chequeo = 1  WHERE id='$id_usuario'";
-    $resultado_nivel_de_vuelo = mysqli_query($conexion,$sql_nivel_de_vuelo);
+if($fila_turno){
+    if($fila_turno['fecha']<=$hoy){
+        $codigo_generado = random_int(0,3);
+        $sql_nivel_de_vuelo = "UPDATE usuarios SET nivel_vuelo = '$codigo_generado', se_chequeo = 1  WHERE id='$id_usuario'";
+        $resultado_nivel_de_vuelo = mysqli_query($conexion,$sql_nivel_de_vuelo);
+    }
 }
 
 ?>

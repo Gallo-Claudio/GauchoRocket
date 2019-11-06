@@ -16,31 +16,50 @@ if($se_chequeo == false) {
     if (isset($_POST['enviar'])) {
         $centro_medico = $_POST['centro_medico'];
         $fecha = $_POST['fecha'];
-        if ($fecha >= $fecha_minimo) {
-            $sql_cantidad = "SELECT turnos_diarios FROM centros_medicos WHERE id = '$centro_medico'";
-            $resultado_cantidad = mysqli_query($conexion, $sql_cantidad);
-            $fila_cantidad = mysqli_fetch_assoc($resultado_cantidad);
-            $cantidad_turnos = $fila_cantidad['turnos_diarios'];
+        echo date("l",strtotime($fecha));
+        $sql_verificar_turno_pendiente = "SELECT (id_usuario) COUNT FROM turnos WHERE id_usuario = '$id_usuario';";
+        $resultado_verificar_turno_pendiente = mysqli_query($conexion, $sql_verificar_turno_pendiente);
+        $fila_verificar_turno_pendiente = mysqli_fetch_array($resultado_verificar_turno_pendiente);
 
-            $sql_turnos = "SELECT COUNT (t.id) as cantidad FROM turnos as t inner join centros_medicos as cm on t.centro_medico = cm.id WHERE cm.id = '$centro_medico'";
-            $resultado_turnos = mysqli_query($conexion, $sql_turnos);
-            if (mysqli_affected_rows($conexion) > 0) {
-                $fila_turnos = mysqli_fetch_assoc($resultado_turnos);
-                $cantidad_turnos -= $fila_turnos['cantidad'];
-            }
-            if ($cantidad_turnos > 0) {
-                $sql_nuevo_turno = "INSERT INTO turnos (fecha,id_usuario,centro_medico) values('$fecha','$id_usuario','$centro_medico')";
-                $resultado_nuevo_turno = mysqli_query($conexion, $sql_nuevo_turno);
-                $nuevo_turno = true;
+        if (!$fila_verificar_turno_pendiente) {
+            if ($fecha >= $fecha_minimo) {
+                $sql_cantidad = "SELECT turnos_diarios FROM centros_medicos WHERE id = '$centro_medico'";
+                $resultado_cantidad = mysqli_query($conexion, $sql_cantidad);
+                $fila_cantidad = mysqli_fetch_assoc($resultado_cantidad);
+                $cantidad_turnos = $fila_cantidad['turnos_diarios'];
+
+                $sql_turnos = "SELECT COUNT (t.id) as cantidad FROM turnos as t inner join centros_medicos as cm on t.centro_medico = cm.id WHERE cm.id = '$centro_medico'";
+                $resultado_turnos = mysqli_query($conexion, $sql_turnos);
+
+                if (mysqli_affected_rows($conexion) > 0) {
+                    $fila_turnos = mysqli_fetch_assoc($resultado_turnos);
+                    $cantidad_turnos -= $fila_turnos['cantidad'];
+                }
+                if ($cantidad_turnos > 0) {
+                    $sql_nuevo_turno = "INSERT INTO turnos (fecha,id_usuario,centro_medico) values('$fecha','$id_usuario','$centro_medico')";
+                    $resultado_nuevo_turno = mysqli_query($conexion, $sql_nuevo_turno);
+                    $nuevo_turno = true;
+                } else {
+                    $error = "No hay mas turnos disponibles para esta fecha";
+                }
             } else {
-                $error = "No hay mas turnos disponibles para esta fecha";
+                $error = "La fecha ingresada es incorrecta";
             }
         } else {
-            $error = "La fecha ingresada es incorrecta";
+            $error = "Ya tiene un turno pendiente";
         }
     }
+
 }else {
-    $error = "El usuario ya realizo el chequeo medico.";
+    echo "<link rel=\"stylesheet\" href=\"https://www.w3schools.com/w3css/4/w3.css\">
+        <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Lobster\">
+        <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css\">
+        <link rel=\"stylesheet\" href=\"css/gr.css\">";
+    include "header.php";
+
+    echo "El usuario ya realizo el chequeo medico.";
+    include "pie.html";
+    die;
 }
 ?>
     <!DOCTYPE html>
@@ -66,11 +85,11 @@ if($se_chequeo == false) {
 
         <?php echo $error; ?>
         <select name="centro_medico" >Centro Medico:
-        <?php
+            <?php
             while ($fila_centro_medico = mysqli_fetch_assoc($resultado_centro_medico)){
                 echo "<option value='" . $fila_centro_medico['id'] . "'>" . $fila_centro_medico['nombre'] . "</option>";
             }
-        ?></select>
+            ?></select>
 
         <label class="w3-xlarge w3-lobster">Fecha:</label>
         <input class="w3-input w3-margin-bottom w3-hover-gray" type="date" name="fecha" min="<?php echo($fecha_minimo); ?>">
@@ -80,6 +99,7 @@ if($se_chequeo == false) {
 
     </form>
 </div>
+
 <?php
 include "pie.html";
 ?>
