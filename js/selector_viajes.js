@@ -97,4 +97,10 @@ $(document).ready(function() {
 		})
     })
 
+
+	$(function() {
+		$('#name').datepicker({
+			beforeShowDay: $.datepicker.noWeekends
+		});
+	});
 });

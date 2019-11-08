@@ -17,7 +17,6 @@ if($fila_turno){
         $resultado_nivel_de_vuelo = mysqli_query($conexion,$sql_nivel_de_vuelo);
     }
 }
-
 ?>
 
     <!DOCTYPE html>
@@ -35,7 +34,7 @@ if($fila_turno){
 
 <div class="w3-container w3-lobster banda">
     <p class="w3-xxxlarge w3-center">Bienvenido <?php echo $usuario; ?> a Gaucho Rocket<img src="img/cohete-espacial-mini.png"></p>
-    <a href='salir.php' class="w3-button w3-round-xlarge w3-red derecha">Salir</a>
+
 </div>
 
 

@@ -46,7 +46,7 @@ if(isset($_POST['enviar'])) {
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
                 } else {
-                    $error = "La reserva no se pudo realizar";
+                    $error = "<div class='w3-panel w3-red'><p>La reserva no se pudo realizar</p></div>";
                 }
 
             } elseif ($tipo_viaje == "Entre destinos") {
@@ -91,16 +91,17 @@ if(isset($_POST['enviar'])) {
                         $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                         $reserva_realizada = true;
                     }elseif ($sePuedeReservar == false){
-                        $error = "La reserva no se pudo realizar";
+                        $error = "<div class='w3-panel w3-red'><p>La reserva no se pudo realizar</p></div>";
+
                     }
                 }else{
-                    $error = "La reserva no se pudo realizar";
+                    $error = "<div class='w3-panel w3-red'><p>La reserva no se pudo realizar</p></div>";
                 }
 
 
             }
         } else {
-            $error = "La reserva no se pudo realizar";
+            $error = "<div class='w3-panel w3-red'><p>La reserva no se pudo realizar</p></div>";
 
         }
 }
@@ -162,8 +163,9 @@ if(isset($_POST['enviar'])) {
     }else if ($reserva_realizada == false && $error != ""){
             echo "<p>$error</p>";
     }else if($reserva_realizada == true){
-        echo "<p>La reserva fue realizada con exito</p> <br><br>";
-        echo "<a href='inicio.php' class='w3-button w3-round-xlarge w3-blue'>Volver al inicio</a>";
+
+        echo "<center><p class=\"w3-xxxlarge w3-lobster\">La reserva fue realizada con èxito</p></center></div><br><br>";
+        echo "<center><a href='inicio.php' class='w3-button w3-round-xlarge w3-blue'>Volver al inicio</a></center>";
     }
 
 
