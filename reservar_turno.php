@@ -6,17 +6,21 @@ require 'conexion.php';
 
 $sql_centro_medico = "SELECT * FROM centros_medicos";
 $resultado_centro_medico = mysqli_query($conexion,$sql_centro_medico);
+
 $hoy = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($hoy."+ 1 days"));
 $nuevo_turno = false;
+
 $sql_se_chequeo = "SELECT se_chequeo FROM usuarios WHERE id = '$id_usuario'";
 $resultado_se_chequeo = mysqli_query($conexion,$sql_se_chequeo);
 $fila_se_chequeo = mysqli_fetch_assoc($resultado_se_chequeo);
+
 $se_chequeo = $fila_se_chequeo['se_chequeo'];
 if($se_chequeo == false) {
     if (isset($_POST['enviar'])) {
         $centro_medico = $_POST['centro_medico'];
         $fecha = $_POST['fecha'];
+
         $sql_verificar_turno_pendiente = "SELECT (id_usuario) COUNT FROM turnos WHERE id_usuario = '$id_usuario';";
         $resultado_verificar_turno_pendiente = mysqli_query($conexion, $sql_verificar_turno_pendiente);
         $fila_verificar_turno_pendiente = mysqli_fetch_array($resultado_verificar_turno_pendiente);
@@ -85,7 +89,7 @@ if($se_chequeo == false) {
 
 <div class="w3-display-container">
 
-    <form class="w3-container w3-card-4 w3-content login" method="POST" action="reservar_turno.php">
+    <form class="w3-container w3-card-4 w3-content login" autocomplete="off" method="POST" action="reservar_turno.php">
 
         <?php echo $error; ?>
        <center>
@@ -124,7 +128,7 @@ if($se_chequeo == false) {
             beforeShowDay: $ .datepicker.noWeekends
         });
     });
-</script>?
+</script>
 </body>
 
 <?php

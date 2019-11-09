@@ -8,6 +8,41 @@ USE gauchorocket;
 -- --------------------------------------------------------
 
 --
+-- NUEVO PARA TARJETA DE CREDITO
+--
+ALTER TABLE `reservas` ADD `pago` boolean;
+
+create table `meses` (`meses` varchar (25) NOT NULL);
+
+alter table meses add id int(11) NOT NULL primary key;
+
+insert INTO meses (id,meses) values (1,'Enero'),
+                                    (2,'Febrero'),
+                                    (3,'Marzo'),
+                                    (4,'Abril'),
+                                    (5,'Mayo'),
+                                    (6,'Junio'),
+                                    (7,'Julio'),
+                                    (8,'Agosto'),
+                                    (9,'Septiembre'),
+                                    (10,'Octubre'),
+                                    (11,'Noviembre'),
+                                    (12,'Diciembre');
+
+
+create table anio (id int (11) primary key auto_increment,
+                   anio int(4));
+
+insert into anio (id,anio) values   (1,2019),
+                                    (2,2020),
+                                    (3,2021),
+                                    (4,2022),
+                                    (5,2023),
+                                    (6,2024),
+                                    (7,2025);
+
+alter table usuarios add cod_seguridad int (3);
+--
 -- Estructura de tabla para la tabla `circuitos`
 --
 
