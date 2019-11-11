@@ -7,11 +7,11 @@ if (isset($_POST['enviar'])) {
     $fecha_salida = $_POST['fecha_salida'];
     $codigo_vuelo = $_POST['codigo_vuelo'];
 
-
-    for ($i=0;$i<3;$i+1){
-        $sql = "INSERT INTO viajes_t (fecha_hora, codigo_vuelo) VALUES ('$fecha_salida','$codigo_vuelo')";
+    for ($i=0;$i<3;$i++){
+        $sql = "INSERT INTO viajes_t_final (fecha_hora, codigo_vuelo) VALUES ('$fecha_salida','$codigo_vuelo')";
+        $resultado = mysqli_query($conexion, $sql);
+        $fecha_salida = date("Y-m-d H:i", strtotime($fecha_salida."+ 5 hours"));
     }
-    $resultado = mysqli_query($conexion, $sql);
 
 }
 ?>
@@ -31,7 +31,7 @@ if (isset($_POST['enviar'])) {
 
 </head>
 <body>
-<form>
+<form method="POST" action="alta-viajes.php" >
     <div class="selector">
         <label for='fecha_salida'>Fecha/Hora de salida:</label>
         <input name="fecha_salida"type="datetime-local" min="<?php echo $fecha_minimo?>">
@@ -43,5 +43,5 @@ if (isset($_POST['enviar'])) {
     <button id="submit" type="submit" name="enviar">Ingresar viaje</button>
 </form>
 </body>
-<?php    include "pie.html";?>
+<?php include "pie.html";?>
 </html>

@@ -77,14 +77,11 @@ if($se_chequeo == false) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
         <link rel="stylesheet" href="css/gr.css">
-        <?php include "header.php" ?>
-
-
     </head>
 <body>
-
-<div class="w3-container w3-lobster banda">
-    <p class="w3-xxxlarge w3-center">Reservar turno medico<img src="img/cohete-espacial-mini.png" class="animated bounceInUp"></p>
+<?php include "header.php" ?>
+<div class="w3-container banda">
+    <p class="w3-xxlarge w3-center">Reservas de turno médico</p>
 </div>
 
 <div class="w3-display-container">
@@ -93,7 +90,7 @@ if($se_chequeo == false) {
 
         <?php echo $error; ?>
        <center>
-           <label class="w3-xlarge w3-lobster"> Centro Medico:</label><br>
+           <label class="w3-xlarge"> Centro Medico:</label><br>
               <select name="centro_medico" >
                 <?php
                 while ($fila_centro_medico = mysqli_fetch_assoc($resultado_centro_medico)){
@@ -103,7 +100,7 @@ if($se_chequeo == false) {
               </select><br><br>
 
            <center>
-               <label class="w3-xlarge w3-lobster">Fecha:</label><br>
+               <label class="w3-xlarge">Fecha:</label><br>
                <input  type="text" name="fecha" id="fecha" placeholder="yy-mm-dd">
            </center><br><br>
 
