@@ -17,16 +17,7 @@ $(document).ready(function() {
 								${resultado.codigo_vuelo}												
 								</td>
 								<td>
-								${resultado.fecha}												
-								</td>
-								<td>
-								${resultado.hora}												
-								</td>
-								<td>
-								${resultado.origen}												
-								</td>
-								<td>
-								${resultado.destino}												
+								${resultado.fecha_hora}												
 								</td>
 								<td>
 								${resultado.duracion}												
@@ -35,7 +26,10 @@ $(document).ready(function() {
 								${resultado.nave}												
 								</td>
 								<td>
-								<button class='w3-button w3-round-xlarge w3-green reserva' type='submit'><a href='reservas.php?${resultado.id}'>Reservar</button>											
+								${resultado.circuito}												
+								</td>
+								<td>
+								<button class='w3-button w3-round-xlarge w3-green reserva' type='submit'><a href='reservas.php?viaje=${resultado.id}&destino=${resultado.destino}&circuito_id=${resultado.circuito_id}'>Reservar</button>											
 								</td></tr>`
 				})
 				$('#resultados').html(listado);
@@ -72,6 +66,7 @@ $(document).ready(function() {
 	})
 
 
+	/***************/
 
     $('#origen').on('change', function(event) {
         event.preventDefault();
@@ -92,10 +87,13 @@ $(document).ready(function() {
 					listado += `<option value='${resultado.id}'>${resultado.nombre}</option>`
 				})
 				$('#estaciones').html(listado);
-	}
+			}
 
 		})
     })
+	/***************/
+
+
 
 
 	$(function() {
