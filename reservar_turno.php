@@ -1,9 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Turno medico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="css/gr.css">
+</head>
 <?php
 session_start();
 $id_usuario = $_SESSION['id'];
 $error="";
 require 'conexion.php';
-
+include 'header.php';
 $sql_centro_medico = "SELECT * FROM centros_medicos";
 $resultado_centro_medico = mysqli_query($conexion,$sql_centro_medico);
 
@@ -16,6 +27,7 @@ $resultado_se_chequeo = mysqli_query($conexion,$sql_se_chequeo);
 $fila_se_chequeo = mysqli_fetch_assoc($resultado_se_chequeo);
 
 $se_chequeo = $fila_se_chequeo['se_chequeo'];
+$nuevo_turno == false;
 if($se_chequeo == false) {
     if (isset($_POST['enviar'])) {
         $centro_medico = $_POST['centro_medico'];
@@ -56,34 +68,20 @@ if($se_chequeo == false) {
     }
 
 }else {
-    echo "<link rel=\"stylesheet\" href=\"css/w3.css\">
-        <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Lobster\">
-        <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css\">
-        <link rel=\"stylesheet\" href=\"css/gr.css\">";
-    include "header.php";
 
     echo "El usuario ya realizo el chequeo medico.";
     include "pie.html";
     die;
 }
 ?>
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <title>Turno medico</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="css/w3.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-        <link rel="stylesheet" href="css/gr.css">
-    </head>
 <body>
-<?php include "header.php" ?>
 <div class="w3-container banda">
     <p class="w3-xxlarge w3-center">Reservas de turno médico</p>
 </div>
 
+<?php
+if ($nuevo_turno != true){
+?>
 <div class="w3-display-container">
 
     <form class="w3-container w3-card-4 w3-content login" autocomplete="off" method="POST" action="reservar_turno.php">
@@ -101,7 +99,7 @@ if($se_chequeo == false) {
 
            <center>
                <label class="w3-xlarge">Fecha:</label><br>
-               <input  type="text" name="fecha" id="fecha" placeholder="yy-mm-dd">
+               <input  type="text" name="fecha" id="fecha" placeholder="yy-mm-dd" min="<?php echo $fecha_minimo;?>">
            </center><br><br>
 
 
@@ -109,7 +107,12 @@ if($se_chequeo == false) {
 
        </center>
 </div>
-
+<?php
+}else if ($nuevo_turno == true){
+    echo "<p>El turno fue reservado correctamente</p>";
+    echo "<a href='inicio.php' class='w3-button w3-round-xlarge w3-blue'>Volver al inicio</a>";
+}
+?>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>

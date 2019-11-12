@@ -29,7 +29,7 @@ $(document).ready(function() {
 								${resultado.circuito}												
 								</td>
 								<td>
-								<button class='w3-button w3-round-xlarge w3-green reserva' type='submit'><a href='reservas.php?viaje=${resultado.id}&destino=${resultado.destino}&circuito_id=${resultado.circuito_id}'>Reservar</button>											
+								<button class='w3-button w3-round-xlarge w3-green reserva' type='submit'><a href='reservas.php?viaje=${resultado.id}&destino=${resultado.destino}&circuito=${resultado.circuito_id}'>Reservar</button>											
 								</td></tr>`
 				})
 				$('#resultados').html(listado);

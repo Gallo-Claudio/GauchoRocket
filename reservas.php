@@ -10,8 +10,7 @@ if(!$conexion){
 $id_viaje = $_GET['viaje'];
 $destino = $_GET['destino'];
 $circuito = $_GET['circuito'];
-//$id_usuario = $_SESSION['id'];
-$id_usuario = '1';  //Lo estoy harcodeando
+$id_usuario = $_SESSION['id'];
 
 /****************************************************************************************************************************/
 /* se obtiene capacidad total de la nave y otros datos - CORREGIR se debe obtener la capacidad de la cabina seleccionada ****/
@@ -32,7 +31,6 @@ $codigo_vuelo = $fila_viaje['codigo_vuelo'];
 $fecha_hora = $fila_viaje['fecha_hora'];
 $nave = $fila_viaje['nombre'];
 $origen = $fila_viaje['origen'];
-
 $sql_origen_nombre ="select nombre from viajes
                 inner join estaciones
                 on viajes.origen = estaciones.id
@@ -182,7 +180,7 @@ if(isset($_POST['enviar'])) {
 <div class="w3-display-container">
     <?php
     if ($reserva_realizada == false && $error == "") {
-        echo "<form class='w3-container w3-card-4 w3-content' id='reserva-lugares' method='POST' action='reservas.php?viaje=".$id_viaje."'>
+        echo "<form class='w3-container w3-card-4 w3-content' id='reserva-lugares' method='POST' action='reservas.php?viaje=".$id_viaje."&destino=".$destino."&circuito=".$circuito."'>
         <center>Cantidad de pasajes a reservar: <input type='number' name='cant' min='0' id='acompaniantes' ></center>
                 <input type='hidden' name='origen' value='$origen'>
                 <input type='hidden' name='destino' value='$destino'><br><br>
@@ -195,6 +193,7 @@ if(isset($_POST['enviar'])) {
     }else if($reserva_realizada == true){
         echo "<p>La reserva fue realizada con exito</p> <br><br>";
         echo "<a href='inicio.php' class='w3-button w3-round-xlarge w3-blue'>Volver al inicio</a>";
+        echo "<a href='reservar_turno.php' class='w3-button w3-round-xlarge w3-blue'>Reservar turno medico</a>";
     }
     ?>
 
