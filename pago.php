@@ -23,11 +23,12 @@ if($pago == false) {
         $año_expiracion = $_POST['año_expiracion'];
         $codigo_seguridad = md5($_POST['codigo_seguridad']);
 
-            if (empty($num_tarjeta) or empty($titular_tarjeta) or empty($fecha_expiracion)
-                or empty($año_expiracion) or empty($codigo_seguridad)) {
+            if (empty($num_tarjeta) or empty($titular_tarjeta) ) {
+                if (empty($fecha_expiracion) or empty($año_expiracion)){
+                    if (empty($codigo_seguridad)){
                 $error = "<div class='w3-panel w3-red'><p>Los campos NO pueden estar vacios</p></div>";
-            } else {
-                $sql = "SELECT * FROM reservas as r 
+            }}} else {
+                $sql = "SELECT pago FROM reservas as r 
                         INNER JOIN usuarios as u 
                         ON r.id_usuario = u.id     
                         WHERE r.usuario = '$usuario'";

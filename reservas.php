@@ -165,7 +165,7 @@ if(isset($_POST['enviar'])) {
     }else if($reserva_realizada == true){
 
         echo "<center><p class=\"w3-xxxlarge w3-lobster\">La reserva fue realizada con èxito</p></center></div><br><br>";
-        echo "<center><a href='pago.php' class='w3-button w3-round-xlarge w3-blue'>Abonar</a></center><br>";
+        echo "<center><a href='inicio.php' class='w3-button w3-round-xlarge w3-blue'>Abonar</a></center>";
         echo "<center><a href='inicio.php' class='w3-button w3-round-xlarge w3-blue'>Volver al inicio</a></center>";
     }
 
@@ -175,6 +175,6 @@ if(isset($_POST['enviar'])) {
 </div>
 </body>
 </html>
-<?php
+<?
 include "pie.html";
 ?>
