@@ -1,10 +1,19 @@
 <?php
 require_once "conexion.php";
 
-    $tipo_viajes = $_POST['tipo_viajes'];
-    $fecha_salida = $_POST['fecha_salida'];
-    $origen = $_POST['origen'];
-    $destino = $_POST['destino'];
+//    $tipo_viajes = $_POST['tipo_viajes'];
+//    $fecha_salida = $_POST['fecha_salida'];
+//    $origen = $_POST['origen'];
+//    if ($tipo_viajes != 2) {
+//        $destino = $_POST['destino'];
+//    }
+  $tipo_viajes = 2;
+  $fecha_salida = "2019-11-17";
+  $origen = 1;
+  $destino =1;
+
+
+    $and = " and circuito_id in ";
 
     if($tipo_viajes==2){
         $destino=$origen;
@@ -24,18 +33,22 @@ require_once "conexion.php";
     // caso especial el primer if --> el viaje es orbital o tour
     if($cantidad==5){
         $a=$sentido[2][0];
+        $and .= "('".$a."')";
     }
     elseif($cantidad<3){
         ($origen<$destino)? $a=$sentido[0][0]:$a=$sentido[1][0];
+        $and .= "('".$a."')";
     }
     else {
         if($origen<$destino){
             $a=$sentido[0][0];
             $b=$sentido[1][0];
+            $and .= "('".$a."','".$b."')";
         }
         else {
             $a=$sentido[2][0];
             $b=$sentido[3][0];
+            $and .= "('".$a."','".$b."')";
         }
     }
 
@@ -49,13 +62,9 @@ require_once "conexion.php";
                 on viajes.circuito_id = circuitos.id
                 where fecha_hora like '$fecha_salida%'
                 and tipo_viaje = '$tipo_viajes'
-                and origen = '$origen'
-                and circuito_id in
-                ('$a','$b')";
-
+                and origen = '$origen'".$and;
 
     $resultado = mysqli_query($conexion, $sql);
-
     $json = array();
         while($fila = mysqli_fetch_array($resultado)){
             $json[] = array(
@@ -68,9 +77,9 @@ require_once "conexion.php";
                 'destino' => $destino,
                 'circuito_id' => $fila['circuito_id']
             );
+
     }
 
     $jsonstring = json_encode($json);
-    echo $jsonstring;
-
+echo $jsonstring;
 ?>

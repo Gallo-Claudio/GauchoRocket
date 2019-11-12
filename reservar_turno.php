@@ -56,7 +56,7 @@ if($se_chequeo == false) {
     }
 
 }else {
-    echo "<link rel=\"stylesheet\" href=\"https://www.w3schools.com/w3css/4/w3.css\">
+    echo "<link rel=\"stylesheet\" href=\"css/w3.css\">
         <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Lobster\">
         <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css\">
         <link rel=\"stylesheet\" href=\"css/gr.css\">";
@@ -73,7 +73,7 @@ if($se_chequeo == false) {
         <meta charset="UTF-8">
         <title>Turno medico</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="css/w3.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
         <link rel="stylesheet" href="css/gr.css">

@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 	var ejecutajax = function(){
 		$.ajax({
-			url: 'buscar-f.php',
+			url: 'buscar.php',
 			type: 'POST',
 			data: form_data,
 			success: function (response) {
@@ -92,13 +92,4 @@ $(document).ready(function() {
 		})
     })
 	/***************/
-
-
-
-
-	$(function() {
-		$('#name').datepicker({
-			beforeShowDay: $.datepicker.noWeekends
-		});
-	});
 });
