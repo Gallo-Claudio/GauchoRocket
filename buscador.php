@@ -1,13 +1,11 @@
 <?php
 require_once "conexion.php";
-
 $sql_estaciones= "select * from estaciones";
 $resultado_estaciones = mysqli_query($conexion, $sql_estaciones);
 $registro_estaciones = mysqli_fetch_all($resultado_estaciones);
 $fecha_actual = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
 $error_fecha = "";
-
 //if (isset($_POST['enviar'])) {
 //    $fecha_salida = $_POST['fecha_salida'];
 //    $hora_salida_inicial = $_POST['hora_salida_inicial'];
@@ -40,7 +38,7 @@ $error_fecha = "";
 <html lang="es">
 <head>
     <meta charset="utf-8">
-<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
     <title>Busqueda de viajes</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -79,8 +77,8 @@ $error_fecha = "";
                     <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
                 </div>
                 <div class="selector">
-                    <label for='origen'>Lugar de Salida:</label>
-                    <select name='origen'>
+                    <label for="origen">Lugar de Salida:</label>
+                    <select name="origen">
                         <?php
                         $es=0;
                         for ($es;$es<2;$es++) {
@@ -170,7 +168,6 @@ $error_fecha = "";
         </div>
     </div>
     <?php
-
     if ($error_fecha == "") {
         if (mysqli_affected_rows($conexion) > 0) {
             echo "<table class='table table-striped table-bordered table-hover table-condensed'>
@@ -195,13 +192,13 @@ $error_fecha = "";
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
 
 <!-- Bootstrap -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-2.2.4.min.js"></script>
 
 <!-- <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> -->
 <script src="js/selector_viajes.js"></script>

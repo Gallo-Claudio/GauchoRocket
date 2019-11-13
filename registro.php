@@ -44,16 +44,14 @@ if (isset($_POST['enviar'])) {
                         $resultado_idUsuario = mysqli_query($conexion,$sql_idUsuario);
                         $filaIdUsuario = mysqli_fetch_assoc($resultado_idUsuario);
                         $idUsuario = $filaIdUsuario['id'];
-
                         $sql_credenciales = "INSERT INTO credenciales(usuario,rol,clave,id_usuario) VALUES ('$usuario',2,'$clave','$idUsuario')";
                         $resultado_credenciales = mysqli_query($conexion,$sql_credenciales);
-
                         $nombre = "";
                         $apellido = "";
                         $email = "";
                         $usuario="";
                         $error = "<div class='w3-panel w3-light-green'><p>Usuario ingresado!!</p></div>";
-                }
+                    }
                 } else {
                     $error = "<div class='w3-panel w3-red'><p>La contraseña no coincide<br>Vuelva a tipearla</p></div>";
                     $clase = "animated shake";
@@ -64,17 +62,17 @@ if (isset($_POST['enviar'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Registro</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <link rel="stylesheet" href="css/gr.css">
-</head>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registro</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+        <link rel="stylesheet" href="css/gr.css">
+    </head>
 <body>
 
 <body>
