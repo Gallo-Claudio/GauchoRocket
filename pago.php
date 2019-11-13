@@ -10,24 +10,23 @@ $resultado_meses = mysqli_query($conexion,$sql_meses);
 $sql_anio= "SELECT * FROM anio";
 $resultado_anio = mysqli_query($conexion,$sql_anio);
 
-$sql_pago = "SELECT pago FROM reservas WHERE id = '$id_usuario'";
+$sql_pago = "SELECT pago FROM reservas WHERE id_usuario = '$id_usuario'";
 $resultado_pago = mysqli_query($conexion,$sql_pago);
 $fila_pago = mysqli_fetch_assoc($resultado_pago);
 
 $pago = $fila_pago['pago'];
 if($pago == false) {
-    if (isset($_POST['enviar'])) {
+    if (empty($_POST['enviar'])) {
+        echo "<b>Debe completar los campos</b>";
+    } else{
         $num_tarjeta = md5($_POST['num_tarjeta']);
         $titular_tarjeta = $_POST['titular_tarjeta'];
         $fecha_expiracion = $_POST['fecha_expiracion'];
         $año_expiracion = $_POST['año_expiracion'];
         $codigo_seguridad = md5($_POST['codigo_seguridad']);
 
-            if (empty($num_tarjeta) or empty($titular_tarjeta) ) {
-                if (empty($fecha_expiracion) or empty($año_expiracion)){
-                    if (empty($codigo_seguridad)){
-                $error = "<div class='w3-panel w3-red'><p>Los campos NO pueden estar vacios</p></div>";
-            }}} else {
+
+
                 $sql = "SELECT pago FROM reservas as r 
                         INNER JOIN usuarios as u 
                         ON r.id_usuario = u.id     
@@ -50,7 +49,7 @@ if($pago == false) {
             $error = "<div class='w3-panel w3-red'><p>Ya ha abonado esta reserva anteriormente</p></div>";
             $clase ="animated shake";
         }
-            }
+
     }else {
     $error = "<div class='w3-panel w3-red'><p>Pago realizado con éxito</p></div>";
           }

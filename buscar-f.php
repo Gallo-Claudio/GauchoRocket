@@ -6,18 +6,52 @@ require_once "conexion.php";
     $origen = $_POST['origen'];
     $destino = $_POST['destino'];
 
+    if($tipo_viajes==2){ //suborbitales
+        $destino=$origen;
+    }
 
-    $sql = "select viajes_t_final.id, fecha_hora, duracion, modelos_naves.nombre, codigo_vuelo from viajes_t_final
+    /* obtengo de acuerdo al destino los numeros de los circuitos (ida y vuelta) que pasan por la estacion */
+    $sql_sentido = "select circuito_id from circuitos_estaciones
+                    where estacion_id = '$destino'"; // LA ESTACION $DESTINO (NUMERO) TIENE TAL CIRCUITO
+    $resultado_sentido = mysqli_query($conexion, $sql_sentido);
+    $sentido = mysqli_fetch_all($resultado_sentido);
+    // si el valor de cantidad es 2 estoy obteniendo los valores de ida/vuelta de un circuito
+    // si el valor de cantidad es 4 estoy recibiendo los valores de ida/vuelta de los dos circuitos
+    $cantidad = count($sentido);
+
+    // Determino que valor enviar a la consulta de acuerdo a si recibi los valores de 1 o de 2 circuitos
+    // y de si es de ida (origen<destino) o de vuelta (origen>destino)
+    // caso especial el primer if --> el viaje es orbital o tour
+    if($cantidad==5){
+        $a=$sentido[2][0];
+    }
+    elseif($cantidad<3){
+        ($origen<$destino)? $a=$sentido[0][0]:$a=$sentido[1][0];
+    }
+    else {
+        if($origen<$destino){
+            $a=$sentido[0][0];
+            $b=$sentido[1][0];
+        }
+        else {
+            $a=$sentido[2][0];
+            $b=$sentido[3][0];
+        }
+    }
+
+
+    $sql = "select viajes.id, fecha_hora, duracion, modelos_naves.nombre, codigo_vuelo, circuitos.nombre as nombre_circuito, circuito_id from viajes
                 left outer join naves
-                on viajes_t_final.nave = naves.id  
+                on viajes.nave = naves.id  
                 left outer join modelos_naves
                 on naves.modelo = modelos_naves.id
+                inner join circuitos
+                on viajes.circuito_id = circuitos.id
                 where fecha_hora like '$fecha_salida%'
                 and tipo_viaje = '$tipo_viajes'
-                and destino = '$destino'
-                and circuitos in
-                (select circuito_id from circuitos_estaciones
-                where estacion_id = '$destino')";
+                and origen = '$origen'
+                and circuito_id in
+                ('$a','$b')";
 
 
     $resultado = mysqli_query($conexion, $sql);
@@ -26,13 +60,13 @@ require_once "conexion.php";
         while($fila = mysqli_fetch_array($resultado)){
             $json[] = array(
                 'id' => $fila['id'],
-                'fecha' => $fila['fecha'],
-                'hora' => $fila['hora'],
-//                'origen' => $fila['origen'],
-//                'destino' => $fila['destino'],
+                'fecha_hora' => $fila['fecha_hora'],
                 'duracion' => $fila['duracion'],
                 'nave' => $fila['nombre'],
-                'codigo_vuelo' => $fila['codigo_vuelo']
+                'codigo_vuelo' => $fila['codigo_vuelo'],
+                'circuito' => $fila['nombre_circuito'],
+                'destino' => $destino,
+                'circuito_id' => $fila['circuito_id']
             );
     }
 
@@ -40,4 +74,3 @@ require_once "conexion.php";
     echo $jsonstring;
 
 ?>
-
