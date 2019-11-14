@@ -102,7 +102,7 @@ $array = explode(",", $reg);
     <input type="submit" name="enviar" value="Reservar ubicación">
 </form>
 
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script src="js/seleccion_asientos.js"></script>
 </body>
 <?php include "pie.html";?>

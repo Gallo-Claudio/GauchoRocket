@@ -79,8 +79,8 @@ $error_fecha = "";
                     <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
                 </div>
                 <div class="selector">
-                    <label for='origen'>Lugar de Salida:</label>
-                    <select name='origen'>
+                    <label for="origen">Lugar de Salida:</label>
+                    <select name="origen">
                         <?php
                         $es=0;
                         for ($es;$es<2;$es++) {
@@ -195,13 +195,13 @@ $error_fecha = "";
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
 
 <!-- Bootstrap -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-2.2.4.min.js"></script>
 
 <!-- <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> -->
 <script src="js/selector_viajes.js"></script>
