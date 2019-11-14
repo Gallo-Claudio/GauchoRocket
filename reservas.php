@@ -92,7 +92,9 @@ if(isset($_POST['enviar'])) {
     // Deserializo el dato pasado por "value"
     $capacidadCabina = unserialize($datos_capacidad_cabina)[capacidadCabina];
     $idCapacidadCabina = unserialize($datos_capacidad_cabina)[idCapacidadCabina];
-
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $email = $_POST['email'];
 
     if ($cantidad_pasajes_a_reservar > 0) {
         if ($tipo_viaje == "Tour" || $tipo_viaje == "Suborbitales") {
@@ -177,11 +179,23 @@ if(isset($_POST['enviar'])) {
         }
         // guarda en la BD los datos de los acompañantes para que realicen el registro y posterior confirmación
         if ($cantidad_pasajes_a_reservar > 1) {
-                $sql_datos_acompaniantes = "insert into usuarios (nombre, apellido, email)
-                                            values ()";
-                $consulta_datos_acompañantes = mysqli_query($conexion, $sql_datos_acompaniantes);
-        }
 
+            for ($i=0;$i<$cantidad_pasajes_a_reservar-1;$i++) {
+
+                $sql_email = "SELECT email FROM usuarios WHERE email = '$email[$i]'";
+                $resultado_email = mysqli_query($conexion,$sql_email);
+                $lista_email = mysqli_fetch_all($resultado_email);
+                if(!empty($lista_email)) {
+                    $error = "<div class='w3-panel w3-red'><p>El Email ".$email[$i]." ya existe en nuestra base de datos</p></div>";
+                    $clase = "animated shake";
+                }
+                else {
+                    $sql_datos_acompaniantes = "insert into usuarios (nombre, apellido, email, confirmacion_mail)
+                                            values ('$nombre[$i]','$apellido[$i]','$email[$i]','0')";
+                    $consulta_datos_acompañantes = mysqli_query($conexion, $sql_datos_acompaniantes);
+                }
+            }
+        }
     } else {
         $error = "La cantidad de pasajes a reservar tiene que ser como mínimo igual a 1";
     }
