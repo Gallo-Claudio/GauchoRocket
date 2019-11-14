@@ -1,9 +1,6 @@
 <?php
-$conexion = mysqli_connect("127.0.0.1:3307","pw2","pw22019","gauchorocket");
-if(!$conexion){
-    echo "<p>ERROR de conexion a la BD</p>";
-    die;
-}
+require_once "conexion.php";
+
     $origen = $_POST['origen'];
 
 
