@@ -12,7 +12,6 @@ $('.input-cart-number').on('keyup change', function(){
       $(this).next().focus();
     }
   })
-  
   $('.credit-card-box .number').html(card_number);
 });
 
