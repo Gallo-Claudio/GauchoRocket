@@ -1,9 +1,7 @@
-
 --
 -- Base de datos: `gauchorocket`
 --
-DROP DATABASE gauchorocket;
-CREATE DATABASE gauchorocket DEFAULT CHARSET = utf8mb4;
+CREATE DATABASE gauchorocket;
 USE gauchorocket;
 -- --------------------------------------------------------
 
@@ -350,47 +348,48 @@ CREATE TABLE `reservas` (
   `estacion_destino` int(11) DEFAULT NULL,
   `idCapacidadCabina` int(11) DEFAULT NULL,
   `lista_espera` tinyint(1) DEFAULT NULL,
-  `pago` tinyint(1) DEFAULT NULL
+  `pago` tinyint(1) DEFAULT NULL,
+  `check_in` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `reservas`
 --
 
-INSERT INTO `reservas` (`id`, `cod_vuelo`, `cantidad`, `id_usuario`, `cod_reserva`, `estacion_origen`, `estacion_destino`, `idCapacidadCabina`, `lista_espera`, `pago`) VALUES
-(1, 1, 20, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(17, 1, 2, 2, 'ABC123', 1, 1, NULL, NULL, 0),
-(42, 11, 3, NULL, 'CR15', NULL, NULL, 2, NULL, NULL),
-(45, 8, 88, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(46, 4, 77, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(89, 20, 5, 1, NULL, 1, 8, NULL, NULL, NULL),
-(90, 20, 4, 1, NULL, 8, 9, NULL, NULL, NULL),
-(91, 1, 4, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(92, 1, 8, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(93, 1, 5, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(94, 8, 10, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(95, 4, 4, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(96, 11, 10, 1, NULL, 3, 6, NULL, NULL, NULL),
-(97, 19, 5, 1, NULL, 3, 10, NULL, NULL, NULL),
-(98, 14, 10, 1, NULL, 6, 4, NULL, NULL, NULL),
-(99, 27, 5, 1, NULL, 9, 5, NULL, NULL, NULL),
-(100, 1, 6, 1, NULL, NULL, NULL, NULL, NULL, NULL),
-(101, 10, 1, 1, NULL, 1, 4, NULL, NULL, NULL),
-(106, 1, 54, 1, NULL, NULL, NULL, 23, NULL, NULL),
-(109, 1, 3, 1, NULL, NULL, NULL, 23, NULL, NULL),
-(110, 1, 43, 1, NULL, NULL, NULL, 23, NULL, NULL),
-(111, 5, 10, 1, NULL, NULL, NULL, 4, NULL, NULL),
-(112, 5, 15, 1, NULL, NULL, NULL, 5, NULL, NULL),
-(113, 5, 2, 1, NULL, NULL, NULL, 6, NULL, NULL),
-(114, 10, 10, 1, NULL, 1, 4, 12, NULL, NULL),
-(115, 10, 10, 1, NULL, 1, 4, 13, NULL, NULL),
-(116, 1, 2, 1, NULL, NULL, NULL, 23, 1, NULL),
-(117, 10, 3, 1, NULL, 1, 4, 13, 1, NULL),
-(118, 1, 3, 1, NULL, NULL, NULL, 23, 1, NULL),
-(119, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL),
-(120, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL),
-(121, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL),
-(122, 10, 1, 1, NULL, 1, 4, 12, NULL, NULL);
+INSERT INTO `reservas` (`id`, `cod_vuelo`, `cantidad`, `id_usuario`, `cod_reserva`, `estacion_origen`, `estacion_destino`, `idCapacidadCabina`, `lista_espera`, `pago`, `check_in`) VALUES
+(1, 1, 20, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 1, 2, 2, 'ABC123', 1, 1, 24, NULL, NULL, NULL),
+(42, 11, 3, NULL, 'CR15', NULL, NULL, 2, NULL, NULL, NULL),
+(45, 8, 88, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 4, 77, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(89, 20, 5, 1, NULL, 1, 8, NULL, NULL, NULL, NULL),
+(90, 20, 4, 1, NULL, 8, 9, NULL, NULL, NULL, NULL),
+(91, 1, 4, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(92, 1, 8, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(93, 1, 5, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(94, 8, 10, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(95, 4, 4, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(96, 11, 10, 1, NULL, 3, 6, NULL, NULL, NULL, NULL),
+(97, 19, 5, 1, NULL, 3, 10, NULL, NULL, NULL, NULL),
+(98, 14, 10, 1, NULL, 6, 4, NULL, NULL, NULL, NULL),
+(99, 27, 5, 1, NULL, 9, 5, NULL, NULL, NULL, NULL),
+(100, 1, 6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(101, 10, 1, 1, NULL, 1, 4, NULL, NULL, NULL, NULL),
+(106, 1, 54, 1, NULL, NULL, NULL, 23, NULL, NULL, NULL),
+(109, 1, 3, 1, NULL, NULL, NULL, 23, NULL, NULL, NULL),
+(110, 1, 43, 1, NULL, NULL, NULL, 23, NULL, NULL, NULL),
+(111, 5, 10, 1, NULL, NULL, NULL, 4, NULL, NULL, NULL),
+(112, 5, 15, 1, NULL, NULL, NULL, 5, NULL, NULL, NULL),
+(113, 5, 2, 1, NULL, NULL, NULL, 6, NULL, NULL, NULL),
+(114, 10, 10, 1, NULL, 1, 4, 12, NULL, NULL, NULL),
+(115, 10, 10, 1, NULL, 1, 4, 13, NULL, NULL, NULL),
+(116, 1, 2, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(117, 10, 3, 1, NULL, 1, 4, 13, 1, NULL, NULL),
+(118, 1, 3, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(119, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(120, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(121, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(122, 10, 1, 1, NULL, 1, 4, 12, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 

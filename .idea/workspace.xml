@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ee4eba9d-0d37-4818-b41d-4da915d81eef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/tarjeta_credito.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/tarjeta_credito.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/header.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pago.php" beforeDir="false" afterPath="$PROJECT_DIR$/pago.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scriptGauchoRocket.sql" beforeDir="false" afterPath="$PROJECT_DIR$/scriptGauchoRocket.sql" afterDir="false" />
     </list>
@@ -52,7 +52,8 @@
       <workItem from="1572447266929" duration="10699000" />
       <workItem from="1572537436671" duration="3083000" />
       <workItem from="1572556955025" duration="4529000" />
-      <workItem from="1573957776001" duration="11315000" />
+      <workItem from="1573957776001" duration="11557000" />
+      <workItem from="1574032806913" duration="7914000" />
     </task>
     <servers />
   </component>
@@ -64,7 +65,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

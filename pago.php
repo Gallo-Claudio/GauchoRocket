@@ -20,6 +20,16 @@ $pagoRealizado = $fila_pago['pago'];
 $sql_tarjetas = "SELECT id , tipo_tarjeta FROM tarjetas_credito";
 $resultado_tarjetas = mysqli_query($conexion,$sql_tarjetas);
 
+$sql_datos_reserva = "SELECT cap.precio,cab.nombre,r.cantidad FROM reservas as r
+                    INNER JOIN capacidad as cap
+                    ON r.idCapacidadCabina = cap.id
+                    INNER JOIN cabina as cab
+                    ON cap.tipo_cabina = cab.id
+                    WHERE r.cod_reserva = '$cod_reserva'";
+$resultado_datos_reserva = mysqli_query($conexion,$sql_datos_reserva);
+$fila_datos_reserva = mysqli_fetch_assoc($resultado_datos_reserva);
+$cabina = $fila_datos_reserva['nombre'];
+$precio = $fila_datos_reserva['precio'] * $fila_datos_reserva['cantidad'];
 if ($pagoRealizado == false) {
     if (isset($_POST['enviar'])) {
         if (isset($_POST['num_tarjeta'])  && isset($_POST['tipo_tarjeta']) &&
@@ -77,26 +87,34 @@ function validarTarjeta($numero_tarjeta, $tipo_tarjeta,$conexion){
 <head>
     <meta charset="UTF-8">
     <title>Abonar</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Inconsolata'>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/gr.css">
+
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/gr.css">
 </head>
 
 <body>
 <?php include "header.php" ?>
 
 <div class="w3-container w3-lobster banda">
-    <p class="w3-xxxlarge w3-center">Abonar<img src="img/cohete-espacial-mini.png" class="animated bounceInUp"></p>
+    <p class="w3-xxxlarge w3-center">Abonar<img src="img/cohete-espacial-mini.png" class="animated bounceInUp"></p><br>
+    <div class="w3-container w3-lobster">
+        <p class="w3-xlarge w3-center">Datos de la reserva<p></p><br><br>
+        <p class="w3-large">Reserva: "<?php echo $cod_reserva ?>"</p><br>
+        <p class="w3-large">Cabina:<?php echo $cabina ?></p><br>
+        <p class="w3-large">Precio: $<?php echo $precio ?></p><br>
+    </div>
 </div>
 <?php
-    if($pagoRealizado == false) {
+if($pagoRealizado == false) {
     echo $error;
     ?>
     <!-- DATOS QUE ESTAN EN LA TARJETA-->
