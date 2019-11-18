@@ -2,57 +2,52 @@
 session_start();
 $id_usuario = $_SESSION['id'];
 $error="";
+$num_tarjeta="";
+$titular_tarjeta="";
+$fecha_expiracion="";
+$año_expiracion="";
+$codigo_seguridad="";
+$cod_reserva ="";
 require 'conexion.php';
 
-$sql_meses= "SELECT * FROM meses";
-$resultado_meses = mysqli_query($conexion,$sql_meses);
+$sql_meses = "SELECT * FROM meses";
+$resultado_meses = mysqli_query($conexion, $sql_meses);
 
-$sql_anio= "SELECT * FROM anio";
-$resultado_anio = mysqli_query($conexion,$sql_anio);
-
-$sql_pago = "SELECT pago FROM reservas WHERE id_usuario = '$id_usuario'";
-$resultado_pago = mysqli_query($conexion,$sql_pago);
+$cod_reserva =$_GET['cod_reserva'];
+$sql_pago = "SELECT pago FROM reservas WHERE id_usuario = '$id_usuario' AND cod_reserva ='$cod_reserva'";
+$resultado_pago = mysqli_query($conexion, $sql_pago);
 $fila_pago = mysqli_fetch_assoc($resultado_pago);
-
 $pago = $fila_pago['pago'];
-if($pago == false) {
-    if (empty($_POST['enviar'])) {
-        echo "<b>Debe completar los campos</b>";
-    } else{
-        $num_tarjeta = md5($_POST['num_tarjeta']);
-        $titular_tarjeta = $_POST['titular_tarjeta'];
+
+if ($pago == false) {
+    if (isset($_POST['enviar'])) {
         $fecha_expiracion = $_POST['fecha_expiracion'];
         $año_expiracion = $_POST['año_expiracion'];
-        $codigo_seguridad = md5($_POST['codigo_seguridad']);
+        $codigo_seguridad = ($_POST['codigo_seguridad']);
+        $num_tarjeta = md5($_POST['num_tarjeta']);
+        $titular_tarjeta = $_POST['titular_tarjeta'];
 
 
+        if (empty($_POST['num_tarjeta']) or empty($_POST['titular_tarjeta']) or empty($_POST['codigo_seguridad'])) {
+            $error = "<h2><div class='w3-panel w3-red'><p>Debe completar los campos</p></h2></div>";
+        } else {
 
-                $sql = "SELECT pago FROM reservas as r 
-                        INNER JOIN usuarios as u 
-                        ON r.id_usuario = u.id     
-                        WHERE r.usuario = '$usuario'";
-                $consulta = mysqli_query($conexion, $sql);
-                $lista =  mysqli_fetch_all($resultado);
-                if (!$consulta) {
-                    $error = "<div class='w3-panel w3-red'><p>Los datos ingresados son incorrectos</p></div>";
-                    $clase ="animated shake";
-                }else{
-                    $sql_cod_seguridad = "INSERT INTO usuarios (cod_seguridad) VALUES ('$codigo_seguridad')";
-                    $consulta_cod = mysqli_query($conexion, $sql_cod_seguridad);
-                    if (!$consulta_cod) {
-                        $error = "<div class='w3-panel w3-red'><p>ERROR<br>Ingrese un numero de seguridad correcto</p></div>";
-                        $clase = "animated shake";
-                    }
-                }
-            }
-        if(!empty($lista)){
-            $error = "<div class='w3-panel w3-red'><p>Ya ha abonado esta reserva anteriormente</p></div>";
-            $clase ="animated shake";
+            $sql_idUsuario =   "SELECT id FROM usuarios as u WHERE u.id = '$id_usuario'";
+
+            $resultado_idUsuario = mysqli_query($conexion, $sql_idUsuario);
+            $filaIdUsuario = mysqli_fetch_assoc($resultado_idUsuario);
+            $idUsuario = $filaIdUsuario['id'];
+
+
+            $sql_tarjeta_credito = "INSERT INTO tarjeta_credito (nombre_titular,num_tarjeta,id_usuario) VALUES ('$titular_tarjeta','$num_tarjeta','$idUsuario')";
+            $consulta_cod = mysqli_query($conexion, $sql_tarjeta_credito);
+
         }
+    } else {
+        $error = "<h2><div class='w3-panel w3-red'><p>Pago realizado con éxito</p></h2></div>";
+    }
 
-    }else {
-    $error = "<div class='w3-panel w3-red'><p>Pago realizado con éxito</p></div>";
-          }
+}
 ?>
 
 <!DOCTYPE html>
@@ -77,6 +72,7 @@ if($pago == false) {
 
 <div class="w3-container w3-lobster banda">
     <p class="w3-xxxlarge w3-center">Abonar<img src="img/cohete-espacial-mini.png" class="animated bounceInUp"></p>
+    <?php echo $error; ?>
 </div>
 <!-- DATOS QUE ESTAN EN LA TARJETA-->
 <div class="checkout">
@@ -114,7 +110,7 @@ if($pago == false) {
             <input type="num" id="card-number" class="input-cart-number" maxlength="4"  />
             <input type="num" id="card-number-1" class="input-cart-number" maxlength="4" />
             <input type="num" id="card-number-2" class="input-cart-number" maxlength="4" />
-            <input type="num" id="card-number-3" class="input-cart-number" maxlength="4" />
+            <input type="num" id="card-number-3" class="input-cart-number" maxlength="4" name="num_tarjeta" />
         </fieldset>
         <fieldset>
             <label for="card-holder">Titular de la tarjeta</label>
@@ -129,7 +125,7 @@ if($pago == false) {
 
                     <?php
                     while ($fila_meses = mysqli_fetch_assoc($resultado_meses)){
-                        echo "<option value='" . $fila_meses['id'] . "'>" . $fila_meses['meses'] . "</option>";
+                        echo "<option value='" . $fila_meses['id'] . "'>" . $fila_meses['nombre'] . "</option>";
                     }
                     ?>
                 </select>
