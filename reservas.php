@@ -94,27 +94,28 @@ $destino_nombre = $fila_destino_nombre['nombre'];
         echo "<form class='w3-container w3-card-4 w3-content' id='reserva-lugares'>
               
                 Seleccione la cabina donde desea realizar su reserva
-                <table>
+                <table class='reservas'>
                   <tr>
-                    <th>Nombre de la cabina</th>
-                    <th>Precio del pasajes</th>
-                    <th></th>
+                    <th class='reservas'>Nombre de la cabina</th>
+                    <th class='reservas'>Precio del pasajes</th>
+                    <th class='reservas'></th>
                   </tr>
                   <tr>
-                    <td>".$fila_viaje['cabinaNombre']."</td>
-                    <td>".$fila_viaje['precio']."</td>
-                    <td><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
+                    <td class='reservas'>".$fila_viaje['cabinaNombre']."</td>
+                    <td class='reservas'>".$fila_viaje['precio']."</td>
+                    <td class='reservas'><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
                   </tr>";
 
                 while ($fila_viaje = mysqli_fetch_assoc($resultado_viaje)){
                     echo "<tr>
-                            <td>".$fila_viaje['cabinaNombre']."</td>
-                            <td>".$fila_viaje['precio']."</td>
-                            <td><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
-                          </tr></table>";
+                            <td class='reservas'>".$fila_viaje['cabinaNombre']."</td>
+                            <td class='reservas'>".$fila_viaje['precio']."</td>
+                            <td class='reservas'><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
+                          </tr>";
                 }
 
-                echo "<center>Cantidad de pasajes a reservar:
+                echo "</table>
+                <center>Cantidad de pasajes a reservar:
                 <input type='number' name='cantidad_pasajes_a_reservar' min='0' id='acompaniantes' value='$cantidad_pasajes_a_reservar'></center>
         
                 <input type='hidden' name='id_destino' value='$id_destino'>
@@ -127,7 +128,7 @@ $destino_nombre = $fila_destino_nombre['nombre'];
                 
                 <div id='mensaje'></div>
                 
-                <center><button class='w3-button w3-round-xlarge w3-blue btn1' type='submit' name='enviar'>Aceptar</button></center>
+                <center><button class='w3-button w3-round-xlarge w3-blue btn1' type='submit' name='enviar' id='btn-accion'>Aceptar</button></center>
                 <center><a class='w3-button w3-round-xlarge w3-blue btn1' href='buscador.php'>Volver al buscador</a></center>
                 </form>";
     }

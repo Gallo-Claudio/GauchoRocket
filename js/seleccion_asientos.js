@@ -32,12 +32,12 @@ $(document).ready(function() {
                 resultados = JSON.parse(response);
 
                 if(resultados.estado == "ok"){
-                    area_mensaje ='<div class="w3-panel ' + resultados.clase +'">' + resultados.mensaje + '</div>';
+                    area_mensaje ='<div class="w3-panel ' + resultados.clase +' dialogo">' + resultados.mensaje + '</div>';
                     $('#mensaje').html(area_mensaje);
                     $('#btn-accion').hide();
                 }
                 else{
-                    area_mensaje ='<div class="w3-panel ' + resultados.clase +'">' + resultados.mensaje + '</div>';
+                    area_mensaje ='<div class="w3-panel ' + resultados.clase +' dialogo">' + resultados.mensaje + '</div>';
                     $('#mensaje').html(area_mensaje);
                 }
 

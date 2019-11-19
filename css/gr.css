@@ -41,7 +41,7 @@ button a {
     margin-top: 60px;
 }
 footer {
-    height: 150px;
+    height: 130px;
     margin-top: 90px;
     width: 100%;
     background-color: #5f8fe4;
@@ -52,16 +52,14 @@ footer {
 .docentes {
     float: left;
     margin-left: 50px;
-    margin-top: 14px;
 }
 .alumnos {
     float: right;
     margin-right: 50px;
-    margin-top: 14px;
 }
 footer img {
     width: 90px;
-    margin-top: 20px;
+    margin-top: 15px;
     float: left;
     margin-right: 20px;
 }
@@ -118,8 +116,12 @@ input, select {
     padding-top: 2px;
 }
 .detalle-circuitos {
-    width: 110px;
-    /*float: right;*/
+    width: 135px;
+    /* float: right; */
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    background-color: #dedddd;
 }
 /*form#destinos {*/
 /*    background-color: #ccc;*/
@@ -127,8 +129,8 @@ input, select {
 /*}*/
 .distribucion {
     display: grid;
-    grid-gap: 10px;
-    grid-template-columns: auto 110px 110px;
+    grid-gap: 20px;
+    grid-template-columns: auto 135px 135px;
 }
 label.acompaniante {
     padding: 0px;
@@ -205,9 +207,24 @@ header {
 .w3-container.w3-blue.w3-bottombar.w3-border-indigo.w3-fixed {
     background-color: initial !important;
 }
-
-
-
+label.buscador {
+    width: 120px;
+    font-size: 14px;
+    height: 30px;
+}
+th.reservas {
+    width: 170px;
+    background-color: #ccc;
+}
+td.reservas {
+    width: 170px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+table.reservas {
+    margin-top: 20px;
+    margin-bottom: 35px;
+}
 
 /** ubicacion-asientos **/
 label {
@@ -307,4 +324,7 @@ label.w3-large.registro {
     margin-bottom: 0px;
     padding-bottom: 0px;
     margin-top: 20px;
+}
+.dialogo {
+    padding: 5px 35px !important;
 }

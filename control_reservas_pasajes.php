@@ -126,6 +126,7 @@ $reserva_realizada = false;
                 $reserva_realizada = true;
                 $error = "<p>La reserva fué realizada con éxito.</p>";
                 $class_error_alerta ="correcto";
+                $estado="ok";
             } else {
 
                 $sql_nueva_reserva = "INSERT INTO reservas (cod_vuelo,cantidad,id_usuario,idCapacidadCabina,lista_espera) VALUES
@@ -134,6 +135,7 @@ $reserva_realizada = false;
                 $reserva_realizada = true;
                 $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";
                 $class_error_alerta ="animated shake alerta";
+                $estado="ok";
             }
 
         } elseif ($tipo_viaje == "Entre destinos") {
@@ -183,6 +185,7 @@ $reserva_realizada = false;
                     $reserva_realizada = true;
                     $error = "<p>La reserva fué realizada con éxito.</p>";
                     $class_error_alerta ="correcto";
+                    $estado="ok";
 
                 }elseif ($sePuedeReservar == false){
                     $sql_nueva_reserva = "INSERT INTO reservas (cod_vuelo,cantidad,id_usuario,estacion_origen,estacion_destino,idCapacidadCabina,lista_espera) 
@@ -191,6 +194,7 @@ $reserva_realizada = false;
                     $reserva_realizada = true;
                     $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";
                     $class_error_alerta ="animated shake alerta";
+                    $estado="ok";
                 }
 
         }
@@ -214,7 +218,7 @@ $reserva_realizada = false;
         }
     }
 
-$mensajeFinal = array('mensaje' => $error,'clase' => $class_error_alerta);
+$mensajeFinal = array('mensaje' => $error,'clase' => $class_error_alerta,'estado' => $estado);
 $jsonstring = json_encode($mensajeFinal);
 echo $jsonstring;
 ?>
