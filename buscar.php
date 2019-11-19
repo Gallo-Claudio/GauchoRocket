@@ -38,7 +38,7 @@ $cantidad = count($sentido);
 $and = determinarCircuito($cantidad, $sentido, $and, $origen, $destino);
 
 
-$sql = "select viajes.id, fecha_hora, duracion, modelos_naves.nombre, codigo_vuelo, circuitos.nombre as nombre_circuito, circuito_id from viajes
+$sql = "select viajes.id, fecha_hora, duracion, naveNombre, codigo_vuelo, circuitos.nombre as nombre_circuito, circuito_id from viajes
                 left outer join naves
                 on viajes.nave = naves.id  
                 left outer join modelos_naves
@@ -57,7 +57,7 @@ while ($fila = mysqli_fetch_array($resultado)) {
         'id' => $fila['id'],
         'fecha_hora' => $fila['fecha_hora'],
         'duracion' => $fila['duracion'],
-        'nave' => $fila['nombre'],
+        'nave' => $fila['naveNombre'],
         'codigo_vuelo' => $fila['codigo_vuelo'],
         'circuito' => $fila['nombre_circuito'],
         'destino' => $destino,

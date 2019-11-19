@@ -8,33 +8,6 @@ $fecha_actual = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
 $error_fecha = "";
 
-//if (isset($_POST['enviar'])) {
-//    $fecha_salida = $_POST['fecha_salida'];
-//    $hora_salida_inicial = $_POST['hora_salida_inicial'];
-//    $hora_salida_final = $_POST['hora_salida_final'];
-//    $tipo_viajes = $_POST['tipo_viajes'];
-//
-//    if ($fecha_salida == "" && $fecha_salida < $fecha_minimo) {
-//        $error_fecha = "Ingrese una fecha valida";
-//    } else {
-//        $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
-//                    inner join tipo_viajes
-//                    on v.tipo_viaje = tipo_viajes.id
-//                    WHERE v.fecha_salida = '$fecha_salida'";
-//        if ($hora_salida_inicial != "-" && $hora_salida_final == "-") {
-//            $sql = $sql . " AND hora_salida >= '$hora_salida_inicial'";
-//        } else if ($hora_salida_inicial != "-" && $hora_salida_final != "-") {
-//            if ($hora_salida_inicial < $hora_salida_final) {
-//                $sql = $sql . " AND hora_salida between '$hora_salida_inicial' and '$hora_salida_final'";
-//            }
-//
-//        }
-//        if($tipo_viajes != "-"){
-//            $sql = $sql . " AND v.tipo_viaje = '$tipo_viajes'";
-//        }
-//        $resultado = mysqli_query($conexion, $sql);
-//    }
-//}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -46,7 +19,6 @@ $error_fecha = "";
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/gr.css">
-
 
 </head>
 <body>
@@ -181,7 +153,7 @@ $error_fecha = "";
                     <td>Duración del viaje</td>
                     <td>Nave</td>
                     <td>Circuito</td>
-                    <td></td>
+                    <td class='btn-reserva'></td>
                   </tr>
                  </thead>
                  <tbody id='resultados'>";
@@ -207,4 +179,10 @@ $error_fecha = "";
 <script src="js/selector_viajes.js"></script>
 </body>
 <?php include "pie.html";?>
+//<?php
+//$sesion = 2;  //Sesion = 2 es el usuario registrado
+//if($sesion == 2){
+//    echo "<script src='js/muestra.js'></script>";
+//}
+//?>
 </html>

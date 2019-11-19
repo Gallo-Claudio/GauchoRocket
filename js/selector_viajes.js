@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 				let resultados = JSON.parse(response);
 				let listado = '';
-
+console.log(response);
 				resultados.forEach(resultado => {
 					listado += `<tr><td>
 								${resultado.codigo_vuelo}												
@@ -28,7 +28,7 @@ $(document).ready(function() {
 								<td>
 								${resultado.circuito}												
 								</td>
-								<td>
+								<td class="btn-reserva">
 								<button class='w3-button w3-round-xlarge w3-green reserva' type='submit'><a href='reservas.php?viaje=${resultado.id}&destino=${resultado.destino}&circuito=${resultado.circuito_id}'>Reservar</button>											
 								</td></tr>`
 				})

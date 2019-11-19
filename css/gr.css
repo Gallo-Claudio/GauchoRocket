@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -157,6 +159,7 @@ span.detalle {
     display: block;
     margin-top: -22px;
     margin-left: 75px;
+    color: #fff;
 }
 span.iso {
     color: #c1c1c1;
@@ -185,7 +188,23 @@ span.iso {
     margin-bottom: 0px !important;
     margin-top: 2px;
 }
-
+.alerta {
+    background-color: #ffe600;
+    color: #000;
+}
+.correcto {
+    background-color: #7ad872;
+    color: #000;
+}
+.btn-reserva {
+    /*display: none;*/
+}
+header {
+    background-image: url("../img/via-lactea.jpg");
+}
+.w3-container.w3-blue.w3-bottombar.w3-border-indigo.w3-fixed {
+    background-color: initial !important;
+}
 
 
 
