@@ -225,6 +225,21 @@ table.reservas {
     margin-top: 20px;
     margin-bottom: 35px;
 }
+div.bienvenida {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: initial;
+}
+.bienvenida p{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+
+
+
 
 /** ubicacion-asientos **/
 label {
