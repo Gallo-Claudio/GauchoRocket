@@ -1,11 +1,13 @@
 <?php
 require_once "conexion.php";
+
 $sql_estaciones= "select * from estaciones";
 $resultado_estaciones = mysqli_query($conexion, $sql_estaciones);
 $registro_estaciones = mysqli_fetch_all($resultado_estaciones);
 $fecha_actual = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
 $error_fecha = "";
+
 //if (isset($_POST['enviar'])) {
 //    $fecha_salida = $_POST['fecha_salida'];
 //    $hora_salida_inicial = $_POST['hora_salida_inicial'];
@@ -38,7 +40,7 @@ $error_fecha = "";
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
     <title>Busqueda de viajes</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -168,6 +170,7 @@ $error_fecha = "";
         </div>
     </div>
     <?php
+
     if ($error_fecha == "") {
         if (mysqli_affected_rows($conexion) > 0) {
             echo "<table class='table table-striped table-bordered table-hover table-condensed'>

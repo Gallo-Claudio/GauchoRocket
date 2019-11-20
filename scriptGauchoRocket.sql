@@ -1,32 +1,7 @@
----------------TARJETA DE CREDITO----------------------------
-
-create table tarjeta_credito (
-id int(11) NOT NULL primary key auto_increment,
-nombre_titular varchar(50),
-num_tarjeta int(4)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-create table meses (
-id int(11) NOT NULL primary key auto_increment,
-nombre varchar(20))ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO meses (id, nombre) VALUES
-(1,'Enero'),
-(2,'Febrero'),
-(3,'Marzo'),
-(4,'Abril'),
-(5,'Mayo'),
-(6,'Junio'),
-(7,'Julio'),
-(8,'Agosto'),
-(9,'Septiembre'),
-(10,'Octubre'),
-(11,'Noviembre'),
-(12,'Diciembre');
 --
 -- Base de datos: `gauchorocket`
 --
-CREATE DATABASE gauchorocket DEFAULT CHARSET=utf8;
+CREATE DATABASE gauchorocket;
 USE gauchorocket;
 -- --------------------------------------------------------
 
@@ -37,7 +12,7 @@ USE gauchorocket;
 CREATE TABLE `cabina` (
   `id` int(11) NOT NULL,
   `nombre` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `cabina`
@@ -59,37 +34,39 @@ CREATE TABLE `capacidad` (
   `modelo` int(11) DEFAULT NULL,
   `tipo_cabina` int(11) DEFAULT NULL,
   `filas` int(11) DEFAULT NULL,
-  `columnas` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `columnas` int(11) DEFAULT NULL,
+  `precio` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `capacidad`
 --
 
-INSERT INTO `capacidad` (`id`, `modelo`, `tipo_cabina`, `filas`, `columnas`) VALUES
-(1, 1, 1, 20, 10),
-(2, 1, 2, 15, 6),
-(3, 1, 3, 5, 5),
-(4, 2, 1, 20, 5),
-(5, 2, 2, 9, 2),
-(6, 2, 3, 1, 2),
-(7, 3, 1, 10, 5),
-(8, 3, 2, 10, 5),
-(9, 4, 1, 22, 5),
-(10, 5, 2, 10, 5),
-(11, 5, 3, 5, 2),
-(12, 6, 2, 14, 5),
-(13, 6, 3, 5, 2),
-(14, 7, 1, 20, 5),
-(15, 7, 2, 15, 5),
-(16, 7, 3, 5, 5),
-(17, 8, 1, 30, 10),
-(18, 8, 2, 5, 2),
-(19, 8, 3, 10, 4),
-(20, 9, 1, 15, 10),
-(21, 9, 2, 5, 5),
-(22, 9, 3, 5, 5),
-(23, 10, 3, 20, 5);
+INSERT INTO `capacidad` (`id`, `modelo`, `tipo_cabina`, `filas`, `columnas`, `precio`) VALUES
+(1, 1, 1, 20, 10, 1000),
+(2, 1, 2, 15, 5, 1500),
+(3, 1, 3, 5, 5, 2500),
+(4, 2, 1, 20, 5, 800),
+(5, 2, 2, 9, 2, 1300),
+(6, 2, 3, 1, 2, 2300),
+(7, 3, 1, 10, 5, 1300),
+(8, 3, 2, 10, 5, 3500),
+(9, 4, 1, 11, 10, 1200),
+(10, 5, 2, 10, 5, 2600),
+(11, 5, 3, 5, 2, 3700),
+(12, 6, 2, 14, 5, 2600),
+(13, 6, 3, 5, 2, 3700),
+(14, 7, 1, 20, 10, 1600),
+(15, 7, 2, 15, 5, 3000),
+(16, 7, 3, 5, 5, 4100),
+(17, 8, 1, 30, 10, 1600),
+(18, 8, 2, 5, 2, 3000),
+(19, 8, 3, 8, 5, 4100),
+(20, 9, 1, 15, 10, 1600),
+(21, 9, 2, 5, 5, 3000),
+(22, 9, 3, 5, 5, 4100),
+(23, 10, 3, 10, 10, 10000),
+(24, 10, 2, 10, 10, 10);
 
 -- --------------------------------------------------------
 
@@ -101,7 +78,7 @@ CREATE TABLE `centros_medicos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) DEFAULT NULL,
   `turnos_diarios` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `centros_medicos`
@@ -121,15 +98,15 @@ INSERT INTO `centros_medicos` (`id`, `nombre`, `turnos_diarios`) VALUES
 CREATE TABLE `circuitos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `circuitos`
 --
 
 INSERT INTO `circuitos` (`id`, `nombre`) VALUES
-(1, 'Circuito 1'),
-(2, 'Circuito 2'),
+(1, 'Circuito 1 - Ida'),
+(2, 'Circuito 2 - Ida'),
 (3, 'Bs As'),
 (4, 'Ankara'),
 (5, 'Circuito 1 - Vuelta'),
@@ -144,7 +121,7 @@ INSERT INTO `circuitos` (`id`, `nombre`) VALUES
 CREATE TABLE `circuitos_estaciones` (
   `circuito_id` int(11) NOT NULL,
   `estacion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `circuitos_estaciones`
@@ -196,7 +173,7 @@ CREATE TABLE `credenciales` (
   `rol` int(11) DEFAULT NULL,
   `clave` varchar(50) DEFAULT NULL,
   `id_usuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `credenciales`
@@ -204,7 +181,8 @@ CREATE TABLE `credenciales` (
 
 INSERT INTO `credenciales` (`id`, `usuario`, `rol`, `clave`, `id_usuario`) VALUES
 (1, 'Tomas', 1, '81dc9bdb52d04dc20036dbd8313ed055', 1),
-(2, 'Sebastian', 2, '81dc9bdb52d04dc20036dbd8313ed055', 2);
+(2, 'Sebastian', 2, '81dc9bdb52d04dc20036dbd8313ed055', 2),
+(8, 'gallo', 2, '81dc9bdb52d04dc20036dbd8313ed055', 6);
 
 -- --------------------------------------------------------
 
@@ -215,7 +193,7 @@ INSERT INTO `credenciales` (`id`, `usuario`, `rol`, `clave`, `id_usuario`) VALUE
 CREATE TABLE `estaciones` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `estaciones`
@@ -237,6 +215,35 @@ INSERT INTO `estaciones` (`id`, `nombre`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `meses`
+--
+
+CREATE TABLE `meses` (
+  `id` int(11) NOT NULL,
+  `meses` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `meses`
+--
+
+INSERT INTO `meses` (`id`, `meses`) VALUES
+(1, '01'),
+(2, '02'),
+(3, '03'),
+(4, '04'),
+(5, '05'),
+(6, '06'),
+(7, '07'),
+(8, '08'),
+(9, '09'),
+(10, '10'),
+(11, '11'),
+(12, '12');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `modelos_naves`
 --
 
@@ -244,7 +251,7 @@ CREATE TABLE `modelos_naves` (
   `id` int(11) NOT NULL,
   `nombre` varchar(20) DEFAULT NULL,
   `capacidad` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `modelos_naves`
@@ -252,14 +259,14 @@ CREATE TABLE `modelos_naves` (
 
 INSERT INTO `modelos_naves` (`id`, `nombre`, `capacidad`) VALUES
 (1, 'Calandria', 300),
-(2, 'Colibri', 120),
+(2, 'Colibrí', 120),
 (3, 'Zorzal', 100),
 (4, 'Carancho', 110),
 (5, 'Aguilucho', 60),
 (6, 'Canario', 80),
-(7, 'Aguila', 300),
+(7, 'Águila', 300),
 (8, 'Condor', 350),
-(9, 'Halcon', 200),
+(9, 'Halcón', 200),
 (10, 'Guanaco', 100);
 
 -- --------------------------------------------------------
@@ -272,7 +279,7 @@ CREATE TABLE `naves` (
   `id` int(11) NOT NULL,
   `matricula` varchar(8) DEFAULT NULL,
   `modelo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `naves`
@@ -339,39 +346,50 @@ CREATE TABLE `reservas` (
   `cod_reserva` varchar(8) DEFAULT NULL,
   `estacion_origen` int(11) DEFAULT NULL,
   `estacion_destino` int(11) DEFAULT NULL,
-  `tipo_cabina` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `idCapacidadCabina` int(11) DEFAULT NULL,
+  `lista_espera` tinyint(1) DEFAULT NULL,
+  `pago` tinyint(1) DEFAULT NULL,
+  `check_in` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `reservas`
 --
 
-INSERT INTO `reservas` (`id`, `cod_vuelo`, `cantidad`, `id_usuario`, `cod_reserva`, `estacion_origen`, `estacion_destino`, `tipo_cabina`) VALUES
-(1, 1, 20, 1, NULL, NULL, NULL, NULL),
-(2, 1, 5, 2, NULL, NULL, NULL, NULL),
-(3, 3, 1, 2, NULL, 1, 5, NULL),
-(6, 1, 10, 2, NULL, NULL, NULL, NULL),
-(9, 1, 15, 2, NULL, NULL, NULL, NULL),
-(10, 1, 2, 2, NULL, NULL, NULL, NULL),
-(16, 1, 2, 2, NULL, NULL, NULL, NULL),
-(17, 1, 2, 2, NULL, NULL, NULL, NULL),
-(42, 11, 3, NULL, 'CR15', NULL, NULL, 2),
-(45, 8, 88, 1, NULL, NULL, NULL, NULL),
-(46, 4, 77, 1, NULL, NULL, NULL, NULL),
-(89, 20, 5, 1, NULL, 1, 8, NULL),
-(90, 20, 4, 1, NULL, 8, 9, NULL),
-(91, 1, 4, 1, NULL, NULL, NULL, NULL),
-(92, 1, 8, 1, NULL, NULL, NULL, NULL),
-(93, 1, 5, 1, NULL, NULL, NULL, NULL),
-(94, 8, 10, 1, NULL, NULL, NULL, NULL),
-(95, 4, 4, 1, NULL, NULL, NULL, NULL),
-(96, 11, 10, 1, NULL, 3, 6, NULL),
-(97, 19, 5, 1, NULL, 3, 10, NULL),
-(98, 14, 10, 1, NULL, 6, 4, NULL),
-(99, 27, 5, 1, NULL, 9, 5, NULL),
-(100, 1, 6, 1, NULL, NULL, NULL, NULL),
-(101, 1, 3, 1, NULL, NULL, NULL, NULL),
-(102, 3, 10, 1, NULL, NULL, NULL, NULL);
+INSERT INTO `reservas` (`id`, `cod_vuelo`, `cantidad`, `id_usuario`, `cod_reserva`, `estacion_origen`, `estacion_destino`, `idCapacidadCabina`, `lista_espera`, `pago`, `check_in`) VALUES
+(1, 1, 20, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 1, 2, 2, 'ABC123', 1, 1, 24, NULL, NULL, NULL),
+(42, 11, 3, NULL, 'CR15', NULL, NULL, 2, NULL, NULL, NULL),
+(45, 8, 88, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 4, 77, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(89, 20, 5, 1, NULL, 1, 8, NULL, NULL, NULL, NULL),
+(90, 20, 4, 1, NULL, 8, 9, NULL, NULL, NULL, NULL),
+(91, 1, 4, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(92, 1, 8, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(93, 1, 5, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(94, 8, 10, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(95, 4, 4, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(96, 11, 10, 1, NULL, 3, 6, NULL, NULL, NULL, NULL),
+(97, 19, 5, 1, NULL, 3, 10, NULL, NULL, NULL, NULL),
+(98, 14, 10, 1, NULL, 6, 4, NULL, NULL, NULL, NULL),
+(99, 27, 5, 1, NULL, 9, 5, NULL, NULL, NULL, NULL),
+(100, 1, 6, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(101, 10, 1, 1, NULL, 1, 4, NULL, NULL, NULL, NULL),
+(106, 1, 54, 1, NULL, NULL, NULL, 23, NULL, NULL, NULL),
+(109, 1, 3, 1, NULL, NULL, NULL, 23, NULL, NULL, NULL),
+(110, 1, 43, 1, NULL, NULL, NULL, 23, NULL, NULL, NULL),
+(111, 5, 10, 1, NULL, NULL, NULL, 4, NULL, NULL, NULL),
+(112, 5, 15, 1, NULL, NULL, NULL, 5, NULL, NULL, NULL),
+(113, 5, 2, 1, NULL, NULL, NULL, 6, NULL, NULL, NULL),
+(114, 10, 10, 1, NULL, 1, 4, 12, NULL, NULL, NULL),
+(115, 10, 10, 1, NULL, 1, 4, 13, NULL, NULL, NULL),
+(116, 1, 2, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(117, 10, 3, 1, NULL, 1, 4, 13, 1, NULL, NULL),
+(118, 1, 3, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(119, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(120, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(121, 1, 1, 1, NULL, NULL, NULL, 23, 1, NULL, NULL),
+(122, 10, 1, 1, NULL, 1, 4, 12, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -382,7 +400,7 @@ INSERT INTO `reservas` (`id`, `cod_vuelo`, `cantidad`, `id_usuario`, `cod_reserv
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `rol` varchar(30) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `roles`
@@ -395,13 +413,34 @@ INSERT INTO `roles` (`id`, `rol`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tarjetas_credito`
+--
+
+CREATE TABLE `tarjetas_credito` (
+  `id` int(11) NOT NULL,
+  `tipo_tarjeta` varchar(30) DEFAULT NULL,
+  `validacion_tarjeta` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tarjetas_credito`
+--
+
+INSERT INTO `tarjetas_credito` (`id`, `tipo_tarjeta`, `validacion_tarjeta`) VALUES
+(1, 'American Express', '/^([34|37]{2})([0-9]{13})$/'),
+(2, 'Visa', '/^([4]{1})([0-9]{12,15})$/'),
+(3, 'MasterCard', '/^([51|52|53|54|55]{2})([0-9]{14})$/');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipo_viajes`
 --
 
 CREATE TABLE `tipo_viajes` (
   `id` int(11) NOT NULL,
   `tipo_viaje` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `tipo_viajes`
@@ -423,14 +462,7 @@ CREATE TABLE `turnos` (
   `fecha` date DEFAULT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `centro_medico` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `turnos`
---
-
-INSERT INTO `turnos` (`id`, `fecha`, `id_usuario`, `centro_medico`) VALUES
-(15, '2019-11-28', 1, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -443,7 +475,7 @@ CREATE TABLE `ubicacion` (
   `codigo_vuelo` varchar(7) DEFAULT NULL,
   `codigo_reserva` varchar(7) DEFAULT NULL,
   `asiento` varchar(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `ubicacion`
@@ -495,13 +527,7 @@ INSERT INTO `ubicacion` (`id`, `codigo_vuelo`, `codigo_reserva`, `asiento`) VALU
 (198, NULL, 'CR15', 'c4f5'),
 (199, NULL, 'CR15', 'c5f8'),
 (200, NULL, 'CR15', 'c4f9'),
-(201, NULL, 'CR15', 'c5f9'),
-(202, NULL, 'CR15', 'c2f1'),
-(203, NULL, 'CR15', 'c2f2'),
-(204, NULL, 'CR15', 'c2f3'),
-(205, NULL, 'CR15', 'c3f10'),
-(206, NULL, 'CR15', 'c4f10'),
-(207, NULL, 'CR15', 'c5f10');
+(201, NULL, 'CR15', 'c5f9');
 
 -- --------------------------------------------------------
 
@@ -515,16 +541,22 @@ CREATE TABLE `usuarios` (
   `apellido` varchar(15) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `nivel_vuelo` int(11) DEFAULT NULL,
-  `se_chequeo` tinyint(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `se_chequeo` tinyint(4) DEFAULT NULL,
+  `confirmacion_mail` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `email`, `nivel_vuelo`, `se_chequeo`) VALUES
-(1, 'Tomas', 'Seijas', 'tomas.seijas10@gmail.com', 3, 0),
-(2, 'Sebastian', 'Dominikow', 'sebidomi@hotmail.com', 1, 1);
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `email`, `nivel_vuelo`, `se_chequeo`, `confirmacion_mail`) VALUES
+(1, 'Tomas', 'Seijas', 'tomas.seijas10@gmail.com', NULL, 1, 1),
+(2, 'Sebastian', 'Dominikow', 'sebidomi@hotmail.com', NULL, 0, 1),
+(4, 'bbb', 'bbbbbb', 'bbbbb@bbbbb.bbb', NULL, NULL, 0),
+(5, 'Juan', 'Lopez', 'juan19@gmail.com', NULL, NULL, 0),
+(6, 'aa', 'ss', 'galloclaudio69@gmail.com', NULL, NULL, NULL),
+(7, 'cccc', 'ccccccccc', 'ccccc@ccccc.ccc', NULL, NULL, 0),
+(8, '', '', '', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -542,7 +574,7 @@ CREATE TABLE `viajes` (
   `codigo_vuelo` varchar(7) DEFAULT NULL,
   `origen` int(11) DEFAULT NULL,
   `destino` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `viajes`
@@ -586,115 +618,6 @@ INSERT INTO `viajes` (`id`, `fecha_hora`, `tipo_viaje`, `duracion`, `nave`, `cir
 (78, '2019-11-22 08:00:00', NULL, NULL, NULL, NULL, 'CERATTI', NULL, NULL),
 (79, '2019-11-20 10:00:00', 3, 'medio dia', 10, 5, 'J8', 5, 3),
 (80, '2019-11-20 10:00:00', 3, 'medio dia', 11, 6, 'J9', 5, 3);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `viajes_t`
---
-
-CREATE TABLE `viajes_t` (
-  `id` int(11) NOT NULL,
-  `fecha` date DEFAULT NULL,
-  `hora` time DEFAULT NULL,
-  `tipo_viaje` int(11) DEFAULT NULL,
-  `duracion` varchar(15) DEFAULT NULL,
-  `nave` int(11) DEFAULT NULL,
-  `circuitos` int(11) DEFAULT NULL,
-  `codigo_vuelo` varchar(7) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `viajes_t`
---
-
-INSERT INTO `viajes_t` (`id`, `fecha`, `hora`, `tipo_viaje`, `duracion`, `nave`, `circuitos`, `codigo_vuelo`) VALUES
-(1, '2019-11-10', '10:00:00', 1, '35 dias', 30, 3, 'TR236'),
-(2, '2019-11-16', '07:00:00', 2, '8 horas', 1, 4, 'OR155'),
-(3, '2019-11-16', '09:00:00', 2, '8 horas', 6, 3, 'OR172'),
-(4, '2019-11-16', '11:00:00', 2, '8 horas', 2, 4, 'OR784'),
-(5, '2019-11-16', '13:00:00', 2, '8 horas', 3, 3, 'OR634'),
-(6, '2019-11-16', '16:00:00', 2, '8 horas', 7, 3, 'OR811'),
-(7, '2019-11-16', '13:00:00', 2, '8 horas', 4, 4, 'OR235'),
-(8, '2019-11-16', '07:00:00', 2, '8 horas', 5, 3, 'OR641'),
-(9, '2019-11-16', '11:00:00', 2, '8 horas', 8, 3, 'OR369'),
-(10, '2019-11-20', '16:00:00', 3, '4 horas', 22, 1, 'ED612-I'),
-(11, '2019-11-20', '20:00:00', 3, '1 horas', 22, 1, 'ED612-I'),
-(12, '2019-11-20', '21:00:00', 3, '16 horas', 22, 1, 'ED612-I'),
-(13, '2019-11-21', '13:00:00', 3, '26 horas', 22, 1, 'ED612-I'),
-(14, '2019-11-19', '10:00:00', 3, '26 horas', 12, 1, 'ED389-V'),
-(15, '2019-11-20', '12:00:00', 3, '16 horas', 12, 1, 'ED389-V'),
-(16, '2019-11-21', '04:00:00', 3, '1 horas', 12, 1, 'ED389-V'),
-(17, '2019-11-21', '05:00:00', 3, '4 horas', 12, 1, 'ED389-V'),
-(18, '2019-11-19', '16:00:00', 3, '4 horas', 32, 2, 'ED951-I'),
-(19, '2019-11-19', '20:00:00', 3, '14 horas', 32, 2, 'ED951-I'),
-(20, '2019-11-20', '10:00:00', 3, '48 horas', 32, 2, 'ED951-I'),
-(21, '2019-11-22', '10:00:00', 3, '50 horas', 32, 2, 'ED951-I'),
-(22, '2019-11-24', '12:00:00', 3, '51 horas', 32, 2, 'ED951-I'),
-(23, '2019-11-26', '15:00:00', 3, '70 horas', 32, 2, 'ED951-I'),
-(24, '2019-11-29', '13:00:00', 3, '77 horas', 32, 2, 'ED951-I'),
-(25, '2019-11-19', '10:00:00', 3, '77 horas', 33, 2, 'ED803-V'),
-(26, '2019-11-22', '15:00:00', 3, '70 horas', 33, 2, 'ED803-V'),
-(27, '2019-11-25', '13:00:00', 3, '51 horas', 33, 2, 'ED803-V'),
-(28, '2019-11-27', '16:00:00', 3, '50 horas', 33, 2, 'ED803-V'),
-(29, '2019-11-29', '18:00:00', 3, '48 horas', 33, 2, 'ED803-V'),
-(30, '2019-12-01', '18:00:00', 3, '14 horas', 33, 2, 'ED803-V'),
-(31, '2019-12-02', '08:00:00', 3, '4 horas', 33, 2, 'ED803-V');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `viajes_t_final`
---
-
-CREATE TABLE `viajes_t_final` (
-  `id` int(11) NOT NULL,
-  `fecha_hora` datetime DEFAULT NULL,
-  `tipo_viaje` int(11) DEFAULT NULL,
-  `duracion` varchar(15) DEFAULT NULL,
-  `nave` int(11) DEFAULT NULL,
-  `circuitos` int(11) DEFAULT NULL,
-  `codigo_vuelo` varchar(7) DEFAULT NULL,
-  `origen` int(11) DEFAULT NULL,
-  `destino` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `viajes_t_final`
---
-
-INSERT INTO `viajes_t_final` (`id`, `fecha_hora`, `tipo_viaje`, `duracion`, `nave`, `circuitos`, `codigo_vuelo`, `origen`, `destino`) VALUES
-(1, '2019-11-10 10:00:00', 1, '35 dias', 30, 3, 'TR236', 1, 1),
-(2, '2019-11-16 07:00:00', 2, '8 horas', 1, 4, 'OR155', 2, 2),
-(3, '2019-11-16 09:00:00', 2, '8 horas', 6, 3, 'OR172', 1, 1),
-(4, '2019-11-16 11:00:00', 2, '8 horas', 2, 4, 'OR784', 2, 2),
-(5, '2019-11-16 13:00:00', 2, '8 horas', 3, 3, 'OR634', 1, 1),
-(6, '2019-11-16 16:00:00', 2, '8 horas', 7, 3, 'OR811', 1, 1),
-(7, '2019-11-16 13:00:00', 2, '8 horas', 4, 4, 'OR235', 2, 2),
-(8, '2019-11-16 07:00:00', 2, '8 horas', 5, 3, 'OR641', 1, 1),
-(9, '2019-11-16 11:00:00', 2, '8 horas', 8, 3, 'OR369', 1, 1),
-(10, '2019-11-20 16:00:00', 3, '4 horas', 22, 1, 'ED612-I', 1, 3),
-(11, '2019-11-20 20:00:00', 3, '1 horas', 22, 1, 'ED612-I', 3, 4),
-(12, '2019-11-20 21:00:00', 3, '16 horas', 22, 1, 'ED612-I', 4, 5),
-(13, '2019-11-21 13:00:00', 3, '26 horas', 22, 1, 'ED612-I', 5, 6),
-(14, '2019-11-19 10:00:00', 3, '26 horas', 12, 1, 'ED389-V', 6, 5),
-(15, '2019-11-20 12:00:00', 3, '16 horas', 12, 1, 'ED389-V', 5, 4),
-(16, '2019-11-21 04:00:00', 3, '1 horas', 12, 1, 'ED389-V', 4, 3),
-(17, '2019-11-21 05:00:00', 3, '4 horas', 12, 1, 'ED389-V', 3, 1),
-(18, '2019-11-19 16:00:00', 3, '4 horas', 32, 2, 'ED951-I', 1, 3),
-(19, '2019-11-19 20:00:00', 3, '14 horas', 32, 2, 'ED951-I', 3, 5),
-(20, '2019-11-20 10:00:00', 3, '48 horas', 32, 2, 'ED951-I', 5, 7),
-(21, '2019-11-22 10:00:00', 3, '50 horas', 32, 2, 'ED951-I', 7, 8),
-(22, '2019-11-24 12:00:00', 3, '51 horas', 32, 2, 'ED951-I', 8, 9),
-(23, '2019-11-26 15:00:00', 3, '70 horas', 32, 2, 'ED951-I', 9, 10),
-(24, '2019-11-29 13:00:00', 3, '77 horas', 32, 2, 'ED951-I', 10, 11),
-(25, '2019-11-19 10:00:00', 3, '77 horas', 33, 2, 'ED803-V', 11, 10),
-(26, '2019-11-22 15:00:00', 3, '70 horas', 33, 2, 'ED803-V', 10, 9),
-(27, '2019-11-25 13:00:00', 3, '51 horas', 33, 2, 'ED803-V', 9, 8),
-(28, '2019-11-27 16:00:00', 3, '50 horas', 33, 2, 'ED803-V', 8, 7),
-(29, '2019-11-29 18:00:00', 3, '48 horas', 33, 2, 'ED803-V', 7, 5),
-(30, '2019-12-01 18:00:00', 3, '14 horas', 33, 2, 'ED803-V', 5, 3),
-(31, '2019-12-02 08:00:00', 3, '4 horas', 33, 2, 'ED803-V', 3, 1);
 
 --
 -- Índices para tablas volcadas
@@ -748,6 +671,12 @@ ALTER TABLE `estaciones`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `meses`
+--
+ALTER TABLE `meses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `modelos_naves`
 --
 ALTER TABLE `modelos_naves`
@@ -774,6 +703,12 @@ ALTER TABLE `reservas`
 -- Indices de la tabla `roles`
 --
 ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tarjetas_credito`
+--
+ALTER TABLE `tarjetas_credito`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -813,24 +748,6 @@ ALTER TABLE `viajes`
   ADD KEY `destino` (`destino`);
 
 --
--- Indices de la tabla `viajes_t`
---
-ALTER TABLE `viajes_t`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tipo_viaje` (`tipo_viaje`),
-  ADD KEY `circuitos` (`circuitos`);
-
---
--- Indices de la tabla `viajes_t_final`
---
-ALTER TABLE `viajes_t_final`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `tipo_viaje` (`tipo_viaje`),
-  ADD KEY `circuitos` (`circuitos`),
-  ADD KEY `origen` (`origen`),
-  ADD KEY `destino` (`destino`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -844,7 +761,7 @@ ALTER TABLE `cabina`
 -- AUTO_INCREMENT de la tabla `capacidad`
 --
 ALTER TABLE `capacidad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `centros_medicos`
@@ -862,13 +779,19 @@ ALTER TABLE `circuitos`
 -- AUTO_INCREMENT de la tabla `credenciales`
 --
 ALTER TABLE `credenciales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `estaciones`
 --
 ALTER TABLE `estaciones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `meses`
+--
+ALTER TABLE `meses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `modelos_naves`
@@ -886,13 +809,19 @@ ALTER TABLE `naves`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tarjetas_credito`
+--
+ALTER TABLE `tarjetas_credito`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_viajes`
@@ -904,37 +833,25 @@ ALTER TABLE `tipo_viajes`
 -- AUTO_INCREMENT de la tabla `turnos`
 --
 ALTER TABLE `turnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ubicacion`
 --
 ALTER TABLE `ubicacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `viajes`
 --
 ALTER TABLE `viajes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
-
---
--- AUTO_INCREMENT de la tabla `viajes_t`
---
-ALTER TABLE `viajes_t`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- AUTO_INCREMENT de la tabla `viajes_t_final`
---
-ALTER TABLE `viajes_t_final`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Restricciones para tablas volcadas
@@ -990,24 +907,4 @@ ALTER TABLE `viajes`
   ADD CONSTRAINT `viajes_ibfk_2` FOREIGN KEY (`circuito_id`) REFERENCES `circuitos` (`id`),
   ADD CONSTRAINT `viajes_ibfk_3` FOREIGN KEY (`origen`) REFERENCES `estaciones` (`id`),
   ADD CONSTRAINT `viajes_ibfk_4` FOREIGN KEY (`destino`) REFERENCES `estaciones` (`id`);
-
---
--- Filtros para la tabla `viajes_t`
---
-ALTER TABLE `viajes_t`
-  ADD CONSTRAINT `viajes_t_ibfk_1` FOREIGN KEY (`tipo_viaje`) REFERENCES `tipo_viajes` (`id`),
-  ADD CONSTRAINT `viajes_t_ibfk_2` FOREIGN KEY (`circuitos`) REFERENCES `circuitos` (`id`);
-
---
--- Filtros para la tabla `viajes_t_final`
---
-ALTER TABLE `viajes_t_final`
-  ADD CONSTRAINT `viajes_t_final_ibfk_1` FOREIGN KEY (`tipo_viaje`) REFERENCES `tipo_viajes` (`id`),
-  ADD CONSTRAINT `viajes_t_final_ibfk_2` FOREIGN KEY (`circuitos`) REFERENCES `circuitos` (`id`),
-  ADD CONSTRAINT `viajes_t_final_ibfk_3` FOREIGN KEY (`origen`) REFERENCES `estaciones` (`id`),
-  ADD CONSTRAINT `viajes_t_final_ibfk_4` FOREIGN KEY (`destino`) REFERENCES `estaciones` (`id`);
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

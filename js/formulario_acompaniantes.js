@@ -25,6 +25,7 @@ $(document).ready(function() {
                 formulario += `
                 <div class="caja">
                 <label class="acompaniante">Nombre: </label><input type="text" name="nombre[]"><br>
+                <label class="acompaniante">Apellido: </label><input type="text" name="apellido[]"><br>
                 <label class="acompaniante">E-mail: </label><input type="email" name="email[]">
                 </div>`
             }
