@@ -10,6 +10,7 @@ $sinReservas = false;
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $hoy = date("Y-m-d-e");
 $horaActual = date("H:i:s");
+$hoy2 = date("Y-m-d H:i:s");
 if(mysqli_affected_rows($conexion) == 0){
     $sinReservas = true;
 }
@@ -44,16 +45,24 @@ if($sinReservas == false){
         $fecha_vuelo = date("Y-m-d",strtotime($fila_reservas['fecha_hora']));
         $hora_vuelo = date("G-i-s",strtotime($fila_reservas['fecha_hora']));
         $hora_checkIn = date("G-i-s",strtotime($fila_reservas['fecha_hora']."- 2 hour"));
+        $fecha_checkIn = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 days"));
+        $fecha_checkIn2 = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 hour"));
+        $boton = "";
         if($fecha_vuelo <= $hoy && $hora_vuelo < $horaActual){
             $boton = "<a class='w3-button w3-round-xlarge w3-red btn1'>Caducada</a>";
+
         }else if ($fila_reservas['pago'] == 0 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1) {
             $boton = "<a class='w3-button w3-round-xlarge w3-blue btn1' href='pago.php?reserva=" . $fila_reservas['cod_reserva'] . "'>Pagar</a>";
+
         } else if ($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] == 1) {
             $boton = "<a class='w3-button w3-round-xlarge w3-green btn1'>OK</a>";
+
         } else if ($fila_reservas['pago'] != 1 && $fila_reservas['lista_espera'] == 1 && $fila_reservas['check_in'] != 1) {
             $boton = "<a class='w3-button w3-round-xlarge w3-yellow btn1'>En espera</a>";
-        }else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $fecha_vuelo == $hoy && $hora_checkIn >= $horaActual){
+
+        }else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy2 >= $fecha_checkIn && $hoy2 <= $fecha_checkIn2){
             $boton = "<a class='w3-button w3-round-xlarge w3-blue btn1' href='ubicacion_asientos.php?reserva=".$fila_reservas['cod_reserva']."'>Check-In</a>";
+
         }
         echo "<tr>
               <th>" . $fila_reservas['cod_reserva'] . "</th>

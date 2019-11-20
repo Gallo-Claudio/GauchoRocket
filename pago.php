@@ -12,15 +12,15 @@ $mes_actual = (int)date(m);
 $sql_meses = "SELECT * FROM meses";
 $resultado_meses = mysqli_query($conexion, $sql_meses);
 
-$sql_pago = "SELECT pago FROM reservas WHERE cod_reserva = '$cod_reserva'";
-$resultado_pago = mysqli_query($conexion, $sql_pago);
-$fila_pago = mysqli_fetch_assoc($resultado_pago);
-$pagoRealizado = $fila_pago['pago'];
+//$sql_pago = "SELECT pago FROM reservas WHERE cod_reserva = '$cod_reserva'";
+//$resultado_pago = mysqli_query($conexion, $sql_pago);
+//$fila_pago = mysqli_fetch_assoc($resultado_pago);
+//$pagoRealizado = $fila_pago['pago'];
 
 $sql_tarjetas = "SELECT id , tipo_tarjeta FROM tarjetas_credito";
 $resultado_tarjetas = mysqli_query($conexion,$sql_tarjetas);
 
-$sql_datos_reserva = "SELECT cap.precio,cab.nombre,r.cantidad FROM reservas as r
+$sql_datos_reserva = "SELECT cap.precio,cab.cabinaNombre,r.cantidad FROM reservas as r
                     INNER JOIN capacidad as cap
                     ON r.idCapacidadCabina = cap.id
                     INNER JOIN cabina as cab
@@ -29,8 +29,10 @@ $sql_datos_reserva = "SELECT cap.precio,cab.nombre,r.cantidad FROM reservas as r
 $resultado_datos_reserva = mysqli_query($conexion,$sql_datos_reserva);
 $fila_datos_reserva = mysqli_fetch_assoc($resultado_datos_reserva);
 $cabina = $fila_datos_reserva['nombre'];
-$precio = $fila_datos_reserva['precio'] * $fila_datos_reserva['cantidad'];
-if ($pagoRealizado == false) {
+$cantidad = $fila_datos_reserva['cantidad'];
+$precio = $fila_datos_reserva['precio'];
+$precioFinal = $precio * $cantidad;
+//if ($pagoRealizado == false) {
     if (isset($_POST['enviar'])) {
         if (isset($_POST['num_tarjeta'])  && isset($_POST['tipo_tarjeta']) &&
             isset($_POST['titular_tarjeta']) && isset($_POST['fecha_expiracion'])
@@ -62,10 +64,10 @@ if ($pagoRealizado == false) {
             $pagoRealizado = false;
         }
     }
-}else {
-    $error = "<div class='w3-panel w3-red w3-center'><p>Ya ha abonado esta reserva anteriormente</p></div>";
-    $clase = "animated shake";
-}
+//}else {
+//    $error = "<div class='w3-panel w3-red w3-center'><p>Ya ha abonado esta reserva anteriormente</p></div>";
+//    $clase = "animated shake";
+//}
 
 function validarTarjeta($numero_tarjeta, $tipo_tarjeta,$conexion){
     $sql_validacion_tarjetas = "SELECT validacion_tarjeta FROM tarjetas_credito WHERE id = '$tipo_tarjeta'";
