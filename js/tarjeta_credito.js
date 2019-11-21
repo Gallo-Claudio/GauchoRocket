@@ -21,10 +21,10 @@ $('#card-holder').on('keyup change', function(){
   $('.credit-card-box .card-holder div').html($t.val());
 });
 
-$('#card-holder').on('keyup change', function(){
-  $t = $(this);
-  $('.credit-card-box .card-holder div').html($t.val());
-});
+// $('#card-holder').on('keyup change', function(){
+//   $t = $(this);
+//   $('.credit-card-box .card-holder div').html($t.val());
+// });
 
 $('#card-expiration-month, #card-expiration-year').change(function(){
   m = $('#card-expiration-month option').index($('#card-expiration-month option:selected'));

@@ -39,7 +39,7 @@ $validaciones=true;
             $resultado_menu = mysqli_query($conexion, $sql_menu);
 
             $error = "<p>Los asientos seleccionados, quedaron asignados a su reserva</p>";
-            $class_error_alerta ="correcto";
+            $class_error_alerta ="w3-green";
             $estado="ok";
         }
 

@@ -190,14 +190,14 @@ span.iso {
     margin-bottom: 0px !important;
     margin-top: 2px;
 }
-.alerta {
+/*.alerta {
     background-color: #ffe600;
     color: #000;
 }
 .correcto {
     background-color: #7ad872;
     color: #000;
-}
+}*/
 .btn-reserva {
     /*display: none;*/
 }
@@ -266,8 +266,8 @@ label {
     margin: 8px;
     font-size: 12px;
     text-align: center;
-    width: 84px;
-    height: 75px;
+    /*width: 84px;*/
+    /*height: 75px;*/
 }
 label.vacante {
     background-color: #89cc7e;

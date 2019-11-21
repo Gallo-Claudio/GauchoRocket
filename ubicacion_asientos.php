@@ -1,5 +1,6 @@
 <?php
 require_once "conexion.php";
+require_once "funciones.php";
 
 $codigo_reserva = 'CR515';   // LO DEBO RECIBIR POR POST - Ahora lo hardcodeo
 
@@ -35,15 +36,8 @@ $datos_nave = mysqli_fetch_assoc($resultado_datos_nave);
 $fecha_hora = $datos_nave['fecha_hora'];
 $codigo_vuelo = $datos_nave['codigo_vuelo'];
 
-function determina_estacion($id_estacion) {
-    global $conexion;
-    $sql_nombre_estacion_origen ="select nombre from estaciones where id='$id_estacion'";
-    $resultado = mysqli_query($conexion, $sql_nombre_estacion_origen);
-    $nombre = mysqli_fetch_assoc($resultado);
-    return $nombre;
-}
-$nombre_estacion_origen = determina_estacion($estacion_origen);
-$nombre_estacion_destino = determina_estacion($estacion_destino);
+$nombre_estacion_origen = determina_nombre_estacion($estacion_origen);
+$nombre_estacion_destino = determina_nombre_estacion($estacion_destino);
 
 $sql_menu = "select * from menu";
 $resultado_menu = mysqli_query($conexion, $sql_menu);
@@ -67,7 +61,7 @@ $array = explode(",", $reg);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reserva de pasajes</title>
+    <title>Check-in</title>
     <link rel="stylesheet" href="css/resetcss.css">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
@@ -82,8 +76,8 @@ $array = explode(",", $reg);
     Datos de la reserva <?php echo $codigo_reserva ?><br><br>
     Vuelo: <?php echo $codigo_vuelo ?><br>
     Fecha/Hora: <?php echo $fecha_hora ?><br>
-    Origen: <?php echo $nombre_estacion_origen['nombre'] ?><br>
-    Destino: <?php echo $nombre_estacion_destino['nombre'] ?><br>
+    Origen: <?php echo $nombre_estacion_origen ?><br>
+    Destino: <?php echo $nombre_estacion_destino ?><br>
     Nave: <?php echo $naveNombre ?><br>
     Cabina: <?php echo $cabinaNombre ?><br>
     <span class="destacado">Reserva para: <?php echo $cantidad_asientos_reservados ?> personas</span>
