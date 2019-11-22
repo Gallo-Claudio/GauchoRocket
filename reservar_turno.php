@@ -10,10 +10,16 @@
 </head>
 <?php
 session_start();
-$id_usuario = $_SESSION['id'];
+$id_usuario_session = $_SESSION['id'];
 $error="";
 require 'conexion.php';
 include 'header.php';
+
+$sql_id_usuario = "select id_usuario from credenciales where id = '$id_usuario_session'";
+$resultado_id_usuario = mysqli_query($conexion,$sql_id_usuario);
+$fila_id_usuario = mysqli_fetch_assoc($resultado_id_usuario);
+$numero_de_usuario = $fila_id_usuario['id_usuario'];
+
 $sql_centro_medico = "SELECT * FROM centros_medicos";
 $resultado_centro_medico = mysqli_query($conexion,$sql_centro_medico);
 
@@ -21,7 +27,7 @@ $hoy = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($hoy."+ 1 days"));
 $nuevo_turno = false;
 
-$sql_se_chequeo = "SELECT se_chequeo FROM usuarios WHERE id = '$id_usuario'";
+$sql_se_chequeo = "SELECT se_chequeo FROM usuarios WHERE id = '$numero_de_usuario'";
 $resultado_se_chequeo = mysqli_query($conexion,$sql_se_chequeo);
 $fila_se_chequeo = mysqli_fetch_assoc($resultado_se_chequeo);
 
@@ -32,7 +38,7 @@ if($se_chequeo == false) {
         $centro_medico = $_POST['centro_medico'];
         $fecha = $_POST['fecha'];
 
-        $sql_verificar_turno_pendiente = "SELECT (id_usuario) COUNT FROM turnos WHERE id_usuario = '$id_usuario';";
+        $sql_verificar_turno_pendiente = "SELECT (id_usuario) COUNT FROM turnos WHERE id_usuario = '$numero_de_usuario';";
         $resultado_verificar_turno_pendiente = mysqli_query($conexion, $sql_verificar_turno_pendiente);
         $fila_verificar_turno_pendiente = mysqli_fetch_array($resultado_verificar_turno_pendiente);
 
@@ -52,7 +58,7 @@ if($se_chequeo == false) {
                 }
 
                 if ($cantidad_turnos > 0) {
-                    $sql_nuevo_turno = "INSERT INTO turnos (fecha,id_usuario,centro_medico) values('$fecha','$id_usuario','$centro_medico')";
+                    $sql_nuevo_turno = "INSERT INTO turnos (fecha,id_usuario,centro_medico) values('$fecha','$numero_de_usuario','$centro_medico')";
                     $resultado_nuevo_turno = mysqli_query($conexion, $sql_nuevo_turno);
                     $nuevo_turno = true;
                 } else {

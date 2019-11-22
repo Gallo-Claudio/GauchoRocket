@@ -5,21 +5,36 @@ $usuario = $_SESSION['username'];
 if(!isset($usuario)){
     header("location:login.php");
 }
-$id_usuario = $_SESSION['id'];
+$id_usuario_session = $_SESSION['id'];
 $hoy = date("Y-m-d");
-$sql_turno = "SELECT fecha FROM turnos WHERE id_usuario = '$id_usuario'";
-$resultado_turno = mysqli_query($conexion,$sql_turno);
-$fila_turno = mysqli_fetch_assoc($resultado_turno);
-if($fila_turno){
-    if($fila_turno['fecha']<=$hoy){
-        $codigo_generado = random_int(0,3);
-        $sql_nivel_de_vuelo = "UPDATE usuarios SET nivel_vuelo = '$codigo_generado', se_chequeo = 1  WHERE id='$id_usuario'";
-        $resultado_nivel_de_vuelo = mysqli_query($conexion,$sql_nivel_de_vuelo);
+
+$sql_id_usuario = "select id_usuario from credenciales where id = '$id_usuario_session'";
+$resultado_id_usuario = mysqli_query($conexion,$sql_id_usuario);
+$fila_id_usuario = mysqli_fetch_assoc($resultado_id_usuario);
+$numero_de_usuario = $fila_id_usuario['id_usuario'];
+
+$sql_verifica_chequeoMedico = "select se_chequeo from usuarios where id = '$numero_de_usuario'";
+$resultado_verifica_chequeoMedico = mysqli_query($conexion, $sql_verifica_chequeoMedico);
+$fila_verifica_chequeoMedico = mysqli_fetch_assoc($resultado_verifica_chequeoMedico);
+$chequeo_medico = $fila_verifica_chequeoMedico['se_chequeo'];
+
+
+if($chequeo_medico != true){
+    $sql_turno = "SELECT fecha FROM turnos WHERE id_usuario = '$numero_de_usuario'";
+    $resultado_turno = mysqli_query($conexion,$sql_turno);
+    $fila_turno = mysqli_fetch_assoc($resultado_turno);
+
+    if($fila_turno){
+        if($fila_turno['fecha']<=$hoy){
+            $codigo_generado = random_int(1,3);
+            $sql_nivel_de_vuelo = "UPDATE usuarios SET nivel_vuelo = '$codigo_generado', se_chequeo = 1  WHERE id='$numero_de_usuario'";
+            $resultado_nivel_de_vuelo = mysqli_query($conexion,$sql_nivel_de_vuelo);
+        }
     }
 }
 ?>
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="es">
     <head>
         <meta charset="UTF-8">

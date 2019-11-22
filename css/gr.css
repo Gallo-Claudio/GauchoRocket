@@ -108,7 +108,7 @@ input, select {
     color: #fff;
     font-weight: bold;
 }
-.table-striped>tbody>tr:nth-of-type(odd) {
+.table-striped>tbody>tr:nth-of-type(odd), .w3-table-all tr:nth-child(even) {
     background-color: #e6e5e5 !important;
 }
 .reserva {
@@ -253,7 +253,21 @@ label.reserva-medica {
     font-size: 20px;
     font-weight: bold;
 }
-
+table.w3-table-all tbody tr th {
+    font-weight: initial;
+}
+.alerta {
+    color: #ff0504;
+}
+.atencion {
+    color: #ffaf07;
+}
+.ok {
+    color: #10c20a;
+}
+.aprobado {
+    color: #2196f3;
+}
 
 
 
