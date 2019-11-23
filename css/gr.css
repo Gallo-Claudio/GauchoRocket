@@ -392,6 +392,28 @@ form#ubicacion_asientos input[type="submit"] {
     width: 100%;
     height: 30px;
 }
+img.image-qr {
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+    margin-top: 70px;
+}
+#codigo a img {
+    width: 100px;
+    float: left;
+    margin-right: 20px;
+}
+.etiqueta {
+    color: #3a3a3a;
+    margin-bottom: 8px;
+}
+.embarque {
+    color: #185ad0;
+    font-size: 25px;
+}
+
+
+
 
 
 

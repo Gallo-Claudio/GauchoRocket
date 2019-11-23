@@ -129,6 +129,6 @@ $array = explode(",", $reg);
 
 <script src="js/jquery.min.js"></script>
 <script src="js/seleccion_asientos.js"></script>
-</body>
 <?php include "pie.html";?>
+</body>
 </html>
