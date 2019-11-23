@@ -35,6 +35,8 @@ $(document).ready(function() {
                     area_mensaje ='<div class="w3-panel ' + resultados.clase +' dialogo">' + resultados.mensaje + '</div>';
                     $('#mensaje').html(area_mensaje);
                     $('#btn-accion').hide();
+                    area_codigo = resultados.qr + '<div><p>Asientos seleccionados<br>' + resultados.asientos + '<br>Código de Embarque</p>' + resultados.codigo_embarque + '</div>';
+                    $('#codigo').html(area_codigo);
                 }
                 else{
                     area_mensaje ='<div class="w3-panel ' + resultados.clase +' dialogo">' + resultados.mensaje + '</div>';
