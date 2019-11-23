@@ -8,33 +8,6 @@ $fecha_actual = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
 $error_fecha = "";
 
-//if (isset($_POST['enviar'])) {
-//    $fecha_salida = $_POST['fecha_salida'];
-//    $hora_salida_inicial = $_POST['hora_salida_inicial'];
-//    $hora_salida_final = $_POST['hora_salida_final'];
-//    $tipo_viajes = $_POST['tipo_viajes'];
-//
-//    if ($fecha_salida == "" && $fecha_salida < $fecha_minimo) {
-//        $error_fecha = "Ingrese una fecha valida";
-//    } else {
-//        $sql = "select fecha_salida, hora_salida, tipo_viajes.tipo_viaje, duracion from viajes as v
-//                    inner join tipo_viajes
-//                    on v.tipo_viaje = tipo_viajes.id
-//                    WHERE v.fecha_salida = '$fecha_salida'";
-//        if ($hora_salida_inicial != "-" && $hora_salida_final == "-") {
-//            $sql = $sql . " AND hora_salida >= '$hora_salida_inicial'";
-//        } else if ($hora_salida_inicial != "-" && $hora_salida_final != "-") {
-//            if ($hora_salida_inicial < $hora_salida_final) {
-//                $sql = $sql . " AND hora_salida between '$hora_salida_inicial' and '$hora_salida_final'";
-//            }
-//
-//        }
-//        if($tipo_viajes != "-"){
-//            $sql = $sql . " AND v.tipo_viaje = '$tipo_viajes'";
-//        }
-//        $resultado = mysqli_query($conexion, $sql);
-//    }
-//}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -46,7 +19,6 @@ $error_fecha = "";
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/gr.css">
-
 
 </head>
 <body>
@@ -75,11 +47,11 @@ $error_fecha = "";
 
                 <input id="tipo_viajes" name="tipo_viajes" type="hidden" value="2">
                 <div class="selector">
-                    <label for='fecha_salida'>Fecha Salida:</label>
+                    <label for='fecha_salida' class="buscador">Fecha Salida:</label>
                     <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
                 </div>
                 <div class="selector">
-                    <label for="origen">Lugar de Salida:</label>
+                    <label for="origen" class="buscador">Lugar de Salida:</label>
                     <select name="origen">
                         <?php
                         $es=0;
@@ -104,12 +76,13 @@ $error_fecha = "";
 
                     <input name="tipo_viajes" type="hidden" value="3">
                     <div class="selector">
-                        <label for='fecha_salida'>Fecha Salida:</label>
+                        <label for='fecha_salida' class="buscador">Fecha Salida:</label>
                         <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
                     </div>
                     <div class="selector">
-                        <label for='origen'>Lugar de Salida:</label>
+                        <label for='origen' class="buscador">Lugar de Salida:</label>
                         <select name='origen' id="origen">
+                            <option>Elija una opción</option>
                             <?php
                             $es=0;
                             while($es < count($registro_estaciones)) {
@@ -121,7 +94,7 @@ $error_fecha = "";
                     </div>
                     <div id="estac"></div>
                     <div class="selector">
-                        <label for='destino'>Lugar de Destino:</label>
+                        <label for='destino' class="buscador">Lugar de Destino:</label>
                         <select name='destino' id="estaciones">
 
                         </select>
@@ -161,7 +134,8 @@ $error_fecha = "";
                 <input name="tipo_viajes" type="hidden" value="1">
                 <input name="origen" type="hidden" value="1">
                 <input name="destino" type="hidden" value="1">
-                <div class="selector"><label for='fecha_salida'>Fecha Salida:</label>
+                <div class="selector">
+                    <label for='fecha_salida' class="buscador">Fecha Salida:</label>
                     <input name="fecha_salida"type="date" min="<?php echo $fecha_minimo?>">
                 </div>
 
@@ -181,7 +155,7 @@ $error_fecha = "";
                     <td>Duración del viaje</td>
                     <td>Nave</td>
                     <td>Circuito</td>
-                    <td></td>
+                    <td class='btn-reserva'></td>
                   </tr>
                  </thead>
                  <tbody id='resultados'>";
@@ -207,4 +181,10 @@ $error_fecha = "";
 <script src="js/selector_viajes.js"></script>
 </body>
 <?php include "pie.html";?>
+<?php
+//$sesion = 2;  //Sesion = 2 es el usuario registrado
+//if($sesion == 2){
+//    echo "<script src='js/muestra.js'></script>";
+//}
+?>
 </html>

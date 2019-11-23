@@ -24,9 +24,23 @@ $(document).ready(function() {
             url: 'reserva_asiento.php',
             type: 'POST',
             data: form_data,
-            success:
-                function(html){
-                $("#mensaje").html(html);
+            // success:
+                // function(html){
+                // $("#mensaje").html(html);
+            // }
+            success: function (response) {
+                resultados = JSON.parse(response);
+
+                if(resultados.estado == "ok"){
+                    area_mensaje ='<div class="w3-panel ' + resultados.clase +' dialogo">' + resultados.mensaje + '</div>';
+                    $('#mensaje').html(area_mensaje);
+                    $('#btn-accion').hide();
+                }
+                else{
+                    area_mensaje ='<div class="w3-panel ' + resultados.clase +' dialogo">' + resultados.mensaje + '</div>';
+                    $('#mensaje').html(area_mensaje);
+                }
+
             }
         })
     })

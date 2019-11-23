@@ -10,41 +10,44 @@ $sinReservas = false;
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $hoy = date("Y-m-d-e");
 $horaActual = date("H:i:s");
+$hoy2 = date("Y-m-d H:i:s");
 if(mysqli_affected_rows($conexion) == 0){
     $sinReservas = true;
 }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Inicio</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
-    <link rel="stylesheet" href="css/gr.css">
-    <?php include "header.php" ?>
-</head>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Inicio</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/w3.css">
+        <link rel="stylesheet" href="css/gr.css">
+        <?php include "header.php" ?>
+    </head>
 <body>
 
-<div class="w3-container w3-lobster banda">
-    <p class="w3-xxxlarge w3-center">Mis Reservas<img src="img/cohete-espacial-mini.png"></p>
-</div>
+    <div class="w3-container banda">
+        <p class="w3-xxlarge w3-center">Mis Reservas</p>
+    </div>
 <?php
 if($sinReservas == false){
-?>
-<table class="w3-table-all">
-    <tr>
-        <th>Codigo de Reserva</th>
-        <th>Codigo de Vuelo</th>
-        <th>Fecha/Hora</th>
-        <th>Estado</th>
-    </tr>
+    ?>
+    <table class="w3-table-all">
+        <tr>
+            <th>Codigo de Reserva</th>
+            <th>Codigo de Vuelo</th>
+            <th>Fecha/Hora</th>
+            <th>Estado</th>
+        </tr>
     <?php
     while ($fila_reservas = mysqli_fetch_assoc($resultado_reservas)) {
         $fecha_vuelo = date("Y-m-d",strtotime($fila_reservas['fecha_hora']));
         $hora_vuelo = date("G-i-s",strtotime($fila_reservas['fecha_hora']));
         $hora_checkIn = date("G-i-s",strtotime($fila_reservas['fecha_hora']."- 2 hour"));
+        $fecha_checkIn = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 days"));
+        $fecha_checkIn2 = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 hour"));
+        $boton = "";
         if($fecha_vuelo <= $hoy && $hora_vuelo < $horaActual){
             $boton = "<a class='w3-button w3-round-xlarge w3-red btn1'>Caducada</a>";
         }else if ($fila_reservas['pago'] == 0 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1) {
@@ -53,7 +56,7 @@ if($sinReservas == false){
             $boton = "<a class='w3-button w3-round-xlarge w3-green btn1'>OK</a>";
         } else if ($fila_reservas['pago'] != 1 && $fila_reservas['lista_espera'] == 1 && $fila_reservas['check_in'] != 1) {
             $boton = "<a class='w3-button w3-round-xlarge w3-yellow btn1'>En espera</a>";
-        }else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $fecha_vuelo == $hoy && $hora_checkIn >= $horaActual){
+        }else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy2 >= $fecha_checkIn && $hoy2 <= $fecha_checkIn2){
             $boton = "<a class='w3-button w3-round-xlarge w3-blue btn1' href='ubicacion_asientos.php?reserva=".$fila_reservas['cod_reserva']."'>Check-In</a>";
         }
         echo "<tr>
@@ -64,5 +67,5 @@ if($sinReservas == false){
     }
 }else if($sinReservas == true){
     echo "<p class='w3-center'>No tiene reservas activas.</p>";
-    }
-    ?>
+}
+?>
