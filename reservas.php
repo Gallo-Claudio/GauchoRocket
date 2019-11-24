@@ -6,7 +6,7 @@ require_once "funciones.php";
 
 $id_viaje = $_GET['viaje'];
 $id_destino = $_GET['destino'];
-$circuito = $_GET['circuito'];
+$id_circuito = $_GET['circuito'];
 //$id_usuario = $_SESSION['id']; // Lo harcodeo para codear sin tener que loguearme y hacer mas rapido las verificacion de lo que hago
 $id_usuario = 1;
 $reserva_realizada = false;
@@ -105,6 +105,8 @@ $nombre_estacion_destino = determina_nombre_estacion($id_destino);
         
                 <input type='hidden' name='id_destino' value='$id_destino'>
                 <input type='hidden' name='id_viaje' value='$id_viaje'>
+                <input type='hidden' name='codigo_vuelo' value='$codigo_vuelo'>
+                <input type='hidden' name='id_circuito' value='$id_circuito'>
                 <input type='hidden' name='tipo_viaje' value='$tipo_viaje'><br><br> 
                 
                 <!-- Sector formularios de acompañantes-->       

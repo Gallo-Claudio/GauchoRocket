@@ -22,7 +22,7 @@ $sql_datos_reserva = "SELECT cap.precio, cab.cabinaNombre, cantidad, estacion_or
                     INNER JOIN cabina as cab
                     ON cap.tipo_cabina = cab.id
                     inner join viajes
-                    on r.cod_vuelo = viajes.id
+                    on r.id_viajes = viajes.id
                     inner join modelos_naves
                     on cap.modelo = modelos_naves.id
                     WHERE r.cod_reserva = '$cod_reserva'";

@@ -1,5 +1,6 @@
 <?php
 require_once "conexion.php";
+require "funciones.php";
 
 $tipo_viaje = $_POST['tipo_viaje'];
 $id_viaje = $_POST['id_viaje'];
@@ -11,6 +12,8 @@ $nombre = $_POST['nombre'];
 $apellido = $_POST['apellido'];
 $email = $_POST['email'];
 $id_estacion_destino = $_POST['id_destino'];
+$codigo_vuelo = $_POST['codigo_vuelo'];
+$id_circuito = $_POST['id_circuito'];
 
 
 /****************************************************************************************************************************/
@@ -32,29 +35,30 @@ $id_estacion_origen = $fila_cabina['id_estacion_origen'];
 
 
 /**************************************************************************************************************/
-/* se obtiene el tipo de circuito y las estaciones que lo integran **** Usado para ENTRE DESTINOS  ************/
+/*    De acuerdo al sentido del viaje, ordena las estaciones   ****    Usado para ENTRE DESTINOS    ************/
 /**************************************************************************************************************/
-if($circuito<3){
-    $sql_estaciones = "SELECT c.id as circuito, e.id, e.nombre FROM viajes as v
+$sql_sentido_del_vuelo = "select sentido from circuitos where id='$id_circuito'";
+$resultado_sentido_del_vuelo = mysqli_query($conexion,$sql_sentido_del_vuelo);
+$fila_sentido_del_vuelo = mysqli_fetch_assoc($resultado_sentido_del_vuelo);
+$sentido_del_vuelo = $fila_sentido_del_vuelo['sentido'];
+
+$sql_estaciones = "SELECT c.id as circuito, e.id, e.nombre FROM viajes as v
                     INNER JOIN circuitos as c
                     ON v.circuito_id = c.id
                     INNER JOIN circuitos_estaciones as ce
                     ON c.id = ce.circuito_id
                     INNER JOIN estaciones as e
                     ON ce.estacion_id = e.id
-                    WHERE v.id = '$id_viaje'
-                    ORDER BY e.id ASC";
+                    WHERE v.id = '$id_viaje'";
+
+if($sentido_del_vuelo == 'ida'){
+    $sql_estaciones .= " ORDER BY e.id asc";
 }else{
-    $sql_estaciones = "SELECT c.id as circuito, e.id, e.nombre FROM viajes as v
-                    INNER JOIN circuitos as c
-                    ON v.circuito_id = c.id
-                    INNER JOIN circuitos_estaciones as ce
-                    ON c.id = ce.circuito_id
-                    INNER JOIN estaciones as e
-                    ON ce.estacion_id = e.id
-                    WHERE v.id = '$id_viaje'
-                    ORDER BY e.id desc ";
+    $sql_estaciones .= " ORDER BY e.id desc ";
 }
+
+
+
 $resultado_estaciones = mysqli_query($conexion,$sql_estaciones);
 $error = "";
 $reserva_realizada = false;
@@ -107,22 +111,29 @@ $reserva_realizada = false;
        }
     }
 
+    /////////////////////////////////////////////
     // Persisto datos si los campos estan llenos
     if ($campos_form_vacios == false) {
 
+        // Genero codigo de reserva
+        $longitud = 8;
+        $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $codigo_de_reserva = generarCodigo($longitud, $pattern);
+
+        // Controlo tipo de viaje y persisto
         if ($tipo_viaje == "Tour" || $tipo_viaje == "Suborbitales") {
-            $sql_reservas = "SELECT r.cod_vuelo , sum(cantidad) as cantidad FROM reservas as r
-                                    WHERE r.cod_vuelo = '$id_viaje'
+            $sql_reservas = "SELECT r.id_viajes , sum(cantidad) as cantidad FROM reservas as r
+                                    WHERE r.codigo_vuelo = '$codigo_vuelo'
                                     and r.idCapacidadCabina = '$idCapacidadCabina'
-                                    GROUP BY r.cod_vuelo";
+                                    GROUP BY r.codigo_vuelo";
             $resultado = mysqli_query($conexion, $sql_reservas);
             $fila = mysqli_fetch_assoc($resultado);
             $capacidad_disponible = $capacidadCabina - $fila['cantidad'];
 
 
             if (($capacidad_disponible - $cantidad_pasajes_a_reservar) >= 0) {
-                $sql_nueva_reserva = "INSERT INTO reservas (cod_vuelo,cantidad,id_usuario,idCapacidadCabina) VALUES
-                                                        ('$id_viaje','$cantidad_pasajes_a_reservar','$id_usuario','$idCapacidadCabina')";
+                $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in) VALUES
+                                                        ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','0','0')";
                 $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                 $reserva_realizada = true;
                 $error = "<p>La reserva fué realizada con éxito.</p>";
@@ -130,8 +141,8 @@ $reserva_realizada = false;
                 $estado="ok";
             } else {
 
-                $sql_nueva_reserva = "INSERT INTO reservas (cod_vuelo,cantidad,id_usuario,idCapacidadCabina,lista_espera) VALUES
-                                                        ('$id_viaje','$cantidad_pasajes_a_reservar','$id_usuario','$idCapacidadCabina','1')";
+                $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in) VALUES
+                                                        ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','1','0')";
                 $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                 $reserva_realizada = true;
                 $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";
@@ -144,11 +155,11 @@ $reserva_realizada = false;
 
                 while($fila_estaciones = mysqli_fetch_assoc($resultado_estaciones)){
 
-                    $sql_reservas_destino = "SELECT r.cod_vuelo, sum(cantidad) as cantidad FROM reservas as r 
-                                                    WHERE r.cod_vuelo = '$id_viaje'
+                    $sql_reservas_destino = "SELECT r.id_viajes, sum(cantidad) as cantidad FROM reservas as r 
+                                                    WHERE r.codigo_vuelo = '$codigo_vuelo'
                                                     AND r.estacion_destino = '" . $fila_estaciones['id'] . "'
                                                     and r.idCapacidadCabina = '$idCapacidadCabina'
-                                                    GROUP BY r.cod_vuelo";
+                                                    GROUP BY r.codigo_vuelo";
                     $resultado_reservas_destino = mysqli_query($conexion, $sql_reservas_destino);
                     $fila_reservas_destino = mysqli_fetch_assoc($resultado_reservas_destino);
 
@@ -157,11 +168,11 @@ $reserva_realizada = false;
                     }
 
 
-                    $sql_reservas_origen = "SELECT r.cod_vuelo, sum(cantidad) as cantidad FROM reservas as r 
-                                                    WHERE r.cod_vuelo = '$id_viaje'
+                    $sql_reservas_origen = "SELECT r.id_viajes, sum(cantidad) as cantidad FROM reservas as r 
+                                                    WHERE r.codigo_vuelo = '$codigo_vuelo'
                                                     AND r.estacion_origen = '" . $fila_estaciones['id'] . "'
                                                     and r.idCapacidadCabina = '$idCapacidadCabina'
-                                                    GROUP BY r.cod_vuelo";
+                                                    GROUP BY r.codigo_vuelo";
                     $resultado_reservas_origen = mysqli_query($conexion, $sql_reservas_origen);
                     $fila_reservas_origen = mysqli_fetch_assoc($resultado_reservas_origen);
 
@@ -169,7 +180,16 @@ $reserva_realizada = false;
                         $capacidadCabina -= $fila_reservas_origen['cantidad'];
                     }
 
-                    if ($fila_estaciones['id'] >= $id_estacion_origen && $fila_estaciones['id'] < $id_estacion_destino) {
+
+
+                    if($sentido_del_vuelo == 'ida'){
+                        $condicion =  $fila_estaciones['id'] >= $id_estacion_origen && $fila_estaciones['id'] < $id_estacion_destino;
+
+                    }else{
+                       $condicion = $fila_estaciones['id'] < $id_estacion_origen && $fila_estaciones['id'] >= $id_estacion_destino;
+                    }
+
+                    if ($condicion) {
                         if ($capacidadCabina < $cantidad_pasajes_a_reservar) {
                             $sePuedeReservar = false;
                             break;
@@ -177,11 +197,12 @@ $reserva_realizada = false;
                     } else {
                         $sePuedeReservar = true;
                     }
+
                 }
 
                 if($sePuedeReservar == true){
-                    $sql_nueva_reserva = "INSERT INTO reservas (cod_vuelo,cantidad,id_usuario,estacion_origen,estacion_destino,idCapacidadCabina) 
-                                                VALUES ('$id_viaje','$cantidad_pasajes_a_reservar','$id_usuario','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina');";
+                    $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in) 
+                                                VALUES ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','0','0')";
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
                     $error = "<p>La reserva fué realizada con éxito.</p>";
@@ -189,8 +210,8 @@ $reserva_realizada = false;
                     $estado="ok";
 
                 }elseif ($sePuedeReservar == false){
-                    $sql_nueva_reserva = "INSERT INTO reservas (cod_vuelo,cantidad,id_usuario,estacion_origen,estacion_destino,idCapacidadCabina,lista_espera) 
-                                                VALUES ('$id_viaje','$cantidad_pasajes_a_reservar','$id_usuario','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','1');";
+                    $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in) 
+                                                VALUES ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','1','0')";
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
                     $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";

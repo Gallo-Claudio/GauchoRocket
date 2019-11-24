@@ -4,7 +4,7 @@ require_once "conexion.php";
 //$id_usuario = $_SESSION['id'];
 $id_usuario = 1;
 $sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.lista_espera, r.check_in, r.id, tipo_viaje FROM reservas as r
-                 INNER JOIN viajes as v on r.cod_vuelo = v.id
+                 INNER JOIN viajes as v on r.id_viajes = v.id
                  WHERE r.id_usuario = '$id_usuario'";
 $resultado_reservas = mysqli_query($conexion,$sql_reservas);
 $sinReservas = false;

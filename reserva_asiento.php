@@ -53,7 +53,7 @@ $validaciones=true;
             $sql_datos_para_qr = "select distinct fecha_hora, naveNombre, cabinaNombre, tipo_viajes.tipo_viaje as tipo_viaje, est1.nombre as estacion_origen,
                                                  est2.nombre as estacion_destino, codigo_vuelo, nombre_menu from reservas
                                     inner join viajes
-                                    on reservas.cod_vuelo = viajes.id
+                                    on reservas.id_viajes = viajes.id
                                     inner join naves
                                     on viajes.nave = naves.id
                                     inner join modelos_naves
