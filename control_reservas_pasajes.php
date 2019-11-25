@@ -12,6 +12,7 @@ $apellido = $_POST['apellido'];
 $email = $_POST['email'];
 $id_estacion_destino = $_POST['id_destino'];
 
+
 /****************************************************************************************************************************/
 /* Se obtiene capacidad de las cabinas y otros datos ************************************************************************/
 /****************************************************************************************************************************/
@@ -76,7 +77,7 @@ $reserva_realizada = false;
         $class_error_alerta ="animated shake w3-red";
         $campos_form_vacios = true;
     }
-    else {
+    elseif($cantidad_pasajes_a_reservar>1) {
         $posicion_dato='lleno';
 
         foreach ($nombre as $valor) {
@@ -125,7 +126,7 @@ $reserva_realizada = false;
                 $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                 $reserva_realizada = true;
                 $error = "<p>La reserva fué realizada con éxito.</p>";
-                $class_error_alerta ="correcto";
+                $class_error_alerta ="w3-green";
                 $estado="ok";
             } else {
 
@@ -134,7 +135,7 @@ $reserva_realizada = false;
                 $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                 $reserva_realizada = true;
                 $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";
-                $class_error_alerta ="animated shake alerta";
+                $class_error_alerta ="animated shake w3-yellow";
                 $estado="ok";
             }
 
@@ -184,7 +185,7 @@ $reserva_realizada = false;
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
                     $error = "<p>La reserva fué realizada con éxito.</p>";
-                    $class_error_alerta ="correcto";
+                    $class_error_alerta ="w3-green";
                     $estado="ok";
 
                 }elseif ($sePuedeReservar == false){
@@ -193,7 +194,7 @@ $reserva_realizada = false;
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
                     $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";
-                    $class_error_alerta ="animated shake alerta";
+                    $class_error_alerta ="animated shake w3-yellow";
                     $estado="ok";
                 }
 

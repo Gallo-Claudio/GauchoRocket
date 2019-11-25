@@ -20,6 +20,7 @@ if (isset($_POST['enviar'])) {
                 session_start();
                 $_SESSION['username'] = $usuario;
                 $_SESSION['id'] = $resultado['id'];
+                $_SESSION['apellido'] = $apellido['apellido'];
                 header("location:inicio.php");
                 exit();
             } else {

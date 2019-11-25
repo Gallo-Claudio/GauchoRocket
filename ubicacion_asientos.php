@@ -1,5 +1,6 @@
 <?php
 require_once "conexion.php";
+require_once "funciones.php";
 
 $codigo_reserva = 'CR515';   // LO DEBO RECIBIR POR POST - Ahora lo hardcodeo
 
@@ -35,15 +36,8 @@ $datos_nave = mysqli_fetch_assoc($resultado_datos_nave);
 $fecha_hora = $datos_nave['fecha_hora'];
 $codigo_vuelo = $datos_nave['codigo_vuelo'];
 
-function determina_estacion($id_estacion) {
-    global $conexion;
-    $sql_nombre_estacion_origen ="select nombre from estaciones where id='$id_estacion'";
-    $resultado = mysqli_query($conexion, $sql_nombre_estacion_origen);
-    $nombre = mysqli_fetch_assoc($resultado);
-    return $nombre;
-}
-$nombre_estacion_origen = determina_estacion($estacion_origen);
-$nombre_estacion_destino = determina_estacion($estacion_destino);
+$nombre_estacion_origen = determina_nombre_estacion($estacion_origen);
+$nombre_estacion_destino = determina_nombre_estacion($estacion_destino);
 
 $sql_menu = "select * from menu";
 $resultado_menu = mysqli_query($conexion, $sql_menu);
@@ -67,7 +61,7 @@ $array = explode(",", $reg);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reserva de pasajes</title>
+    <title>Check-in</title>
     <link rel="stylesheet" href="css/resetcss.css">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
@@ -79,11 +73,12 @@ $array = explode(",", $reg);
     <p class="w3-xxlarge w3-center">Selección de asientos</p>
 </div>
 <div class="datos-reserva">
-    Datos de la reserva <?php echo $codigo_reserva ?><br><br>
+    <p class="w3-xlarge">Datos de la reserva</p><br>
+    Reserva: <?php echo $codigo_reserva ?><br>
     Vuelo: <?php echo $codigo_vuelo ?><br>
     Fecha/Hora: <?php echo $fecha_hora ?><br>
-    Origen: <?php echo $nombre_estacion_origen['nombre'] ?><br>
-    Destino: <?php echo $nombre_estacion_destino['nombre'] ?><br>
+    Origen: <?php echo $nombre_estacion_origen ?><br>
+    Destino: <?php echo $nombre_estacion_destino ?><br>
     Nave: <?php echo $naveNombre ?><br>
     Cabina: <?php echo $cabinaNombre ?><br>
     <span class="destacado">Reserva para: <?php echo $cantidad_asientos_reservados ?> personas</span>
@@ -91,16 +86,16 @@ $array = explode(",", $reg);
 
 <form id="ubicacion_asientos">
 
-    Seleccione el menú
+    <p class="item-reserva det1">Seleccione el menú</p>
     <?php
-    echo "<div>";
+    echo "<div class='opciones-menu'>";
     while($menu = mysqli_fetch_array($resultado_menu)){
-    echo "<label>$menu[nombre_menu]</label><input type='radio' name='menu' value='$menu[id_menu]'>";
+    echo "<label>$menu[nombre_menu]</label><input type='radio' name='menu' value='$menu[id_menu]' id='menu'>";
     }
     echo "</div>";
     ?>
 
-    Seleccione el/los asientos
+    <p class="item-reserva">Seleccione el/los asientos</p>
     <div class="cabina-asientos">
     <input name="cantidad_asientos_reservados" type="hidden" value="<?php echo $cantidad_asientos_reservados ?>">
     <input name="codigo_reserva" type="hidden" value="<?php echo $codigo_reserva ?>">
@@ -112,14 +107,14 @@ $array = explode(",", $reg);
                 $numero_asiento= (($fila-1)*$columnas_cabina+$columna);
 
                 if (in_array($ubicacion, $array)){
-                    echo "<label class='reservado'>
+                    echo "<label class='asientos reservado'>
                           <p>Asiento ".$numero_asiento."<br>F".$fila." - C".$columna."<br><span class='reservado'>Reservado</span></p>
                           </label>";
                 }
                 else {
-                    echo "<label class='vacante'>
+                    echo "<label class='asientos vacante'>
                           <p>Asiento ".$numero_asiento."<br>F".$fila." - C".$columna."</p>
-                          <input type='checkbox' name='asiento[]' value='".$ubicacion."'><p class='disponible'>Disponible</p>
+                          <input type='checkbox' name='asiento[]' value='".$ubicacion."' id='asiento'><p class='disponible'>Disponible</p>
                           </label>";
                 }
             }
@@ -129,6 +124,7 @@ $array = explode(",", $reg);
     </div>
     <input type="submit" name="enviar" value="Reservar ubicación" id="btn-accion">
     <div id="mensaje"></div>
+    <div id="codigo"></div>
 </form>
 
 <script src="js/jquery.min.js"></script>

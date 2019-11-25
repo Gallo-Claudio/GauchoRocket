@@ -57,6 +57,7 @@ footer {
     float: right;
     margin-right: 50px;
 }
+
 footer img {
     width: 90px;
     margin-top: 15px;
@@ -87,6 +88,9 @@ footer img {
     font-size: 14px;
     margin-bottom: 3px;
 }
+.docentes, .alumnos {
+    margin-top: 15px;
+}
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
     background-color: #a2d0f5 !important;
 }
@@ -108,7 +112,7 @@ input, select {
     color: #fff;
     font-weight: bold;
 }
-.table-striped>tbody>tr:nth-of-type(odd) {
+.table-striped>tbody>tr:nth-of-type(odd), .w3-table-all tr:nth-child(even) {
     background-color: #e6e5e5 !important;
 }
 .reserva {
@@ -190,14 +194,14 @@ span.iso {
     margin-bottom: 0px !important;
     margin-top: 2px;
 }
-.alerta {
+/*.alerta {
     background-color: #ffe600;
     color: #000;
 }
 .correcto {
     background-color: #7ad872;
     color: #000;
-}
+}*/
 .btn-reserva {
     /*display: none;*/
 }
@@ -253,21 +257,70 @@ label.reserva-medica {
     font-size: 20px;
     font-weight: bold;
 }
-
-
-
-
+table.w3-table-all tbody tr th {
+    font-weight: initial;
+}
+.alerta {
+    color: #ff0504;
+}
+.atencion {
+    color: #ffaf07;
+}
+.ok {
+    color: #10c20a;
+}
+.aprobado {
+    color: #2196f3;
+}
+#codigo {
+    display: grid;
+    /*grid-template-columns: 1fr 4fr;*/
+    grid-template-columns: 1fr 1fr;
+}
+span.item-reserva, p.item-reserva {
+    font-size: 15px;
+    margin-top: 40px;
+    font-weight: bold;
+}
+.opciones-menu {
+    display: inline-block;
+    margin-left: 15px;
+}
+input#menu {
+    margin-top: 7px;
+    margin-left: -5px;
+    margin-right: 7px;
+}
+.det1 {
+    display: inline-block;
+}
 
 
 /** ubicacion-asientos **/
+.opciones-menu label {
+    display: inline-block;
+    padding: 5px;
+    margin: 14px 8px 0px 8px;
+    font-size: 12px;
+    text-align: center;
+}
 label {
     display: inline-block;
     padding: 5px;
     margin: 8px;
     font-size: 12px;
     text-align: center;
+    /*width: 84px;*/
+    /*height: 75px;*/
+}
+label.asientos {
+    display: inline-block;
+    padding: 5px;
+    margin: 8px;
+    font-size: 12px;
+    text-align: center;
     width: 84px;
-    height: 75px;
+    height: 58px;
 }
 label.vacante {
     background-color: #89cc7e;
@@ -280,12 +333,11 @@ label.reservado {
 }
 input[type="checkbox"] {
     margin-left: 0px;
-    margin-top: 7px;
 }
 p.disponible {
     display: inline-block;
     vertical-align: top;
-    margin-top: 7px;
+    margin-top: 5px;
 }
 span.reservado {
     margin-top: 4px;
@@ -301,13 +353,12 @@ span.reservado {
 }
 .cabina-asientos {
     width: fit-content;
-    height: 450px;
-    background-color: #ccc;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 30px;
+    height: 400px;
+    margin-left: -8px;
+    margin-top: 7px;
     margin-bottom: 30px;
     overflow: auto;
+    padding-right: 20px;
 }
 .cabina-asientos div {
     display: flex;
@@ -332,6 +383,10 @@ form#ubicacion_asientos {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
+    padding: 0px 30px 30px 30px;
+    border: 1px solid #ccc;
+    margin-top: 50px;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
 }
 form#ubicacion_asientos input[type="submit"] {
     width: 100%;
