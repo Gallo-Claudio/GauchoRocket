@@ -1,10 +1,13 @@
 <?php
 session_start();
 require_once "conexion.php";
-//$id_usuario = $_SESSION['id'];
-$id_usuario = 1;
-$sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.lista_espera, r.check_in, r.id, tipo_viaje FROM reservas as r
+require "funciones.php";
+$id_usuario = $_SESSION['id'];
+//$id_usuario = 1;
+$sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.lista_espera, r.check_in, r.id, tipo_viaje,
+                 cantidad, circuito_id, id_viajes, idCapacidadCabina, (filas*columnas) as capacidadCabina, estacion_origen, estacion_destino FROM reservas as r
                  INNER JOIN viajes as v on r.id_viajes = v.id
+                 inner join capacidad on r.idCapacidadCabina = capacidad.id
                  WHERE r.id_usuario = '$id_usuario'";
 $resultado_reservas = mysqli_query($conexion,$sql_reservas);
 $sinReservas = false;
@@ -55,12 +58,24 @@ if($sinReservas == false){
         $fecha_checkIn_inicio = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 days"));
         $fecha_checkIn_fin = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 hour"));
         $boton = "";
-
-
-
-
+        $codigo_reserva = $fila_reservas['cod_reserva'];
+        $codigo_vuelo = $fila_reservas['codigo_vuelo'];
         $id_reserva = $fila_reservas['id'];
+        $cantidad = $fila_reservas['cantidad'];
+        $circuito_id = $fila_reservas['circuito_id'];
+        $id_viajes = $fila_reservas['id_viajes'];
+        $idCapacidadCabina = $fila_reservas['idCapacidadCabina'];
+        $capacidadCabina = $fila_reservas['capacidadCabina'];
+        $id_estacion_origen = $fila_reservas['estacion_origen'];
+        $id_estacion_destino = $fila_reservas['estacion_destino'];
+
+
+
         $id_tipo_viaje = $fila_reservas['tipo_viaje'];
+
+        //***************************************************
+        // Se determina el grado obtenido en el cheque medico
+        //***************************************************
         $sql_integrantes = "select id_usuarios from integrantes_viaje
                             where id_reserva = '$id_reserva'";
         $resultados_integrantes = mysqli_query($conexion, $sql_integrantes);
@@ -80,11 +95,29 @@ if($sinReservas == false){
             }
         }
 
+        //***********************************************
+        // Se determina el tipo de aceleracion de la nave
+        //***********************************************
+        $sql_tipo_de_aceleracion = "select tipo_aceleracion from reservas
+                                    inner join capacidad
+                                    on reservas.idCapacidadCabina = capacidad.id
+                                    inner join modelos_naves
+                                    on capacidad.modelo = modelos_naves.id
+                                    where cod_reserva = '$codigo_reserva'";
+
+        $resultados_tipo_de_aceleracion = mysqli_query($conexion, $sql_tipo_de_aceleracion);
+        $filas_tipo_de_aceleracion = mysqli_fetch_assoc($resultados_tipo_de_aceleracion);
+        $tipo_de_aceleracion = $filas_tipo_de_aceleracion['tipo_aceleracion'];
+
+
+
         If($nivel_vuelo_grupal == 0){
             $boton = "<span class='atencion'>Pendiente de chequeo médico</span>";
 
-        } else if($id_tipo_viaje == 3 && $nivel_vuelo_grupal < 3){
+        } else if($tipo_de_aceleracion == 'AA' && $nivel_vuelo_grupal < 3){
             $boton = "<span class='alerta'>Reserva CANCELADA - No apto para el viaje</span>";
+            cambia_estado_reserva_caida($id_reserva);
+            habilita_cupo_en_lista_espera($codigo_vuelo, $cantidad, $circuito_id, $id_viajes, $idCapacidadCabina, $capacidadCabina);
 
         } else if ($fila_reservas['pago'] == 0 && $fila_reservas['lista_espera'] != 1) {
             $boton = "<a class='w3-button w3-round-xlarge w3-blue btn1 reserva' href='pago.php?reserva=" . $fila_reservas['cod_reserva'] . "'>Pagar</a>";
@@ -110,8 +143,8 @@ if($sinReservas == false){
         }
 
         echo "<tr>
-              <th>" . $fila_reservas['cod_reserva'] . "</th>
-              <th>" . $fila_reservas['codigo_vuelo'] . "</th>
+              <th>" . $codigo_reserva . "</th>
+              <th>" . $codigo_vuelo . "</th>
               <th>" . $fila_reservas['fecha_hora'] . "</th>
               <th>" .$boton . "</th>";
     }

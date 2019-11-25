@@ -96,7 +96,7 @@ $error_fecha = "";
                     <div class="selector">
                         <label for='destino' class="buscador">Lugar de Destino:</label>
                         <select name='destino' id="estaciones">
-
+                            <!-- Recibe los datos segun la estacion de origen que se haya seleccionado -->
                         </select>
                     </div>
 
