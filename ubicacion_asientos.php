@@ -4,7 +4,7 @@ require_once "funciones.php";
 
 $codigo_reserva = 'CR515';   // LO DEBO RECIBIR POR POST - Ahora lo hardcodeo
 
-$sql_datos_reserva = "select cantidad, cod_vuelo, idCapacidadCabina, filas, columnas, estacion_origen, estacion_destino, naveNombre, cabinaNombre from reservas
+$sql_datos_reserva = "select cantidad, id_viajes, idCapacidadCabina, filas, columnas, estacion_origen, estacion_destino, naveNombre, cabinaNombre from reservas
                         inner join capacidad
                         on reservas.idCapacidadCabina = capacidad.id
                         inner join modelos_naves
@@ -16,7 +16,7 @@ $resultado_datos_reserva = mysqli_query($conexion, $sql_datos_reserva);
 $datos_reserva = mysqli_fetch_assoc($resultado_datos_reserva);
 
 $cantidad_asientos_reservados = $datos_reserva ['cantidad'];
-$id_vuelo = $datos_reserva ['cod_vuelo'];  /// Se deberia renombrar en la tabla reservas el campo cod_vuelo por vuelo, para una mas facil comprension del campo al que hace referencia. OJO de hacer esto corregir el codigo en reservas.php
+$id_vuelo = $datos_reserva ['id_viajes'];  /// Se deberia renombrar en la tabla reservas el campo cod_vuelo por vuelo, para una mas facil comprension del campo al que hace referencia. OJO de hacer esto corregir el codigo en reservas.php
 $tipo_cabina = $datos_reserva ['idCapacidadCabina'];
 $filas_cabina = $datos_reserva['filas'];
 $columnas_cabina = $datos_reserva['columnas'];
@@ -129,6 +129,6 @@ $array = explode(",", $reg);
 
 <script src="js/jquery.min.js"></script>
 <script src="js/seleccion_asientos.js"></script>
-</body>
 <?php include "pie.html";?>
+</body>
 </html>

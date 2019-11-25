@@ -35,7 +35,12 @@ $(document).ready(function() {
                     area_mensaje ='<div class="w3-panel ' + resultados.clase +' dialogo">' + resultados.mensaje + '</div>';
                     $('#mensaje').html(area_mensaje);
                     $('#btn-accion').hide();
-                    area_codigo = resultados.qr + '<div><p>Asientos seleccionados<br>' + resultados.asientos + '<br>Código de Embarque</p>' + resultados.codigo_embarque + '</div>';
+                    area_codigo = '<div>' +
+                                  '<a href="codigo-qr.php?codigo_reserva=' + resultados.codigo_reserva + '&codigo_embarque=' + resultados.codigo_embarque + '">'
+                                  + resultados.qr + '</a>Haga click sobre la imagen para<br>poder realizar un escaneo QR de la misma' +
+                                  '</div>' +
+                                  '<div><p class="etiqueta">Asientos seleccionados</p>' + resultados.asientos + '<br>' +
+                                  '<p class="etiqueta">Código de Embarque</p><p class="embarque">' + resultados.codigo_embarque + '</p></div>';
                     $('#codigo').html(area_codigo);
                 }
                 else{
@@ -46,8 +51,6 @@ $(document).ready(function() {
             }
         })
     })
-
-
 
 
 });

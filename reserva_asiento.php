@@ -53,7 +53,7 @@ $validaciones=true;
             $sql_datos_para_qr = "select distinct fecha_hora, naveNombre, cabinaNombre, tipo_viajes.tipo_viaje as tipo_viaje, est1.nombre as estacion_origen,
                                                  est2.nombre as estacion_destino, codigo_vuelo, nombre_menu from reservas
                                     inner join viajes
-                                    on reservas.cod_vuelo = viajes.id
+                                    on reservas.id_viajes = viajes.id
                                     inner join naves
                                     on viajes.nave = naves.id
                                     inner join modelos_naves
@@ -107,7 +107,7 @@ $validaciones=true;
             $archivo = 'codigo-'.$codigo_reserva.'.png';
             $filename = $dir.$archivo;
 
-            $tamanio = 4;
+            $tamanio = 5;
             $level = 'H';
             $frameSize = 1;
             $contenido = 'DATOS DE LA RESERVA<br>
@@ -134,7 +134,7 @@ $validaciones=true;
 
 
 
-$mensajeFinal = array('mensaje' => $error, 'clase' => $class_error_alerta, 'asientos' => $asientos, 'codigo_embarque' => $codigo_embarque, 'qr' => $codigo_qr, 'estado' => $estado);
+$mensajeFinal = array('mensaje' => $error, 'clase' => $class_error_alerta, 'asientos' => $asientos, 'codigo_embarque' => $codigo_embarque, 'qr' => $codigo_qr, 'codigo_reserva' => $codigo_reserva, 'estado' => $estado);
 $jsonstring = json_encode($mensajeFinal);
 echo $jsonstring;
 
