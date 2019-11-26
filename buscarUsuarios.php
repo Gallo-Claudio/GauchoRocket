@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once "conexion.php";
-$error = "";
 ?>
 <!-- Primero hago el HTML porque sino me imprime el cuadro de busqueda arriba,
 esto hace que se imprima donde corresponda -->
@@ -26,35 +25,44 @@ esto hace que se imprima donde corresponda -->
 </html>
 
 <?php
-$busca=$_POST['busca']; /*Aca agarro lo del boton buscar*/
-    if($busca==""){ /*SI $busca esta vacio que me tire este error. Sino que haga la query*/
-        echo "<center><p class='w3-panel w3-red'>Ingrese un campo a buscar</center></p>";
-    }else {
-        $busqueda = "SELECT * FROM usuarios WHERE nombre LIKE '%" . $busca . "%'";
-        $resultado_busqueda = mysqli_query($conexion, $busqueda);
-    ?>
+if (isset($_POST['busca'])) {
+$busca = $_POST['busca']; /*Aca agarro lo del input*/
+if ($busca == ""){ /*SI $busca esta vacio que me tire este error. Sino que haga la query*/
+
+    echo "<center><p class='w3-panel w3-red'>Ingrese un campo a buscar</center></p>";
+}else {
+$busqueda = "SELECT * FROM usuarios WHERE nombre LIKE '%" . $busca . "%'";
+$resultado_busqueda = mysqli_query($conexion, $busqueda);
+$final_busqueda = mysqli_fetch_all($resultado_busqueda);
+$i = 0;
+$idf = $final_busqueda[$i][0]; /*ID DE LA FACTURA ES LO MISMO QUE EL ID DEL REGISTRO*/
+$nombre = $final_busqueda[$i][1]; /*NOMBRE DEL USUARIO*/
+$apellido = $final_busqueda[$i][2]; /*APELLIDO DEL USUARIO*/
+
+?>
 <center>
-<div class="w3-display-container">
-    <div class="w3-container w3-card-4 w3-content">
-        <table class="w3-table-all">
-            <tr>
-                <td width="157"><b>Nombre</b></td>
-                <td width="221"><b>Apellido</b></td>
-                <td width="176"><b>Email</b></td>
-                <td width="73"><b>Ver factura</b></td>
+    <div class="w3-display-container">
+        <div class="w3-container w3-card-4 w3-content">
+            <table class="w3-table-all">
+                <tr>
+                    <td width="157"><b>Nombre</b></td>
+                    <td width="221"><b>Apellido</b></td>
+                    <td width="176"><b>Email</b></td>
+                    <td width="73"><b>Ver factura</b></td>
+                </tr>
 
-            </tr>
-
-    <?php
-    while($final_busqueda=mysqli_fetch_array($resultado_busqueda)){
-        echo '<tr>';
-        echo '<td width="19">'.$final_busqueda['nombre'].'</td>';
-        echo '<td width="61">'.$final_busqueda['apellido'].'</td>';
-        echo '<td width="157">'.$final_busqueda['email'].'</td>';
-        echo '<td><a href="factura.php">Factura</a></td>';
-        echo '</tr>';
-    }
-    }
+                <?php
+                while ($i < count($final_busqueda)) {
+                    echo "<tr>
+        <td>" . $final_busqueda[$i][1] . "</td> <!-- Nombre -->
+        <td>" . $final_busqueda[$i][2] . "</td> <!-- Apellido -->
+        <td>" . $final_busqueda[$i][3] . "</td> <!-- Email -->
+        <td><a href='factura.php?id=" . $final_busqueda[$i][0] . "&nombre=" . $final_busqueda[$i][1] . "&apellido=" . $final_busqueda[$i][2] . "'>Factura</a></td> <!-- ID -->
+      </tr>";
+                    $i++;
+                }
+                }
+                }
     ?>
         </table>
     </div>
@@ -64,3 +72,4 @@ $busca=$_POST['busca']; /*Aca agarro lo del boton buscar*/
 <?php
 include "pie.html";
 ?>
+

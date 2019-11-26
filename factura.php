@@ -1,29 +1,31 @@
 <?php
 session_start();
 require_once "conexion.php";
-$id_Usuario = 1;
+
+$idf = $_GET ['id'];
+$nombre = $_GET ['nombre'];
+$apellido = $_GET ['apellido'];
 $usuario = $_SESSION['username'];
 $date= date("Y-m-d");
 
-$sql = "SELECT apellido FROM usuarios where id = $id_Usuario";
+
+
+$sql = "SELECT apellido FROM usuarios where id = $idf";
 $resultado_apellido = mysqli_query($conexion,$sql);
 $final = mysqli_fetch_assoc($resultado_apellido);
-$apellido = $final['apellido'];
 
 $sql_reservas = "select estaciones.nombre as Origen, r.estacion_destino,r.cod_reserva as CodigoReserva from reservas as r
-                 inner join estaciones on
-                 r.estacion_origen = estaciones.id
-                 where pago = 1 and id_usuario = '$id_Usuario'";
+inner join estaciones on
+r.estacion_origen = estaciones.id
+where pago = 1 and id_usuario = $idf;";
 $resultado_reservas = mysqli_query($conexion, $sql_reservas);
 $final_reservas = mysqli_fetch_assoc($resultado_reservas);
-
 
 
 if(!isset($usuario)){
     header("location:login.php");
 }
-if ($_POST["generar_factura"] == "true")
-{
+if (isset($_POST['generar_factura'])) {
 
 //Recibir detalles de factura
 $id_factura = $_POST["id_factura"];
@@ -66,6 +68,9 @@ $archivo_de_salida=$archivo;
 
 $pdf=new FPDF();  //crea el objeto
 $pdf->AddPage();  //añadimos una página. Origen coordenadas, esquina superior izquierda, posición por defeto a 1 cm de los bordes.
+
+
+//logo de la tienda
 
 // Encabezado de la factura
 $pdf->SetFont('Arial','B',14);
@@ -207,7 +212,7 @@ unlink($archivo);
         <table>
             <tr>
                 <td>ID de factura:</td>
-                <td><input type="text" name="id_factura" value="1" size="5"></td>
+                <td><?php echo $idf?></td>
             </tr>
             <tr>
                 <td>fecha emisión de factura:</td>
@@ -243,7 +248,7 @@ unlink($archivo);
             </tr>
             <tr>
                 <td>Nombre del cliente:</td>
-                <td><?php echo$usuario;?></td>
+                <td><?php echo$nombre;?></td>
             </tr>
             <tr>
                 <td>Apellidos del cliente:</td>
@@ -252,17 +257,14 @@ unlink($archivo);
         </table><br>
 
         <table cellpadding="5" border="1">
-            <tr><th>Origen</th>
-                <th>Destino</th>
-                <th>Codigo de reserva</th>
-            </tr>
+            <tr><th>Origen</th><th>Destino</th><th>Codigo de reserva</th></tr>
             <?php
             while ( $final_reservas = mysqli_fetch_assoc($resultado_reservas)){
                 echo "<tr>
-                          <td class='reservas'>".$final_reservas['Origen']."</td>
-                          <td class='reservas'>".$final_reservas['estacion_destino']."</td>
-                          <td class='reservas'>".$final_reservas['CodigoReserva']."</td>
-                     </tr>";
+                            <td class='reservas'>".$final_reservas['Origen']."</td>
+                            <td class='reservas'>".$final_reservas['estacion_destino']."</td>
+                            <td class='reservas'>".$final_reservas['CodigoReserva']."</td>
+                          </tr>";
             }
             ?>
         </table>
