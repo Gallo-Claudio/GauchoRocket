@@ -26,18 +26,17 @@ esto hace que se imprima donde corresponda -->
 
 <?php
 if (isset($_POST['busca'])) {
-$busca = $_POST['busca']; /*Aca agarro lo del input*/
-if ($busca == ""){ /*SI $busca esta vacio que me tire este error. Sino que haga la query*/
-
-    echo "<center><p class='w3-panel w3-red'>Ingrese un campo a buscar</center></p>";
-}else {
-$busqueda = "SELECT * FROM usuarios WHERE nombre LIKE '%" . $busca . "%'";
-$resultado_busqueda = mysqli_query($conexion, $busqueda);
-$final_busqueda = mysqli_fetch_all($resultado_busqueda);
-$i = 0;
-$idf = $final_busqueda[$i][0]; /*ID DE LA FACTURA ES LO MISMO QUE EL ID DEL REGISTRO*/
-$nombre = $final_busqueda[$i][1]; /*NOMBRE DEL USUARIO*/
-$apellido = $final_busqueda[$i][2]; /*APELLIDO DEL USUARIO*/
+    $busca = $_POST['busca']; /*Aca agarro lo del input*/
+        if ($busca == ""){ /*SI $busca esta vacio que me tire este error. Sino que haga la query*/
+            echo "<center><p class='w3-panel w3-red'>Ingrese un campo a buscar</center></p>";
+            }else {
+            $busqueda = "SELECT * FROM usuarios WHERE nombre LIKE '%" . $busca . "%'";
+            $resultado_busqueda = mysqli_query($conexion, $busqueda);
+            $final_busqueda = mysqli_fetch_all($resultado_busqueda);
+            $i = 0;
+            $idf = $final_busqueda[$i][0]; /*ID DE LA FACTURA ES LO MISMO QUE EL ID DEL REGISTRO*/
+            $nombre = $final_busqueda[$i][1]; /*NOMBRE DEL USUARIO*/
+            $apellido = $final_busqueda[$i][2]; /*APELLIDO DEL USUARIO*/
 
 ?>
 <center>
