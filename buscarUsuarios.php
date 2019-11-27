@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "conexion.php";
+$ran=rand(1,10000);
 ?>
 <!-- Primero hago el HTML porque sino me imprime el cuadro de busqueda arriba,
 esto hace que se imprima donde corresponda -->
@@ -30,7 +31,7 @@ if (isset($_POST['busca'])) {
         if ($busca == ""){ /*SI $busca esta vacio que me tire este error. Sino que haga la query*/
             echo "<center><p class='w3-panel w3-red'>Ingrese un campo a buscar</center></p>";
             }else {
-            $busqueda = "SELECT * FROM usuarios WHERE nombre LIKE '%" . $busca . "%'";
+            $busqueda = "SELECT nombre, apellido,email FROM usuarios WHERE email  LIKE '$busca'";
             $resultado_busqueda = mysqli_query($conexion, $busqueda);
             $final_busqueda = mysqli_fetch_all($resultado_busqueda);
             $i = 0;
@@ -53,10 +54,10 @@ if (isset($_POST['busca'])) {
                 <?php
                 while ($i < count($final_busqueda)) {
                     echo "<tr>
-        <td>" . $final_busqueda[$i][1] . "</td> <!-- Nombre -->
-        <td>" . $final_busqueda[$i][2] . "</td> <!-- Apellido -->
-        <td>" . $final_busqueda[$i][3] . "</td> <!-- Email -->
-        <td><a href='factura.php?id=" . $final_busqueda[$i][0] . "&nombre=" . $final_busqueda[$i][1] . "&apellido=" . $final_busqueda[$i][2] . "'>Factura</a></td> <!-- ID -->
+        <td>" . $final_busqueda[$i][0] . "</td> <!-- Nombre -->
+        <td>" . $final_busqueda[$i][1] . "</td> <!-- Apellido -->
+        <td>" . $final_busqueda[$i][2] . "</td> <!-- Email -->
+        <td><a href='factura.php?id=" . $ran . "&nombre=" . $final_busqueda[$i][0] . "&apellido=" . $final_busqueda[$i][1] . "'>Factura</a></td> <!-- ID -->
       </tr>";
                     $i++;
                 }
