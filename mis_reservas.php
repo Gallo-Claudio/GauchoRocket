@@ -132,6 +132,8 @@ if($sinReservas == false){
 
         } else if ($fila_reservas['pago'] != 1 && $fila_reservas['lista_espera'] == 1 && $fila_reservas['check_in'] != 1) {
             $boton = "<span class='atencion'>Lista de espera</span>";
+        }else{
+            $boton = "<span class='alerta'>Error en estado de Reserva</span>";
         }
         if($fecha_vuelo <= $hoy2){
             $boton = "El viaje ya partió";
