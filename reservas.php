@@ -6,8 +6,7 @@ require_once "funciones.php";
 $id_viaje = $_GET['viaje'];
 $id_destino = $_GET['destino'];
 $id_circuito = $_GET['circuito'];
-//$id_usuario = $_SESSION['id']; // Lo harcodeo para codear sin tener que loguearme y hacer mas rapido las verificacion de lo que hago
-$id_usuario = 1;
+$id_usuario = $_SESSION['id'];
 $reserva_realizada = false;
 //Inicializo los array que van a conformar el formulario de acompañantes para pasarlos al "formulario_acomaniantes.js" que los renderiza
 $nombre=array();
