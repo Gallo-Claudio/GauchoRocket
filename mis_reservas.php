@@ -14,7 +14,6 @@ $sinReservas = false;
 //date_default_timezone_set('America/Argentina/Buenos_Aires');
 //$hoy = date("Y-m-d-e");
 //$horaActual = date("H:i:s");
-
 $hoy2 = date("Y-m-d H:i:s");
 if(mysqli_affected_rows($conexion) == 0){
     $sinReservas = true;
@@ -78,13 +77,11 @@ if($sinReservas == false){
         //***************************************************
         $sql_integrantes = "select id_usuarios from integrantes_viaje
                             where id_reserva = '$id_reserva'";
-        $resultados_integrantes = mysqli_query($conexion, $sql_integrantes);
-        $nivel_vuelo_grupal='3';
-
-        while ($fila_integrantes = mysqli_fetch_assoc($resultados_integrantes)){
-            $id_integrante = $fila_integrantes['id_usuarios'];
-
-            $sql_nivel_vuelo = "select nivel_vuelo from usuarios
+                $resultados_integrantes = mysqli_query($conexion, $sql_integrantes);
+                $nivel_vuelo_grupal='3';
+                while ($fila_integrantes = mysqli_fetch_assoc($resultados_integrantes)){
+                    $id_integrante = $fila_integrantes['id_usuarios'];
+                    $sql_nivel_vuelo = "select nivel_vuelo from usuarios
                                 where id = '$id_integrante'";
             $resultados_nivel_vuelo = mysqli_query($conexion,$sql_nivel_vuelo);
             $fila_nivel_vuelo = mysqli_fetch_assoc($resultados_nivel_vuelo);
@@ -153,7 +150,6 @@ if($sinReservas == false){
     }
     ?>
 </table>
-</div>
 </div>
 </body>
 <?php include "pie.html";?>

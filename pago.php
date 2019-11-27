@@ -7,7 +7,6 @@ $cod_reserva = 'CR515';
 $error="";
 require 'conexion.php';
 require_once "funciones.php";
-
 $anio_actual = date("Y");
 
 $sql_meses = "SELECT * FROM meses";
@@ -37,10 +36,8 @@ $naveNombre = $fila_datos_reserva['naveNombre'];
 $fecha_hora = $fila_datos_reserva['fecha_hora'];
 $codigo_vuelo = $fila_datos_reserva['codigo_vuelo'];
 $id_reserva = $fila_datos_reserva['id_reserva'];
-
 $nombre_estacion_origen = determina_nombre_estacion($estacion_origen);
 $nombre_estacion_destino = determina_nombre_estacion($estacion_destino);
-
 $total_a_pagar = $precio * $cantidad_asientos;
 ?>
 
@@ -110,8 +107,8 @@ $total_a_pagar = $precio * $cantidad_asientos;
                     </div>
                 </div>
 
-            </div>
         </div>
+    </div>
 
 
     <!-- ACA COMIENZA EL FORMULARIO-->
@@ -120,44 +117,37 @@ $total_a_pagar = $precio * $cantidad_asientos;
             <input type="hidden" name="total_a_pagar" value="<?php echo $total_a_pagar ?>">
             <input type="hidden" name="id_reserva" value="<?php echo $id_reserva ?>">
 
-            <fieldset name="num_tarjeta">
-                <label for="card-number">Número de tarjeta</label>
-                <input type="num" id="card-number" class="input-cart-number" maxlength="4" name="num_tarjeta[]"/>
-                <input type="num" id="card-number-1" class="input-cart-number" maxlength="4" name="num_tarjeta[]"/>
-                <input type="num" id="card-number-2" class="input-cart-number" maxlength="4" name="num_tarjeta[]"/>
-                <input type="num" id="card-number-3" class="input-cart-number" maxlength="4" name="num_tarjeta[]"/>
-            </fieldset>
-            <fieldset name="tipo_tarjeta">
-                <label for="card-type">Tipo de Tarjeta</label>
-                <div class="select">
-                    <select id="card-type" name="tipo_tarjeta">
-                        <option value="">Seleccione un tarjeta</option>
-                        <?php
-                        while ($fila_tipo_tarjeta = mysqli_fetch_assoc($resultado_tarjetas)) {
-                            echo "<option value='" . $fila_tipo_tarjeta['id'] . "'>" . $fila_tipo_tarjeta['tipo_tarjeta'] . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-            </fieldset>
-            <fieldset>
-                <label for="card-holder">Titular de la tarjeta</label>
-                <input type="text" id="card-holder" name="titular_tarjeta"/>
-            </fieldset>
+        <fieldset class="fieldset-expiration">
 
-            <fieldset class="fieldset-expiration">
+            <label for="card-expiration-month">Fecha de expiracion</label>
+            <div class="select">
+                <select id="card-expiration-month" name="fecha_expiracion">
+                    <option value="">Mes</option>
+                    <?php
+                    while ($fila_meses = mysqli_fetch_assoc($resultado_meses)) {
+                        echo "<option value='" . $fila_meses['id'] . "'>" . $fila_meses['meses'] . "</option>";
+                    }
+                    ?>
+                </select>
+            </div>
 
-                <label for="card-expiration-month">Fecha de expiracion</label>
-                <div class="select">
-                    <select id="card-expiration-month" name="fecha_expiracion">
-                        <option value="">Mes</option>
-                        <?php
-                        while ($fila_meses = mysqli_fetch_assoc($resultado_meses)) {
-                            echo "<option value='" . $fila_meses['id'] . "'>" . $fila_meses['meses'] . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
+            <div class="select">
+                <select id="card-expiration-year" name="anio_expiracion">
+                    <option value="">Año</option>
+                    <?php
+                    for ($i = $anio_actual; $i <= ($anio_actual + 6); $i++) {
+                        echo "<option value='" . $i . "'>$i</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset-ccv">
+            <label for="card-ccv">Codigo de seguridad</label>
+            <input type="text" id="card-ccv" maxlength="3" name="codigo_seguridad">
+        </fieldset>
+        <div class="limpia-float"></div>
+        <button class="btn" type="submit" name="enviar" id="btn-accion">Aceptar</button>
 
                 <div class="select">
                     <select id="card-expiration-year" name="anio_expiracion">

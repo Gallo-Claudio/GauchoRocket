@@ -13,6 +13,7 @@ if (isset($_POST['enviar'])) {
     $usuario = $_POST['usuario'];
     $clave = md5($_POST['clave']);
     $clave2 = md5($_POST['clave2']);
+    $apellidoU = $_SESSION['apellido'];
     if(empty($usuario) or empty($clave)){
         $error = "<div class='w3-panel w3-red'><p>Nombre de Usuario/Contraseña<br>NO pueden estar vacios</p></div>";
         $clase ="animated shake";

@@ -3,21 +3,17 @@ session_start();
 $error="";
 require_once "conexion.php";
 require_once "funciones.php";
-
 $id_viaje = $_GET['viaje'];
 $id_destino = $_GET['destino'];
 $id_circuito = $_GET['circuito'];
 //$id_usuario = $_SESSION['id']; // Lo harcodeo para codear sin tener que loguearme y hacer mas rapido las verificacion de lo que hago
 $id_usuario = 1;
 $reserva_realizada = false;
-
 //Inicializo los array que van a conformar el formulario de acompañantes para pasarlos al "formulario_acomaniantes.js" que los renderiza
 $nombre=array();
 $apellido=array();
 $email=array();
 $cantidad_pasajes_a_reservar='';
-
-
 /****************************************************************************************************************************/
 /* Se obtiene capacidad de las cabinas y otros datos ************************************************************************/
 /****************************************************************************************************************************/
@@ -37,7 +33,6 @@ $sql_viaje = "SELECT tv.tipo_viaje, codigo_vuelo, fecha_hora, naveNombre, origen
                         on v.origen = estaciones.id
                         WHERE v.id = '$id_viaje'";
 $resultado_viaje = mysqli_query($conexion, $sql_viaje);
-
 $fila_viaje = mysqli_fetch_assoc($resultado_viaje);
 $tipo_viaje = $fila_viaje['tipo_viaje'];
 $codigo_vuelo = $fila_viaje['codigo_vuelo'];
@@ -45,7 +40,6 @@ $fecha_hora = $fila_viaje['fecha_hora'];
 $nave = $fila_viaje['naveNombre'];
 $origen = $fila_viaje['origen'];
 $nombre_estacion_origen = $fila_viaje['nombre'];
-
 $nombre_estacion_destino = determina_nombre_estacion($id_destino);
 ?>
 
@@ -90,16 +84,14 @@ $nombre_estacion_destino = determina_nombre_estacion($id_destino);
                     <td class='reservas'>".$fila_viaje['precio']."</td>
                     <td class='reservas'><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
                   </tr>";
-
-                while ($fila_viaje = mysqli_fetch_assoc($resultado_viaje)){
-                    echo "<tr>
+        while ($fila_viaje = mysqli_fetch_assoc($resultado_viaje)){
+            echo "<tr>
                             <td class='reservas'>".$fila_viaje['cabinaNombre']."</td>
                             <td class='reservas'>".$fila_viaje['precio']."</td>
                             <td class='reservas'><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
                           </tr>";
-                }
-
-                echo "</table>
+        }
+        echo "</table>
                 <center>Cantidad de pasajes a reservar:
                 <input type='number' name='cantidad_pasajes_a_reservar' min='0' id='acompaniantes' value='$cantidad_pasajes_a_reservar'></center>
         
@@ -119,7 +111,7 @@ $nombre_estacion_destino = determina_nombre_estacion($id_destino);
                 <center><a class='w3-button w3-round-xlarge w3-blue btn1' href='buscador.php'>Volver al buscador</a></center>
                 </form>";
     }
-?>
+    ?>
 
 </div>
 <script src="js/jquery.min.js"></script>
