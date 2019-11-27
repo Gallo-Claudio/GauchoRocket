@@ -69,21 +69,7 @@ $mpdf -> writeHtml("<p>Gaucho Rocket</p><br>Factura<br><br>  <table>
                     <td>Apellidos del cliente:</td>
                     <td>$apellido</td>
                 </tr>
-            </table><br>
-            
-            <table>
-            <tr><th>Origen</th><th>Destino</th><th>Codigo de reserva</th></tr>
-            <?php
-          
-            while ($final_reservas = mysqli_fetch_assoc($resultado_reservas){
-                echo \"<tr>
-                <td>".$final_reservas['Origen']."</td>
-                <td>".$final_reservas['estacion_destino']."</td>
-                <td>".$final_reservas['CodigoReserva']."</td>
-                </tr>\"
-                }
-                ?>
-          </table> ",\Mpdf\HTMLParserMode::HTML_BODY);
+            </table><br>",\Mpdf\HTMLParserMode::HTML_BODY);
 $mpdf ->Output();
 
 ?>
