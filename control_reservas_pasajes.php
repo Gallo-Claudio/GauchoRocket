@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "conexion.php";
 require "funciones.php";
 $tipo_viaje = $_POST['tipo_viaje'];
