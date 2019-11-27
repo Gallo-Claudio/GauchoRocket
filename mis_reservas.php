@@ -115,7 +115,7 @@ if($sinReservas == false){
             cambia_estado_reserva_caida($id_reserva);
             habilita_cupo_en_lista_espera($codigo_vuelo, $cantidad, $circuito_id, $id_viajes, $idCapacidadCabina, $capacidadCabina);
 
-        } else if ($fila_reservas['pago'] == 0 && $fila_reservas['lista_espera'] != 1 && $hoy2 >= $fecha_checkIn_inicio && $hoy2 <= $fecha_checkIn_fin) {
+        } else if ($fila_reservas['pago'] == 0 && $fila_reservas['lista_espera'] != 1 ) {
             $boton = "<a class='w3-button w3-round-xlarge w3-blue btn1 reserva' href='pago.php?reserva=" . $fila_reservas['cod_reserva'] . "'>Pagar</a>";
 
         }else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy2 >= $fecha_checkIn_inicio && $hoy2 <= $fecha_checkIn_fin){
