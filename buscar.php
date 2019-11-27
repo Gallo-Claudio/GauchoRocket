@@ -1,25 +1,19 @@
 <?php
 require_once "conexion.php";
 
-  $tipo_viajes = $_POST['tipo_viajes'];
-  $fecha_salida = $_POST['fecha_salida'];
+$tipo_viajes = $_POST['tipo_viajes'];
+$fecha_salida = $_POST['fecha_salida'];
 $origen = $_POST['origen'];
-if ($tipo_viajes != 2) {
+
+
+if ($tipo_viajes == 2) {    // 2 son vuelos Orbitales
+    $destino = $origen;
+}
+else {
     $destino = $_POST['destino'];
 }
 
-//$tipo_viajes = 1;
-//$fecha_salida = "2019-11-17";
-//$origen = 1;
-//$destino = 1;
-
-
-
 $and = " and circuito_id in ";
-
-if ($tipo_viajes == 2) {
-    $destino = $origen;
-}
 
 /* obtengo de acuerdo al destino los numeros de los circuitos (ida y vuelta) que pasan por la estacion */
 $sql_sentido = "select circuito_id from circuitos_estaciones
@@ -38,7 +32,7 @@ $cantidad = count($sentido);
 $and = determinarCircuito($cantidad, $sentido, $and, $origen, $destino);
 
 
-$sql = "select viajes.id, fecha_hora, duracion, modelos_naves.nombre, codigo_vuelo, circuitos.nombre as nombre_circuito, circuito_id from viajes
+$sql = "select viajes.id, fecha_hora, duracion, naveNombre, codigo_vuelo, circuitos.nombre as nombre_circuito, circuito_id from viajes
                 left outer join naves
                 on viajes.nave = naves.id  
                 left outer join modelos_naves
@@ -57,65 +51,56 @@ while ($fila = mysqli_fetch_array($resultado)) {
         'id' => $fila['id'],
         'fecha_hora' => $fila['fecha_hora'],
         'duracion' => $fila['duracion'],
-        'nave' => $fila['nombre'],
+        'nave' => $fila['naveNombre'],
         'codigo_vuelo' => $fila['codigo_vuelo'],
         'circuito' => $fila['nombre_circuito'],
         'destino' => $destino,
         'circuito_id' => $fila['circuito_id']
     );
-
 }
 
 $jsonstring = json_encode($json);
-
 echo $jsonstring;
 
 
 
-function estaEnCincoCircuitos($cantidad)
-{
+function estaEnCincoCircuitos($cantidad) {
     return $cantidad == 5;
 }
 
 
-function circuitoBuenosAires(array $sentido, $and)
-{
+function circuitoBuenosAires(array $sentido, $and) {
     $a = $sentido[2][0];
     $and .= "('" . $a . "')";
     return $and;
 }
 
 
-function estaEnMenosDe3Circuitos($cantidad)
-{
+function estaEnMenosDe3Circuitos($cantidad) {
     return $cantidad < 3;
 }
 
 
-function circuitoDeDosTramos($origen, $destino, array $sentido, $and)
-{
+function circuitoDeDosTramos($origen, $destino, array $sentido, $and) {
     ($origen < $destino) ? $a = $sentido[0][0] : $a = $sentido[1][0];
     $and .= "('" . $a . "')";
     return $and;
 }
 
 
-function esDeIda($origen, $destino)
-{
+function esDeIda($origen, $destino) {
     return $origen < $destino;
 }
 
 
-function elCircuitoEsDeIda(array $sentido, $and)
-{
+function elCircuitoEsDeIda(array $sentido, $and) {
     $a = $sentido[0][0];
     $b = $sentido[1][0];
     $and .= "('" . $a . "','" . $b . "')";
     return $and;
 }
 
-function esDeVuelta(array $sentido, $and)
-{
+function esDeVuelta(array $sentido, $and) {
     $a = $sentido[2][0];
     $b = $sentido[3][0];
     $and .= "('" . $a . "','" . $b . "')";
@@ -123,8 +108,7 @@ function esDeVuelta(array $sentido, $and)
 }
 
 
-function determinarCircuito($cantidad, array $sentido, $and, $origen, $destino)
-{
+function determinarCircuito($cantidad, array $sentido, $and, $origen, $destino) {
 //SMELL: el codigo esta atado al orden de las columnas de la tabla y accede por indice mediante un count
     if (estaEnCincoCircuitos($cantidad)) {
         $and = circuitoBuenosAires($sentido, $and);

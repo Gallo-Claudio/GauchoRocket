@@ -1,35 +1,47 @@
 <?php
 require_once "conexion.php";
+require_once "funciones.php";
 
-$codigo_reserva = 'CR15';   // LO DEBO RECIBIR POR POST - Ahora lo hardcodeo
+$codigo_reserva = 'CR515';   // LO DEBO RECIBIR POR POST - Ahora lo hardcodeo
 
-$sql_datos_reserva = "select * from reservas
+$sql_datos_reserva = "select cantidad, id_viajes, idCapacidadCabina, filas, columnas, estacion_origen, estacion_destino, naveNombre, cabinaNombre from reservas
+                        inner join capacidad
+                        on reservas.idCapacidadCabina = capacidad.id
+                        inner join modelos_naves
+                        on capacidad.modelo = modelos_naves.id
                         inner join cabina
-                        on reservas.tipo_cabina = cabina.id
+                        on capacidad.tipo_cabina = cabina.id
                         where cod_reserva ='$codigo_reserva'";
 $resultado_datos_reserva = mysqli_query($conexion, $sql_datos_reserva);
 $datos_reserva = mysqli_fetch_assoc($resultado_datos_reserva);
 
 $cantidad_asientos_reservados = $datos_reserva ['cantidad'];
-$vuelo = $datos_reserva ['cod_vuelo'];  /// Se deberia renombrar en la tabla reservas el campo cod_vuelo por vuelo, para una mas facil comprension del campo al que hace referencia. OJO de hacer esto corregir el codigo en reservas.php
-$tipo_cabina = $datos_reserva ['tipo_cabina'];
-$nombre_cabina = $datos_reserva ['nombre'];
+$id_vuelo = $datos_reserva ['id_viajes'];  /// Se deberia renombrar en la tabla reservas el campo cod_vuelo por vuelo, para una mas facil comprension del campo al que hace referencia. OJO de hacer esto corregir el codigo en reservas.php
+$tipo_cabina = $datos_reserva ['idCapacidadCabina'];
+$filas_cabina = $datos_reserva['filas'];
+$columnas_cabina = $datos_reserva['columnas'];
+$estacion_origen = $datos_reserva['estacion_origen'];
+$estacion_destino = $datos_reserva['estacion_destino'];
+$naveNombre = $datos_reserva['naveNombre'];
+$cabinaNombre = $datos_reserva['cabinaNombre'];
 
 
 $sql_datos_nave = "select * from viajes
                     left outer join naves
                     on viajes.nave = naves.id
-                    left outer join capacidad
-                    on naves.modelo = capacidad.modelo
-                    where viajes.id='$vuelo'
-                    and tipo_cabina='$tipo_cabina'";
-$resultado_datos_nave = mysqli_query($conexion, $sql_datos_nave);
+                    where viajes.id='$id_vuelo'";
 
+$resultado_datos_nave = mysqli_query($conexion, $sql_datos_nave);
 $datos_nave = mysqli_fetch_assoc($resultado_datos_nave);
-$filas_cabina = $datos_nave['filas'];
-$columnas_cabina = $datos_nave['columnas'];
 $fecha_hora = $datos_nave['fecha_hora'];
 $codigo_vuelo = $datos_nave['codigo_vuelo'];
+
+$nombre_estacion_origen = determina_nombre_estacion($estacion_origen);
+$nombre_estacion_destino = determina_nombre_estacion($estacion_destino);
+
+$sql_menu = "select * from menu";
+$resultado_menu = mysqli_query($conexion, $sql_menu);
+
 
 
 
@@ -49,7 +61,7 @@ $array = explode(",", $reg);
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reserva de pasajes</title>
+    <title>Check-in</title>
     <link rel="stylesheet" href="css/resetcss.css">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
@@ -61,18 +73,29 @@ $array = explode(",", $reg);
     <p class="w3-xxlarge w3-center">Selección de asientos</p>
 </div>
 <div class="datos-reserva">
-    Datos de la reserva<br><br>
+    <p class="w3-xlarge">Datos de la reserva</p><br>
+    Reserva: <?php echo $codigo_reserva ?><br>
     Vuelo: <?php echo $codigo_vuelo ?><br>
     Fecha/Hora: <?php echo $fecha_hora ?><br>
-    Origen: <br>
-    Destino: <br>
-    Nave: <br>
-    Cabina: <?php echo $nombre_cabina ?><br>
+    Origen: <?php echo $nombre_estacion_origen ?><br>
+    Destino: <?php echo $nombre_estacion_destino ?><br>
+    Nave: <?php echo $naveNombre ?><br>
+    Cabina: <?php echo $cabinaNombre ?><br>
     <span class="destacado">Reserva para: <?php echo $cantidad_asientos_reservados ?> personas</span>
 </div>
 
 <form id="ubicacion_asientos">
-    <div id="mensaje"></div>
+
+    <p class="item-reserva det1">Seleccione el menú</p>
+    <?php
+    echo "<div class='opciones-menu'>";
+    while($menu = mysqli_fetch_array($resultado_menu)){
+    echo "<label>$menu[nombre_menu]</label><input type='radio' name='menu' value='$menu[id_menu]' id='menu'>";
+    }
+    echo "</div>";
+    ?>
+
+    <p class="item-reserva">Seleccione el/los asientos</p>
     <div class="cabina-asientos">
     <input name="cantidad_asientos_reservados" type="hidden" value="<?php echo $cantidad_asientos_reservados ?>">
     <input name="codigo_reserva" type="hidden" value="<?php echo $codigo_reserva ?>">
@@ -84,14 +107,14 @@ $array = explode(",", $reg);
                 $numero_asiento= (($fila-1)*$columnas_cabina+$columna);
 
                 if (in_array($ubicacion, $array)){
-                    echo "<label class='reservado'>
+                    echo "<label class='asientos reservado'>
                           <p>Asiento ".$numero_asiento."<br>F".$fila." - C".$columna."<br><span class='reservado'>Reservado</span></p>
                           </label>";
                 }
                 else {
-                    echo "<label class='vacante'>
+                    echo "<label class='asientos vacante'>
                           <p>Asiento ".$numero_asiento."<br>F".$fila." - C".$columna."</p>
-                          <input type='checkbox' name='asiento[]' value='".$ubicacion."'><p class='disponible'>Disponible</p>
+                          <input type='checkbox' name='asiento[]' value='".$ubicacion."' id='asiento'><p class='disponible'>Disponible</p>
                           </label>";
                 }
             }
@@ -99,11 +122,13 @@ $array = explode(",", $reg);
         }
     ?>
     </div>
-    <input type="submit" name="enviar" value="Reservar ubicación">
+    <input type="submit" name="enviar" value="Reservar ubicación" id="btn-accion">
+    <div id="mensaje"></div>
+    <div id="codigo"></div>
 </form>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/seleccion_asientos.js"></script>
-</body>
 <?php include "pie.html";?>
+</body>
 </html>

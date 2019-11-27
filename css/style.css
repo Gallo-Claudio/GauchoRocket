@@ -9,11 +9,6 @@ body {
   min-height: 100%;
   font-family: 'Open sans', sans-serif;
 }
-
-body {
-  background: linear-gradient(50deg, #f3c680, #a1e3e2);
-}
-
 /*--------------------
 Buttons
 --------------------*/
@@ -59,14 +54,14 @@ Form
   width: 60%;
 }
 .form fieldset.fieldset-expiration .select {
-  width: 84px;
+  width: 115px;
   margin-right: 12px;
   float: left;
 }
 .form fieldset.fieldset-ccv {
   clear: none;
   float: right;
-  width: 86px;
+  width: 135px;
 }
 .form fieldset label {
   display: block;
@@ -93,7 +88,7 @@ Form
 .form fieldset .select.input-cart-number {
   width: 82px;
   display: inline-block;
-  margin-right: 8px;
+  margin-right: 31px;
 }
 .form fieldset input.input-cart-number:last-child,
 .form fieldset .select.input-cart-number:last-child {
@@ -151,19 +146,19 @@ Checkout
 .checkout {
   margin: 150px auto 30px;
   position: relative;
-  width: 460px;
+  width: 560px;
   background: white;
   border-radius: 15px;
-  padding: 160px 45px 30px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 160px 64px 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 /*--------------------
 Credit Card
 --------------------*/
 .credit-card-box {
-  -webkit-perspective: 1000;
-          perspective: 1000;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
   width: 400px;
   height: 280px;
   position: absolute;
@@ -266,7 +261,7 @@ Credit Card
 .credit-card-box .number {
   position: absolute;
   margin: 0 auto;
-  top: 103px;
+  top: 33px;
   left: 19px;
   font-size: 38px;
 }
@@ -309,7 +304,7 @@ Credit Card
   padding: 10px;
 }
 .credit-card-box .ccv label {
-  margin: -25px 0 14px;
+  margin: -35px 0 14px;
   color: #fff;
 }
 
@@ -324,4 +319,7 @@ Credit Card
 }
 .the-most img {
   max-width: 100%;
+}
+.card-expiration-date div {
+  top: -70px;
 }
