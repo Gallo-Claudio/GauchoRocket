@@ -10,6 +10,7 @@ $anio_expiracion = $_POST['anio_expiracion'];
 $codigo_seguridad = $_POST['codigo_seguridad'];
 $total_a_pagar = $_POST['total_a_pagar'];
 $id_reserva = $_POST['id_reserva'];
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 $anio_actual = (int)date("Y");
 $mes_actual = (int)date("m");
 $fecha_de_pago = date("Y-m-d");
