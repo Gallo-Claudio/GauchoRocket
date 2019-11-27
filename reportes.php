@@ -13,6 +13,13 @@ $sql_cabina_mas_vendida = " select DISTINCT c.cabinaNombre,count(r.idCapacidadCa
                             order by count(r.idCapacidadCabina) desc
                             limit 2";
 $resultado_cabina_mas_vendida = mysqli_query($conexion,$sql_cabina_mas_vendida);
+
+
+$sql_facturacion_mensual = "select sum(monto_pago) as facturacionMensual, month(fecha_pago) as mes,year(fecha_pago) as anio
+                            from facturacion
+                            group by mes";
+$sql_resultado_facturacion_mensual = mysqli_query($conexion,$sql_facturacion_mensual);
+
 ?>
 
 
@@ -50,7 +57,34 @@ while ($final_cabina_mas_vendida = mysqli_fetch_assoc($resultado_cabina_mas_vend
           </tr>";
                 }
       ?>
+        </table><br><br>
+
+
+
+        <table class="w3-table-all">
+        <h3 class="w3-xxxlarge w3-center w3-lobster">Facturación mensual</h3>
+        <tr>
+            <td width="157"><b>Facturación</b></td>
+            <td width="221"><b>Mes</b></td>
+            <td width="176"><b>Año</b></td>
+        </tr>
+
+        <?php
+
+        while ($final_resultado_facturacion_mensual = mysqli_fetch_assoc($sql_resultado_facturacion_mensual)){
+            echo "<tr>
+<center>
+                <td> $ ".$final_resultado_facturacion_mensual['facturacionMensual']."</td>\n 
+                <td>".$final_resultado_facturacion_mensual['mes']."</td>\n
+                <td>".$final_resultado_facturacion_mensual['anio']."</td><br><br>
+</center>
+          </tr>";
+        }
+        ?>
         </table>
+
+
+
     </div>
 </body>
 <?php
