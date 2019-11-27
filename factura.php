@@ -5,6 +5,8 @@ require_once "vendor/autoload.php";
 $idf = $_GET ['id'];
 $nombre = $_GET ['nombre'];
 $apellido = $_GET ['apellido'];
+$pago = $_GET['pago'];
+$fechaPago = $_GET['fechaPago'];
 $usuario = $_SESSION['username'];
 $date= date("Y-m-d");
 
@@ -68,6 +70,14 @@ $mpdf -> writeHtml("<p>Gaucho Rocket</p><br>Factura<br><br>  <table>
                 <tr>
                     <td>Apellidos del cliente:</td>
                     <td>$apellido</td>
+                </tr>
+                  <tr>
+                    <td>Precio:</td>
+                    <td>$pago</td>
+                </tr>
+                <tr>
+                    <td>Fecha pago:</td>
+                    <td>$fechaPago</td>
                 </tr>
             </table><br>",\Mpdf\HTMLParserMode::HTML_BODY);
 $mpdf ->Output();
