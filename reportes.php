@@ -1,8 +1,9 @@
 <?php
 session_start();
 require_once "conexion.php";
+
 $sql_cabina_mas_vendida = " select DISTINCT c.cabinaNombre,count(r.idCapacidadCabina)as CabinaMasVendida,
-                            year(v.fecha_hora) as anio, month(v.fecha_hora) as mes from cabina as c
+                            year(v.fecha_hora) as anio, monthname(v.fecha_hora) as mes from cabina as c
                             inner join capacidad as cap 
                             on c.id = cap.tipo_cabina
                             inner join reservas as r
@@ -15,7 +16,7 @@ $sql_cabina_mas_vendida = " select DISTINCT c.cabinaNombre,count(r.idCapacidadCa
 $resultado_cabina_mas_vendida = mysqli_query($conexion,$sql_cabina_mas_vendida);
 
 
-$sql_facturacion_mensual = "select sum(f.monto_pago) as facturacionMensual,cab.cabinaNombre, month(f.fecha_pago) as mes,year(f.fecha_pago) as anio
+$sql_facturacion_mensual = "select sum(f.monto_pago) as facturacionMensual,cab.cabinaNombre, monthname(f.fecha_pago) as mes,year(f.fecha_pago) as anio
                             from facturacion as f
                             inner join reservas as r
                             on f.id_reserva = r.id
@@ -27,7 +28,10 @@ $sql_facturacion_mensual = "select sum(f.monto_pago) as facturacionMensual,cab.c
 $sql_resultado_facturacion_mensual = mysqli_query($conexion,$sql_facturacion_mensual);
 
 ?>
-
+<script type="text/javascript" src="js/jquery-2.2.4.min.js" xmlns="http://www.w3.org/1999/html"></script>
+<script type="text/javascript" src="js/Chart.min.js"></script>
+<script src="js/Chart.bundle.js"></script>
+<script src="js/Chart.js"></script>
 
 <!DOCTYPE HTML>
 <html>
@@ -64,7 +68,12 @@ while ($final_cabina_mas_vendida = mysqli_fetch_assoc($resultado_cabina_mas_vend
           </tr>";
                 }
       ?>
-        </table><br><br>
+        </table><br>
+
+<center><button class="w3-button w3-round-xlarge w3-dark-grey" type="submit">
+        <a href="graficoCabinaMasVendida.php">Ver gráfico</a>
+</center>
+        </button><br><br>
 
 <!--*********************************************FACTURACION MENSUAL************************************** -->
         <table class="w3-table-all">
@@ -89,7 +98,12 @@ while ($final_cabina_mas_vendida = mysqli_fetch_assoc($resultado_cabina_mas_vend
           </tr>";
         }
         ?>
-        </table>
+        </table><br>
+
+        <center><button class="w3-button w3-round-xlarge w3-dark-grey" type="submit">
+                <a href="graficoFacturacionMensual.php">Ver gráfico</a>
+        </center>
+        </button><br><br>
 <!--*********************************************TASA DE OCUPACION POR VIAJE Y EQUIPO************************************** -->
 
         <table class="w3-table-all">
@@ -97,10 +111,9 @@ while ($final_cabina_mas_vendida = mysqli_fetch_assoc($resultado_cabina_mas_vend
 
 
         </table>
-
-
     </div>
 </body>
+
 <?php
 include "pie.html";
 ?>

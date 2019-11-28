@@ -51,7 +51,7 @@ if($resultado_reservas) {
                 <td>" . $final['fechaPago'] . "</td>\n
                 <td><a href='factura.php?id=" . $ran . "&nombre=" . $final['nombre'] .
                              "&apellido=" . $final['apellido'] . "&pago=" . $final['pago'] .
-                             "&fechaPago=" .$final['fechaPago'] . "'>Factura</a></td> <!-- ID -->
+                             "&fechaPago=" .$final['fechaPago'] . "'>Factura</a></td> 
 </center>
           </tr>";
     }
