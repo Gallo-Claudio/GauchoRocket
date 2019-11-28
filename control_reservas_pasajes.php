@@ -132,8 +132,8 @@ $reserva_realizada = false;
 
 
             if (($capacidad_disponible - $cantidad_pasajes_a_reservar) >= 0) {
-                $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in) VALUES
-                                                        ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','0','0')";
+                $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in,reserva_activa) VALUES
+                                                        ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','0','0','1')";
                 $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                 $reserva_realizada = true;
                 $error = "<p>La reserva fué realizada con éxito.</p>";
@@ -141,8 +141,8 @@ $reserva_realizada = false;
                 $estado="ok";
             } else {
 
-                $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in) VALUES
-                                                        ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','1','0')";
+                $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in,reserva_activa) VALUES
+                                                        ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','1','0','0')";
                 $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                 $reserva_realizada = true;
                 $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";
@@ -201,8 +201,8 @@ $reserva_realizada = false;
                 }
 
                 if($sePuedeReservar == true){
-                    $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in) 
-                                                VALUES ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','0','0')";
+                    $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in,reserva_activa) 
+                                                VALUES ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','0','0','1')";
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
                     $error = "<p>La reserva fué realizada con éxito.</p>";
@@ -210,8 +210,8 @@ $reserva_realizada = false;
                     $estado="ok";
 
                 }elseif ($sePuedeReservar == false){
-                    $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in) 
-                                                VALUES ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','1','0')";
+                    $sql_nueva_reserva = "INSERT INTO reservas (id_viajes,codigo_vuelo,cantidad,id_usuario,cod_reserva,estacion_origen,estacion_destino,idCapacidadCabina,pago,lista_espera,check_in,reserva_activa) 
+                                                VALUES ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','1','0','0')";
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
                     $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";

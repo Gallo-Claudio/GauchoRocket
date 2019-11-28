@@ -14,7 +14,7 @@ esto hace que se imprima donde corresponda -->
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/gr.css">
-    <?php include "header.php" ?><br>
+    <?php include "header-admin.php" ?><br>
 </head>
 <form class="w3-container w3-card-4 w3-content" method="post" action="buscarUsuarios.php">
 <center>

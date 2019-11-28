@@ -294,6 +294,23 @@ input#menu {
 .det1 {
     display: inline-block;
 }
+.panel-control {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 230px;
+    margin-bottom: 220px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+
+
+
+
 
 
 /** ubicacion-asientos **/

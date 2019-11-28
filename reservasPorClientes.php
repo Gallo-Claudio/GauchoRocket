@@ -25,7 +25,7 @@ $resultado_reservas = mysqli_query($conexion,$sql_reservas);
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/gr.css">
-    <?php include "header.php" ?><br>
+    <?php include "header-admin.php" ?>
 </head>
 <body>
 <div class="w3-container w3-card-4 w3-content">
@@ -52,7 +52,6 @@ if($resultado_reservas) {
                 <td><a href='factura.php?id=" . $ran . "&nombre=" . $final['nombre'] .
                              "&apellido=" . $final['apellido'] . "&pago=" . $final['pago'] .
                              "&fechaPago=" .$final['fechaPago'] . "'>Factura</a></td> <!-- ID -->
-                <br><br>
 </center>
           </tr>";
     }
