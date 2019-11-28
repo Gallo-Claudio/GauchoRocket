@@ -1,16 +1,12 @@
 <?php
+session_start();
 require_once "conexion.php";
 require "funciones.php";
-
 $tipo_viaje = $_POST['tipo_viaje'];
 $id_viaje = $_POST['id_viaje'];
-//$id_usuario = $_SESSION['id']; // Lo harcodeo para codear sin tener que loguearme y hacer mas rapido las verificacion de lo que hago
-$id_usuario = 1;
+$id_usuario = $_SESSION['id'];
 $idCapacidadCabina = $_POST['idCapacidadCabina'];
 $cantidad_pasajes_a_reservar = $_POST['cantidad_pasajes_a_reservar'];
-$nombre = $_POST['nombre'];
-$apellido = $_POST['apellido'];
-$email = $_POST['email'];
 $id_estacion_destino = $_POST['id_destino'];
 $codigo_vuelo = $_POST['codigo_vuelo'];
 $id_circuito = $_POST['id_circuito'];
@@ -82,6 +78,9 @@ $reserva_realizada = false;
         $campos_form_vacios = true;
     }
     elseif($cantidad_pasajes_a_reservar>1) {
+        $nombre = $_POST['nombre'];
+        $apellido = $_POST['apellido'];
+        $email = $_POST['email'];
         $posicion_dato='lleno';
 
         foreach ($nombre as $valor) {
@@ -136,7 +135,7 @@ $reserva_realizada = false;
                                                         ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','0','0','1')";
                 $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                 $reserva_realizada = true;
-                $error = "<p>La reserva fué realizada con éxito.</p>";
+                $error = "<p>La reserva fue realizada con exito.</p>";
                 $class_error_alerta ="w3-green";
                 $estado="ok";
             } else {
@@ -145,7 +144,7 @@ $reserva_realizada = false;
                                                         ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','1','0','0')";
                 $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                 $reserva_realizada = true;
-                $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";
+                $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmacion hasta que haya alguna cancelacion de reserva.</p>";
                 $class_error_alerta ="animated shake w3-yellow";
                 $estado="ok";
             }
@@ -205,7 +204,7 @@ $reserva_realizada = false;
                                                 VALUES ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','0','0','1')";
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
-                    $error = "<p>La reserva fué realizada con éxito.</p>";
+                    $error = "<p>La reserva fue realizada con exito.</p>";
                     $class_error_alerta ="w3-green";
                     $estado="ok";
 
@@ -214,7 +213,7 @@ $reserva_realizada = false;
                                                 VALUES ('$id_viaje','$codigo_vuelo','$cantidad_pasajes_a_reservar','$id_usuario','$codigo_de_reserva','$id_estacion_origen','$id_estacion_destino','$idCapacidadCabina','0','1','0','0')";
                     $consulta = mysqli_query($conexion, $sql_nueva_reserva);
                     $reserva_realizada = true;
-                    $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelación de reserva.</p>";
+                    $error = "<p>La reserva entro en LISTA DE ESPERA.<br>Lo que significa que la misma esta pendiente de confirmación hasta que haya alguna cancelacion de reserva.</p>";
                     $class_error_alerta ="animated shake w3-yellow";
                     $estado="ok";
                 }

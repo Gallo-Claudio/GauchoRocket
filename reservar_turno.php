@@ -23,6 +23,7 @@ $numero_de_usuario = $fila_id_usuario['id_usuario'];
 $sql_centro_medico = "SELECT * FROM centros_medicos";
 $resultado_centro_medico = mysqli_query($conexion,$sql_centro_medico);
 
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 $hoy = date("Y-m-d");
 $fecha_minimo = date("Y-m-d",strtotime($hoy."+ 1 days"));
 $nuevo_turno = false;

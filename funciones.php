@@ -138,7 +138,7 @@
     //*********************************************************
     function habilita_lista_de_espera (){
         global $conexion;
-
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $hora_de_vuelos_que_despegan_ahora = date("Y-m-d H:i:s");
         $hora_de_vuelos_que_despegan_dentro_de_2_horas = date("Y-m-d H:i:s",strtotime($hora_de_vuelos_que_despegan_ahora."+ 2 hour"));
 

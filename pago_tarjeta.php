@@ -10,10 +10,10 @@ $anio_expiracion = $_POST['anio_expiracion'];
 $codigo_seguridad = $_POST['codigo_seguridad'];
 $total_a_pagar = $_POST['total_a_pagar'];
 $id_reserva = $_POST['id_reserva'];
+date_default_timezone_set('America/Argentina/Buenos_Aires');
 $anio_actual = (int)date("Y");
 $mes_actual = (int)date("m");
 $fecha_de_pago = date("Y-m-d");
-
 $campos_vacios = false;
 $error="";
 
@@ -72,7 +72,7 @@ $error="";
                 $error = "<p>La tarjeta ingresada está vencida.</p>";
                 $class_error_alerta ="animated shake w3-red";
             }else if(validarTarjeta($num_tarjeta,$tipo_tarjeta,$conexion) == true){
-                $sql_pago = "UPDATE reservas SET pago = 1 WHERE cod_reserva = '$cod_reserva'";
+                $sql_pago = "UPDATE reservas SET pago = 1 WHERE id = '$id_reserva'";
                 $resultado_pago = mysqli_query($conexion,$sql_pago);
 
                 $sql_facturacion ="INSERT INTO facturacion (fecha_pago, monto_pago, id_reserva, numero_tarjeta, tipo_de_tarjeta, titular)
