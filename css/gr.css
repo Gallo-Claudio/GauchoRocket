@@ -303,7 +303,15 @@ input#menu {
     margin-left: auto;
     margin-right: auto;
 }
-
+.cuadro-mensaje {
+    width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 64px;
+    margin-bottom: 213px;
+    font-size: 17px;
+    padding: 20px 0px;
+}
 
 
 

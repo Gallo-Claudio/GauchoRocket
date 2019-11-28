@@ -32,6 +32,14 @@ $cantidad = count($sentido);
 $and = determinarCircuito($cantidad, $sentido, $and, $origen, $destino);
 
 
+if(empty($fecha_salida)){
+    $hoy = date("Y-m-d");
+    $opcion_fecha ="where fecha_hora > '$hoy%'";
+}
+else{
+    $opcion_fecha ="where fecha_hora like '$fecha_salida%'";
+}
+
 $sql = "select viajes.id, fecha_hora, duracion, naveNombre, codigo_vuelo, circuitos.nombre as nombre_circuito, circuito_id from viajes
                 left outer join naves
                 on viajes.nave = naves.id  
@@ -39,7 +47,7 @@ $sql = "select viajes.id, fecha_hora, duracion, naveNombre, codigo_vuelo, circui
                 on naves.modelo = modelos_naves.id
                 inner join circuitos
                 on viajes.circuito_id = circuitos.id
-                where fecha_hora like '$fecha_salida%'
+                ".$opcion_fecha."
                 and tipo_viaje = '$tipo_viajes'
                 and origen = '$origen'" . $and;
 

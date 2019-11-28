@@ -26,10 +26,11 @@ if(mysqli_affected_rows($conexion) == 0){
     <meta charset="UTF-8">
     <title>Inicio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/animate.min.css">
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/gr.css">
-    <?php include "header.php" ?>
 </head>
+<?php include "header.php" ?>
 <body>
 
 <div class="w3-container banda">
@@ -76,11 +77,13 @@ if($sinReservas == false){
         //***************************************************
         $sql_integrantes = "select id_usuarios from integrantes_viaje
                             where id_reserva = '$id_reserva'";
-                $resultados_integrantes = mysqli_query($conexion, $sql_integrantes);
-                $nivel_vuelo_grupal='3';
-                while ($fila_integrantes = mysqli_fetch_assoc($resultados_integrantes)){
-                    $id_integrante = $fila_integrantes['id_usuarios'];
-                    $sql_nivel_vuelo = "select nivel_vuelo from usuarios
+        $resultados_integrantes = mysqli_query($conexion, $sql_integrantes);
+        $nivel_vuelo_grupal='3';
+
+        while ($fila_integrantes = mysqli_fetch_assoc($resultados_integrantes)){
+            $id_integrante = $fila_integrantes['id_usuarios'];
+
+            $sql_nivel_vuelo = "select nivel_vuelo from usuarios
                                 where id = '$id_integrante'";
             $resultados_nivel_vuelo = mysqli_query($conexion,$sql_nivel_vuelo);
             $fila_nivel_vuelo = mysqli_fetch_assoc($resultados_nivel_vuelo);
@@ -147,7 +150,7 @@ if($sinReservas == false){
               <th>" .$boton . "</th>";
     }
 }else if($sinReservas == true){
-    echo "<p class='w3-center'>No tiene reservas activas.</p>";
+    echo "<p class='w3-center animated shake w3-red cuadro-mensaje'>No tiene reservas activas.</p>";
     }
     ?>
 </table>

@@ -72,6 +72,7 @@ $error="";
                 $error = "<p>La tarjeta ingresada está vencida.</p>";
                 $class_error_alerta ="animated shake w3-red";
             }else if(validarTarjeta($num_tarjeta,$tipo_tarjeta,$conexion) == true){
+//                $sql_pago = "UPDATE reservas SET pago = 1 WHERE cod_reserva = '$cod_reserva'";
                 $sql_pago = "UPDATE reservas SET pago = 1 WHERE id = '$id_reserva'";
                 $resultado_pago = mysqli_query($conexion,$sql_pago);
 

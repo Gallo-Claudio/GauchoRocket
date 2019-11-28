@@ -165,9 +165,6 @@
             else if ($id_viajes != $filas_vuelos_checkin_finalizados['id_viajes']){
                 $id_viajes = $filas_vuelos_checkin_finalizados['id_viajes'];
             }
-            else{
-                break;
-            }
 
             // Con el id de viaje busco todas las reservas DE ESE VUELO (INDIVIDUAL) que no hicieron el checkin
             // y cambio el estado de la reserva a INACTIVA
@@ -195,7 +192,7 @@
                                             inner join viajes
                                             on reservas.id_viajes = viajes.id 
                                             where lista_espera ='1'
-                                            and codigo_vuelo ='$codigo_vuelo'
+                                            and reservas.codigo_vuelo ='$codigo_vuelo'
                                             and fecha_hora between '$hora_de_vuelos_que_despegan_ahora' and '$hora_de_vuelos_que_despegan_dentro_de_2_horas'";
             $resultados_reservas_lista_espera = mysqli_query($conexion, $sql_reservas_lista_espera);
 
