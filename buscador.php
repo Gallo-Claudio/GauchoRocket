@@ -158,6 +158,7 @@ $error_fecha = "";
                     <td>Código de Vuelo</td>
                     <td>Fecha y Hora</td>
                     <td>Duración del viaje</td>
+                    <td>Tipo</td>
                     <td>Nave</td>
                     <td>Circuito</td>
                     <td class='btn-reserva'></td>

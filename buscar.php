@@ -40,7 +40,7 @@ else{
     $opcion_fecha ="where fecha_hora like '$fecha_salida%'";
 }
 
-$sql = "select viajes.id, fecha_hora, duracion, naveNombre, codigo_vuelo, circuitos.nombre as nombre_circuito, circuito_id from viajes
+$sql = "select viajes.id, fecha_hora, duracion, naveNombre, codigo_vuelo, circuitos.nombre as nombre_circuito, circuito_id, tipo_aceleracion from viajes
                 left outer join naves
                 on viajes.nave = naves.id  
                 left outer join modelos_naves
@@ -49,7 +49,8 @@ $sql = "select viajes.id, fecha_hora, duracion, naveNombre, codigo_vuelo, circui
                 on viajes.circuito_id = circuitos.id
                 ".$opcion_fecha."
                 and tipo_viaje = '$tipo_viajes'
-                and origen = '$origen'" . $and;
+                and origen = '$origen'" . $and.
+                "order by fecha_hora asc";
 
 $resultado = mysqli_query($conexion, $sql);
 
@@ -59,6 +60,7 @@ while ($fila = mysqli_fetch_array($resultado)) {
         'id' => $fila['id'],
         'fecha_hora' => $fila['fecha_hora'],
         'duracion' => $fila['duracion'],
+        'tipo_aceleracion' => $fila['tipo_aceleracion'],
         'nave' => $fila['naveNombre'],
         'codigo_vuelo' => $fila['codigo_vuelo'],
         'circuito' => $fila['nombre_circuito'],

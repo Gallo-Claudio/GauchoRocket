@@ -102,6 +102,10 @@ $reserva_realizada = false;
                 $error_form_acompañante_email = "<br>- Falta/n email/s";
                 $posicion_dato='vacio';
             }
+//            elseif(!$campos_vacios = valida_email($email)) {
+//                $error_form_acompañante_email = "<br>- Verifique la correcta escritura del/los email/s";
+//                $posicion_dato='vacio';
+//            }
         }
 
        if($posicion_dato=='vacio') {
@@ -221,6 +225,15 @@ $reserva_realizada = false;
                 }
 
         }
+
+
+        // Obtengo el id de la reserva, para guardar a todos los integrantes de la reserva en la tabla "integrantes viaje"
+        $sql_id_reserva = "select id from reservas where cod_reserva = '$codigo_de_reserva'";
+        $resultado_id_reserva = mysqli_query($conexion, $sql_id_reserva);
+        $fila_id_reserva = mysqli_fetch_assoc($resultado_id_reserva);
+        $id_reserva = $fila_id_reserva['id'];
+
+
         // Guarda en la BD los datos de los acompañantes para que realicen el registro y posterior confirmación
         if ($cantidad_pasajes_a_reservar > 1) {
 
@@ -233,12 +246,27 @@ $reserva_realizada = false;
                     $error .= "<p class='w3-red'>El Email ".$email[$i]." ya existe en nuestra base de datos</p>";
                 }
                 else {
-                    $sql_datos_acompaniantes = "insert into usuarios (nombre, apellido, email, confirmacion_mail)
-                                            values ('$nombre[$i]','$apellido[$i]','$email[$i]','0')";
+                    $sql_datos_acompaniantes = "insert into usuarios (nombre, apellido, email, nivel_vuelo, se_chequeo, confirmacion_mail)
+                                            values ('$nombre[$i]','$apellido[$i]','$email[$i]','0','0','0')";
                     $consulta_datos_acompañantes = mysqli_query($conexion, $sql_datos_acompaniantes);
                 }
+
+                // Guarda en la tabla "integrantes_viaje", a los acompañantes
+                $sql_id_usuario_acompaniantes = "select id from usuarios where email = '$email[$i]'";
+                $resultado_id_usuario_acompaniantes = mysqli_query($conexion, $sql_id_usuario_acompaniantes);
+                $filas_id_usuario_acompaniantes = mysqli_fetch_assoc($resultado_id_usuario_acompaniantes);
+                $id_usuario_acompaniantes = $filas_id_usuario_acompaniantes['id'];
+
+                $sql_integrantes_reserva = "insert into integrantes_viaje (id_usuarios, id_reserva) values('$id_usuario_acompaniantes','$id_reserva')";
+                $resultado_integrantes_reserva = mysqli_query($conexion, $sql_integrantes_reserva);
+
             }
         }
+
+        // Guarda en la tabla "integrantes_viaje", al que realiza la reserva
+        $sql_integrantes_reserva = "insert into integrantes_viaje (id_usuarios, id_reserva) values('$id_usuario','$id_reserva')";
+        $resultado_integrantes_reserva = mysqli_query($conexion, $sql_integrantes_reserva);
+
     }
 
 $mensajeFinal = array('mensaje' => $error,'clase' => $class_error_alerta,'estado' => $estado);
