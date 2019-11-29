@@ -2,6 +2,10 @@
 session_start();
 require_once "conexion.php";
 require "funciones.php";
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+    header("location:login.php");
+}
 $id_usuario = $_SESSION['id'];
 $sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.lista_espera, r.check_in, r.id, tipo_viaje,
                  cantidad, circuito_id, id_viajes, idCapacidadCabina, (filas*columnas) as capacidadCabina, estacion_origen, estacion_destino FROM reservas as r

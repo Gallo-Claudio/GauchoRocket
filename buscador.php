@@ -1,6 +1,10 @@
 <?php
+session_start();
 require_once "conexion.php";
-
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+    header("location:login.php");
+}
 $sql_estaciones= "select * from estaciones";
 $resultado_estaciones = mysqli_query($conexion, $sql_estaciones);
 $registro_estaciones = mysqli_fetch_all($resultado_estaciones);
