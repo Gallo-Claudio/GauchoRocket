@@ -157,7 +157,7 @@
             <input class="w3-input w3-margin-bottom w3-hover-gray" type="password" name="clave2">
         </div>
         <button class="w3-button w3-round-xlarge w3-green derecha" type="submit" name="enviar">Registrarse</button><br><br>
-        <button class="w3-button w3-round-xlarge w3-dark-grey derecha" name="iniciosesion"><a href="login.php">Iniciar sesion</button>
+        <a class="w3-button w3-round-xlarge w3-dark-grey derecha" href="login.php">Iniciar sesion</a>
     </form>
 </div>
 <?php

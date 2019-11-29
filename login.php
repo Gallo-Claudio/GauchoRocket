@@ -17,12 +17,25 @@ if (isset($_POST['enviar'])) {
         } else {
             $resultado = mysqli_fetch_assoc($consulta); /*Todos los datos que trae los guardo aca*/
             if ($resultado['clave'] == $clave) {
-                session_start();
-                $_SESSION['username'] = $usuario;
-                $_SESSION['id'] = $resultado['id'];
-                $_SESSION['rol'] = $resultado['rol'];
-                header("location:inicio.php");
-                exit();
+                $id_usuario = $resultado['id_usuario'];
+                $sql_confirmacion_mail = "select confirmacion_mail from usuarios where id='$id_usuario'";
+                $resultado_confirmacion_mail = mysqli_query($conexion, $sql_confirmacion_mail);
+                $fila_confirmacion_mail = mysqli_fetch_assoc($resultado_confirmacion_mail);
+                $confirmacion_mail = $fila_confirmacion_mail['confirmacion_mail'];
+
+                if($confirmacion_mail==0){
+                    $error = "<div class='w3-panel w3-red'><p>El email no esta validado. Complete el proceso para poder ingresar al sistema</p></div>";
+                    $clase ="animated shake";
+                }
+                else{
+                    session_start();
+                    $_SESSION['username'] = $usuario;
+                    $_SESSION['id'] = $resultado['id'];
+                    $_SESSION['rol'] = $resultado['rol'];
+                    header("location:inicio.php");
+                    exit();
+                }
+
             } else {
                 $error = "<div class='w3-panel w3-red'><p>Los datos ingresados son incorrectos</p></div>";
                 $clase ="animated shake";
@@ -58,7 +71,7 @@ if (isset($_POST['enviar'])) {
         <input class="w3-input w3-margin-bottom w3-hover-gray" type="password" name="clave">
 
         <button class="w3-button w3-round-xlarge w3-green derecha" type="submit" name="enviar">Entrar</button><br><br>
-        <button class="w3-button w3-round-xlarge w3-dark-grey derecha" type="submit" name="registro"><a href="registro.php">Registrarse</a></button>
+        <a href="registro.php" class="w3-button w3-round-xlarge w3-dark-grey derecha">Registrarse</a>
     </form>
 </div>
 <?php
