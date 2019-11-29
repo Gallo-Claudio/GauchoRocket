@@ -5,8 +5,7 @@ require "funciones.php";
 
 $tipo_viaje = $_POST['tipo_viaje'];
 $id_viaje = $_POST['id_viaje'];
-$id_usuario = $_SESSION['id']; // Lo harcodeo para codear sin tener que loguearme y hacer mas rapido las verificacion de lo que hago
-//$id_usuario = 1;
+$id_usuario = $_SESSION['id'];
 $idCapacidadCabina = $_POST['idCapacidadCabina'];
 $cantidad_pasajes_a_reservar = $_POST['cantidad_pasajes_a_reservar'];
 $id_estacion_destino = $_POST['id_destino'];
@@ -33,7 +32,7 @@ $id_estacion_origen = $fila_cabina['id_estacion_origen'];
 
 
 /**************************************************************************************************************/
-/*    De acuerdo al sentido del viaje, ordena las estaciones   ****    Usado para ENTRE DESTINOS    ************/
+/*    De acuerdo al sentido del viaje, ordena las estaciones   ****    Usado para ENTRE DESTINOS    ***********/
 /**************************************************************************************************************/
 $sql_sentido_del_vuelo = "select sentido from circuitos where id='$id_circuito'";
 $resultado_sentido_del_vuelo = mysqli_query($conexion,$sql_sentido_del_vuelo);

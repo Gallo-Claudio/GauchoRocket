@@ -327,8 +327,16 @@ input#menu {
     font-size: 20px;
     float: initial;
 }
-
-
+p.usuario {
+    float: right;
+    margin-right: 20px;
+    font-size: 20px;
+    margin-top: 4px;
+}
+.iso-logo_encabezado {
+    clear: both;
+    margin-top: -50px;
+}
 
 
 
