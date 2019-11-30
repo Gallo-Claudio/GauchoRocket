@@ -7,10 +7,23 @@ if(!isset($usuario)){
     header("location:login.php");
 }
 $id_usuario = $_SESSION['id'];
-$sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.lista_espera, r.check_in, r.id, tipo_viaje,
-                 cantidad, circuito_id, id_viajes, idCapacidadCabina, (filas*columnas) as capacidadCabina, estacion_origen, estacion_destino FROM reservas as r
+$sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.lista_espera, r.check_in, r.id, v.tipo_viaje as id_tipo_viaje,
+                 cantidad, circuito_id, id_viajes, idCapacidadCabina, (filas*columnas) as capacidadCabina, estacion_origen,
+                 estacion_destino, naveNombre, tipo_aceleracion, tipo_viajes.tipo_viaje as nombre_tipo_viaje, cabinaNombre,
+                 est1.nombre as origen, est2.nombre as destino, precio FROM reservas as r
                  INNER JOIN viajes as v on r.id_viajes = v.id
-                 inner join capacidad on r.idCapacidadCabina = capacidad.id
+                 inner join capacidad
+                 on r.idCapacidadCabina = capacidad.id
+                 inner join modelos_naves
+                 on capacidad.modelo = modelos_naves.id
+                 inner join tipo_viajes
+                 on v.tipo_viaje = tipo_viajes.id
+                 inner join cabina
+                 on capacidad.tipo_cabina = cabina.id
+                 inner join estaciones as est1
+                 on r.estacion_origen = est1.id
+                 inner join estaciones as est2
+                 on r.estacion_destino = est2.id
                  WHERE r.id_usuario = '$id_usuario'";
 $resultado_reservas = mysqli_query($conexion,$sql_reservas);
 $sinReservas = false;
@@ -38,17 +51,37 @@ if(mysqli_affected_rows($conexion) == 0){
 <div class="w3-container banda">
     <p class="w3-xxlarge w3-center">Mis Reservas</p>
 </div>
+<div class="w3-container banda detalle">
+    <p><span class="atencion">Pendiente de chequeo médico</span>Todavia no ha realizado el chequeo correspondiente</p>
+    <p><span class="alerta">Reserva CANCELADA - No apto para el viaje</span>Se cancela la reserva por no obtener el apto médico necesario para el viaje</p>
+    <p><span><span class="w3-button w3-round-xlarge w3-blue btn1 reserva2">Pagar</span></span>Se aprobo el chequeo médico, ya puede pagar la reserva</p>
+    <p><span class="aprobado">Aprobada</span>Se ha aprobado el pago. En espera de la ventana de tiempo correspondiente para realizar el Check-in</p>
+    <p><span><span class="w3-button w3-round-xlarge w3-green btn1 reserva2">Check-in</span></span>Ya puede realizar el Check-in</p>
+    <p><span class="ok">OK - Apto para abordar la nave</span>El Check-in ys esta realizado. Esta en condiciones para abordar la nave cuando corresponda</p>
+    <p><span class="alerta">Reserva CAIDA por falta de Check-In</span>Se cancela la reserva por no haber cumplimentado en tiempo el Check-in</p>
+    <p><span class="atencion">Lista de espera</span>La reserva se haya en lista de espera</p>
+    <p><span>El viaje ya partió</span></p>
+</div>
 <?php
 if($sinReservas == false){
 ?>
 
 <div class="w3-display-container">
-<div class="w3-container w3-card-4 w3-content">
+<div class="w3-container w3-card-4 mis_reservas">
 <table class="w3-table-all">
     <tr>
-        <th>Codigo de Reserva</th>
-        <th>Codigo de Vuelo</th>
-        <th>Fecha/Hora</th>
+        <th width="111">Cod.Reserva
+        <th>Origen</th>
+        <th>Destino</th>
+        <th width="114">Tipo</th>
+        <th width="59">Veloc.</th>
+        <th>Nave</th>
+        <th width="71">Cabina</th>
+        <th width="52">Cant.</th>
+        <th>Precio</th>
+        <th>Total</th>
+        <th width="86">Cod.Vuelo</th>
+        <th width="90">Fecha/Hora</th>
         <th>Estado</th>
     </tr>
     <?php
@@ -60,19 +93,25 @@ if($sinReservas == false){
         $fecha_checkIn_fin = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 hour"));
         $boton = "";
         $codigo_reserva = $fila_reservas['cod_reserva'];
-        $codigo_vuelo = $fila_reservas['codigo_vuelo'];
-        $id_reserva = $fila_reservas['id'];
+        $id_estacion_origen = $fila_reservas['estacion_origen'];
+        $id_estacion_destino = $fila_reservas['estacion_destino'];
+        $tipo_viaje = $fila_reservas['nombre_tipo_viaje'];
+        $aceleracion = $fila_reservas['tipo_aceleracion'];
+        $nombre_nave = $fila_reservas['naveNombre'];
+        $nombre_cabina = $fila_reservas['cabinaNombre'];
+        $origen = $fila_reservas['origen'];
+        $destino = $fila_reservas['destino'];
         $cantidad = $fila_reservas['cantidad'];
+        $precio = $fila_reservas['precio'];
+        $codigo_vuelo = $fila_reservas['codigo_vuelo'];
+        $total = $cantidad * $precio;
+
+        $id_reserva = $fila_reservas['id'];
         $circuito_id = $fila_reservas['circuito_id'];
         $id_viajes = $fila_reservas['id_viajes'];
         $idCapacidadCabina = $fila_reservas['idCapacidadCabina'];
         $capacidadCabina = $fila_reservas['capacidadCabina'];
-        $id_estacion_origen = $fila_reservas['estacion_origen'];
-        $id_estacion_destino = $fila_reservas['estacion_destino'];
-
-
-
-        $id_tipo_viaje = $fila_reservas['tipo_viaje'];
+        $id_tipo_viaje = $fila_reservas['id_tipo_viaje'];
 
         //***************************************************
         // Se determina el grado obtenido en el cheque medico
@@ -147,10 +186,19 @@ if($sinReservas == false){
         }
 
         echo "<tr>
-              <th>" . $codigo_reserva . "</th>
-              <th>" . $codigo_vuelo . "</th>
-              <th>" . $fila_reservas['fecha_hora'] . "</th>
-              <th>" .$boton . "</th>";
+              <td>" . $codigo_reserva . "</td>
+              <td>" . $origen . "</td>
+              <td>" . $destino . "</td>
+              <td>" . $tipo_viaje . "</td>
+              <td>" . $aceleracion . "</td>
+              <td>" . $nombre_nave . "</td>
+              <td>" . $nombre_cabina . "</td>
+              <td>" . $cantidad . "</td>
+              <td>$ " . $precio . "</td>
+              <td>$ " . $total . "</td>
+              <td>" . $codigo_vuelo . "</td>
+              <td>" . $fila_reservas['fecha_hora'] . "</td>
+              <td>" .$boton . "</td>";
     }
 }else if($sinReservas == true){
     echo "<p class='w3-center animated shake w3-red cuadro-mensaje'>No tiene reservas activas.</p>";
