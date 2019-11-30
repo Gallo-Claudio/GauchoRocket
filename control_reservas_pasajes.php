@@ -120,7 +120,7 @@ $reserva_realizada = false;
     if ($campos_form_vacios == false) {
 
         // Genero codigo de reserva
-        $longitud = 8;
+        $longitud = 7;
         $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $codigo_de_reserva = generarCodigo($longitud, $pattern);
 
@@ -263,7 +263,12 @@ $reserva_realizada = false;
         }
 
         // Guarda en la tabla "integrantes_viaje", al que realiza la reserva
-        $sql_integrantes_reserva = "insert into integrantes_viaje (id_usuarios, id_reserva) values('$id_usuario','$id_reserva')";
+        $sql_id_usuario_reserva = "select id_usuario from credenciales where id ='$id_usuario'";
+        $resultados_id_usuario_reserva = mysqli_query($conexion, $sql_id_usuario_reserva);
+        $fila_id_usuario_reserva = mysqli_fetch_assoc($resultados_id_usuario_reserva);
+        $id_usuario_reserva = $fila_id_usuario_reserva['id_usuario'];
+
+        $sql_integrantes_reserva = "insert into integrantes_viaje (id_usuarios, id_reserva) values('$id_usuario_reserva','$id_reserva')";
         $resultado_integrantes_reserva = mysqli_query($conexion, $sql_integrantes_reserva);
 
     }

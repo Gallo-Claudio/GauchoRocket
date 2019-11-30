@@ -1,10 +1,14 @@
 <?php
+session_start();
 require_once "conexion.php";
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+    header("location:login.php");
+}
 
 $codigo_reserva = $_GET['codigo_reserva'];
-$codigo_embarque =$_GET['codigo_embarque'];
 
-$sql_imagen_qr ="select codigo_qr from reservas where cod_reserva='$codigo_reserva' and codigo_embarque='$codigo_embarque'";
+$sql_imagen_qr ="select codigo_qr from reservas where cod_reserva='$codigo_reserva'";
 $resultado_imagen_qr = mysqli_query($conexion,$sql_imagen_qr);
 $fila_imagen_qr = mysqli_fetch_assoc($resultado_imagen_qr);
 $imagen_qr = $fila_imagen_qr['codigo_qr'];

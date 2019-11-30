@@ -15,9 +15,7 @@ $sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.l
 $resultado_reservas = mysqli_query($conexion,$sql_reservas);
 $sinReservas = false;
 date_default_timezone_set('America/Argentina/Buenos_Aires');
-//$hoy = date("Y-m-d-e");
-//$horaActual = date("H:i:s");
-$hoy2 = date("Y-m-d H:i:s");
+$hoy = date("Y-m-d H:i:s");
 if(mysqli_affected_rows($conexion) == 0){
     $sinReservas = true;
 }
@@ -56,8 +54,8 @@ if($sinReservas == false){
     <?php
     while ($fila_reservas = mysqli_fetch_assoc($resultado_reservas)) {
         $fecha_vuelo = date("Y-m-d",strtotime($fila_reservas['fecha_hora']));
-        $hora_vuelo = date("G-i-s",strtotime($fila_reservas['fecha_hora']));
-        $hora_checkIn = date("G-i-s",strtotime($fila_reservas['fecha_hora']."- 2 hour"));
+//        $hora_vuelo = date("G-i-s",strtotime($fila_reservas['fecha_hora']));
+//        $hora_checkIn = date("G-i-s",strtotime($fila_reservas['fecha_hora']."- 2 hour"));
         $fecha_checkIn_inicio = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 days"));
         $fecha_checkIn_fin = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 hour"));
         $boton = "";
@@ -125,16 +123,17 @@ if($sinReservas == false){
         } else if ($fila_reservas['pago'] == 0 && $fila_reservas['lista_espera'] != 1 ) {
             $boton = "<a class='w3-button w3-round-xlarge w3-blue btn1 reserva' href='pago.php?reserva=" . $fila_reservas['cod_reserva'] . "'>Pagar</a>";
 
-        }else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy2 >= $fecha_checkIn_inicio && $hoy2 <= $fecha_checkIn_fin){
+        }else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy >= $fecha_checkIn_inicio && $hoy <= $fecha_checkIn_fin){
             $boton = "<a class='w3-button w3-round-xlarge w3-green btn1 reserva' href='ubicacion_asientos.php?reserva=".$fila_reservas['cod_reserva']."'>Check-In</a>";
 
-        } else if ($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy2 < $fecha_checkIn_inicio) {
+        } else if ($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy < $fecha_checkIn_inicio) {
             $boton = "<span class='aprobado'>Aprobada</span>";
 
-        } else if ($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] == 1 && $hoy2 >= $fecha_checkIn_inicio && $hoy2 <= $fecha_checkIn_fin) {
-            $boton = "<span class='ok'>OK - Apto para abordar la nave</span>";
+        } else if ($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] == 1 && $hoy >= $fecha_checkIn_inicio && $hoy <= $fecha_checkIn_fin) {
+            $boton = "<span class='ok'>OK - Apto para abordar la nave - QR 
+                      <a href='codigo-qr.php?codigo_reserva=".$codigo_reserva."'><img src='img/qr/codigo-".$codigo_reserva.".png' width='50px'></a></span>";
 
-        } else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy2 >= $fecha_checkIn_inicio && $hoy2 > $fecha_checkIn_fin){
+        } else if($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy >= $fecha_checkIn_inicio && $hoy > $fecha_checkIn_fin){
             $boton = "<span class='alerta'>Reserva CAIDA por falta de Check-In</span>";
 
         } else if ($fila_reservas['pago'] != 1 && $fila_reservas['lista_espera'] == 1 && $fila_reservas['check_in'] != 1) {
@@ -142,7 +141,7 @@ if($sinReservas == false){
         }else{
             $boton = "<span class='alerta'>Error en estado de Reserva</span>";
         }
-        if($fecha_vuelo <= $hoy2){
+        if($fecha_vuelo <= $hoy){
             $boton = "El viaje ya partió";
 
         }

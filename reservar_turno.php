@@ -75,7 +75,7 @@ if($se_chequeo == false) {
                 } else {
                     $error = "<div class='w3-panel w3-red animated shake'><p>La fecha ingresada es incorrecta</p></div>";
                 }
-                
+
             }
 
 
@@ -86,7 +86,7 @@ if($se_chequeo == false) {
 
 }else {
 
-    echo "<div class='mensaje-yahecho'>El usuario ya realizo el chequeo medico.</div>";
+    echo "<div class='mensaje-yahecho'>El usuario ya realizó el chequeo médico.</div>";
     include "pie.html";
     die;
 }
@@ -105,7 +105,7 @@ if ($nuevo_turno != true){
 
         <?php echo $error; ?>
        <center>
-           <label class="w3-large reserva-medica">Centro Medico:</label>
+           <label class="w3-large reserva-medica">Centro Médico:</label>
               <select name="centro_medico" >
                 <?php
                 while ($fila_centro_medico = mysqli_fetch_assoc($resultado_centro_medico)){

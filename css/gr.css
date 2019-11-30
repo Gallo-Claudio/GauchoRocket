@@ -337,6 +337,14 @@ p.usuario {
     clear: both;
     margin-top: -50px;
 }
+p.aviso_qr {
+    width: 180px;
+    display: inline-block;
+    margin-right: 35px;
+}
+
+
+
 
 
 
