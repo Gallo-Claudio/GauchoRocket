@@ -63,7 +63,8 @@ require_once "conexion.php";
                     while ($final_resultado_facturacion_mensual = mysqli_fetch_assoc($sql_resultado_facturacion_mensual))
                     {
                     ?>
-                    '<?php echo $final_resultado_facturacion_mensual['mes'] . $final_resultado_facturacion_mensual['cabinaNombre']?>',
+                    '<?php echo $final_resultado_facturacion_mensual['mes'].
+                                $final_resultado_facturacion_mensual['cabinaNombre']?>',
                     <?php
                     }
                     ?>

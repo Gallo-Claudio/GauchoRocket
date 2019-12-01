@@ -23,6 +23,9 @@ console.log(response);
 								${resultado.duracion}												
 								</td>
 								<td>
+								${resultado.tipo_aceleracion}												
+								</td>
+								<td>
 								${resultado.nave}												
 								</td>
 								<td>

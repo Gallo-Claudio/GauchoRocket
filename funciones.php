@@ -138,7 +138,7 @@
     //*********************************************************
     function habilita_lista_de_espera (){
         global $conexion;
-
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $hora_de_vuelos_que_despegan_ahora = date("Y-m-d H:i:s");
         $hora_de_vuelos_que_despegan_dentro_de_2_horas = date("Y-m-d H:i:s",strtotime($hora_de_vuelos_que_despegan_ahora."+ 2 hour"));
 
@@ -164,9 +164,6 @@
             }
             else if ($id_viajes != $filas_vuelos_checkin_finalizados['id_viajes']){
                 $id_viajes = $filas_vuelos_checkin_finalizados['id_viajes'];
-            }
-            else{
-                break;
             }
 
             // Con el id de viaje busco todas las reservas DE ESE VUELO (INDIVIDUAL) que no hicieron el checkin
@@ -195,7 +192,7 @@
                                             inner join viajes
                                             on reservas.id_viajes = viajes.id 
                                             where lista_espera ='1'
-                                            and codigo_vuelo ='$codigo_vuelo'
+                                            and reservas.codigo_vuelo ='$codigo_vuelo'
                                             and fecha_hora between '$hora_de_vuelos_que_despegan_ahora' and '$hora_de_vuelos_que_despegan_dentro_de_2_horas'";
             $resultados_reservas_lista_espera = mysqli_query($conexion, $sql_reservas_lista_espera);
 
@@ -293,17 +290,18 @@
 
             }
 
-
-
-
-
-
-
-
             $contador++;
         }
 
+    }
 
+
+    //*******************************************
+    // Comprueba la correcta estructura del email
+    //*******************************************
+    function valida_email($email){
+        $matches = null;
+        return (1 === preg_match('/^[A-z0-9\\._-]+@[A-z0-9][A-z0-9-]*(\\.[A-z0-9_-]+)*\\.([A-z]{2,6})$/', $email, $matches));
     }
 
 

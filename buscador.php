@@ -1,11 +1,16 @@
 <?php
+session_start();
 require_once "conexion.php";
-
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+    header("location:login.php");
+}
 $sql_estaciones= "select * from estaciones";
 $resultado_estaciones = mysqli_query($conexion, $sql_estaciones);
 $registro_estaciones = mysqli_fetch_all($resultado_estaciones);
 $fecha_actual = date("Y-m-d");
-$fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
+//$fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
+$fecha_minimo = date("Y-m-d");
 $error_fecha = "";
 
 ?>
@@ -153,6 +158,7 @@ $error_fecha = "";
                     <td>Código de Vuelo</td>
                     <td>Fecha y Hora</td>
                     <td>Duración del viaje</td>
+                    <td>Tipo</td>
                     <td>Nave</td>
                     <td>Circuito</td>
                     <td class='btn-reserva'></td>

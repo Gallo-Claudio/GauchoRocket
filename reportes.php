@@ -27,9 +27,11 @@ $sql_facturacion_mensual = "select sum(f.monto_pago) as facturacionMensual,cab.c
                             group by mes,cab.cabinaNombre;";
 $sql_resultado_facturacion_mensual = mysqli_query($conexion,$sql_facturacion_mensual);
 
+$sql_equipos = "select naveNombre from modelos_naves";
+$sql_resultado_equipos = mysqli_query($conexion,$sql_equipos);
+
 ?>
 <script type="text/javascript" src="js/jquery-2.2.4.min.js" xmlns="http://www.w3.org/1999/html"></script>
-<script type="text/javascript" src="js/Chart.min.js"></script>
 <script src="js/Chart.bundle.js"></script>
 <script src="js/Chart.js"></script>
 
@@ -108,6 +110,8 @@ while ($final_cabina_mas_vendida = mysqli_fetch_assoc($resultado_cabina_mas_vend
 
         <table class="w3-table-all">
             <h3 class="w3-xxxlarge w3-center w3-lobster">Tasa de ocupación por viaje y equipo</h3>
+
+
 
 
         </table>

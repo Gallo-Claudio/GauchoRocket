@@ -1,18 +1,20 @@
 <?php
 session_start();
-//$id_usuario = $_SESSION['id'];
-$id_usuario = 1;
-//$cod_reserva = $_GET['reserva'];
-$cod_reserva = 'CR515';
+$id_usuario = $_SESSION['id'];
+$cod_reserva = $_GET['reserva'];
 $error="";
 require 'conexion.php';
 require_once "funciones.php";
+
 $anio_actual = date("Y");
+
 $sql_meses = "SELECT * FROM meses";
 $resultado_meses = mysqli_query($conexion, $sql_meses);
+
 $sql_tarjetas = "SELECT id , tipo_tarjeta FROM tarjetas_credito";
 $resultado_tarjetas = mysqli_query($conexion,$sql_tarjetas);
-$sql_datos_reserva = "SELECT cap.precio, cab.cabinaNombre, cantidad, estacion_origen, estacion_destino, naveNombre, fecha_hora, codigo_vuelo, r.id as id_reserva FROM reservas as r
+
+$sql_datos_reserva = "SELECT cap.precio, cab.cabinaNombre, cantidad, estacion_origen, estacion_destino, naveNombre, fecha_hora, r.codigo_vuelo, r.id as id_reserva FROM reservas as r
                     INNER JOIN capacidad as cap
                     ON r.idCapacidadCabina = cap.id
                     INNER JOIN cabina as cab
@@ -33,8 +35,10 @@ $naveNombre = $fila_datos_reserva['naveNombre'];
 $fecha_hora = $fila_datos_reserva['fecha_hora'];
 $codigo_vuelo = $fila_datos_reserva['codigo_vuelo'];
 $id_reserva = $fila_datos_reserva['id_reserva'];
+
 $nombre_estacion_origen = determina_nombre_estacion($estacion_origen);
 $nombre_estacion_destino = determina_nombre_estacion($estacion_destino);
+
 $total_a_pagar = $precio * $cantidad_asientos;
 ?>
 
@@ -172,7 +176,6 @@ $total_a_pagar = $precio * $cantidad_asientos;
         <button class="btn" type="submit" name="enviar" id="btn-accion">Aceptar</button>
 
         <div id='mensaje'></div>
-
     </form>
 </div>
 <?php

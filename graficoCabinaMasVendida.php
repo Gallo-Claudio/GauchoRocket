@@ -8,7 +8,6 @@ require_once "conexion.php";
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/gr.css">
     <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="js/Chart.min.js"></script>
     <script src="js/Chart.bundle.js"></script>
     <script src="js/Chart.js"></script>
 

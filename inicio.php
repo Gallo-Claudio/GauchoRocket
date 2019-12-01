@@ -27,6 +27,7 @@ switch ($rol) {
         <p class='panel-control'>Panel de Control</p>";
         break;
     case 2:
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
         $hoy = date("Y-m-d");
 
         $sql_id_usuario = "select id_usuario from credenciales where id = '$id_usuario_session'";

@@ -3,17 +3,20 @@ session_start();
 $error="";
 require_once "conexion.php";
 require_once "funciones.php";
+
 $id_viaje = $_GET['viaje'];
 $id_destino = $_GET['destino'];
 $id_circuito = $_GET['circuito'];
-//$id_usuario = $_SESSION['id']; // Lo harcodeo para codear sin tener que loguearme y hacer mas rapido las verificacion de lo que hago
-$id_usuario = 1;
+$id_usuario = $_SESSION['id'];
 $reserva_realizada = false;
+
 //Inicializo los array que van a conformar el formulario de acompañantes para pasarlos al "formulario_acomaniantes.js" que los renderiza
 $nombre=array();
 $apellido=array();
 $email=array();
 $cantidad_pasajes_a_reservar='';
+
+
 /****************************************************************************************************************************/
 /* Se obtiene capacidad de las cabinas y otros datos ************************************************************************/
 /****************************************************************************************************************************/
@@ -84,6 +87,7 @@ $nombre_estacion_destino = determina_nombre_estacion($id_destino);
                     <td class='reservas'>".$fila_viaje['precio']."</td>
                     <td class='reservas'><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
                   </tr>";
+
         while ($fila_viaje = mysqli_fetch_assoc($resultado_viaje)){
             echo "<tr>
                             <td class='reservas'>".$fila_viaje['cabinaNombre']."</td>
@@ -91,7 +95,9 @@ $nombre_estacion_destino = determina_nombre_estacion($id_destino);
                             <td class='reservas'><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
                           </tr>";
         }
+
         echo "</table>
+
                 <center>Cantidad de pasajes a reservar:
                 <input type='number' name='cantidad_pasajes_a_reservar' min='0' id='acompaniantes' value='$cantidad_pasajes_a_reservar'></center>
         
