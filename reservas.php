@@ -4,6 +4,11 @@ $error="";
 require_once "conexion.php";
 require_once "funciones.php";
 
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+    header("location:login.php");
+}
+
 $id_viaje = $_GET['viaje'];
 $id_destino = $_GET['destino'];
 $id_circuito = $_GET['circuito'];

@@ -2,9 +2,12 @@
 $error="";
 require 'conexion.php';
 
-$nombre = $_GET['n'];
-$apellido = $_GET['a'];
-$email = $_GET['e'];
+$nombre = isset($_GET['n']) ? $_GET['n'] : '';
+$apellido = isset($_GET['a']) ? $_GET['a'] : '';
+$email = isset($_GET['e']) ? $_GET['e'] : '';
+//$nombre = $_GET['n'];
+//$apellido = $_GET['a'];
+//$email = $_GET['e'];
 
 $sql_validacion_mail = "UPDATE usuarios SET confirmacion_mail = 1 WHERE email='$email'";
 mysqli_query($conexion, $sql_validacion_mail);

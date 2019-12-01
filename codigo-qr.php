@@ -26,7 +26,7 @@ $imagen_qr = $fila_imagen_qr['codigo_qr'];
     <body>
     <?php
     include "header.php";
-    echo "<img src='img/qr/".$imagen_qr."' class='image-qr'>";
+    echo "<div class='codigo-qr'><p>Escaneé el código QR para obtener toda la información del viaje</p><img src='img/qr/".$imagen_qr."' class='image-qr'></div>";
     include "pie.html";
     ?>
     </body>

@@ -40,52 +40,52 @@ $se_chequeo = $fila_se_chequeo['se_chequeo'];
 //$nuevo_turno == false;
 if($se_chequeo == false) {
 
-        $centro_medico = $_POST['centro_medico'];
-        $fecha = $_POST['fecha'];
+    $centro_medico = isset($_POST['centro_medico']) ? $_POST['centro_medico'] : '';
+    $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : '';
+//    $centro_medico = $_POST['centro_medico'];
+//    $fecha = $_POST['fecha'];
 
-        $sql_verificar_turno_pendiente = "SELECT (id_usuario) COUNT FROM turnos WHERE id_usuario = '$numero_de_usuario';";
-        $resultado_verificar_turno_pendiente = mysqli_query($conexion, $sql_verificar_turno_pendiente);
-        $fila_verificar_turno_pendiente = mysqli_fetch_array($resultado_verificar_turno_pendiente);
+    $sql_verificar_turno_pendiente = "SELECT (id_usuario) COUNT FROM turnos WHERE id_usuario = '$numero_de_usuario';";
+    $resultado_verificar_turno_pendiente = mysqli_query($conexion, $sql_verificar_turno_pendiente);
+    $fila_verificar_turno_pendiente = mysqli_fetch_array($resultado_verificar_turno_pendiente);
 
-        if (!$fila_verificar_turno_pendiente) {
+    if (!$fila_verificar_turno_pendiente) {
 
-            if (isset($_POST['enviar'])) {
+        if (isset($_POST['enviar'])) {
 
-                if ($fecha >= $fecha_minimo) {
-                    $sql_cantidad = "SELECT turnos_diarios FROM centros_medicos WHERE id = '$centro_medico'";
-                    $resultado_cantidad = mysqli_query($conexion, $sql_cantidad);
-                    $fila_cantidad = mysqli_fetch_assoc($resultado_cantidad);
-                    $cantidad_turnos = $fila_cantidad['turnos_diarios'];
+            if ($fecha >= $fecha_minimo) {
+                $sql_cantidad = "SELECT turnos_diarios FROM centros_medicos WHERE id = '$centro_medico'";
+                $resultado_cantidad = mysqli_query($conexion, $sql_cantidad);
+                $fila_cantidad = mysqli_fetch_assoc($resultado_cantidad);
+                $cantidad_turnos = $fila_cantidad['turnos_diarios'];
 
-                    $sql_turnos = "SELECT COUNT (t.id) as cantidad FROM turnos as t inner join centros_medicos as cm on t.centro_medico = cm.id WHERE cm.id = '$centro_medico'";
-                    $resultado_turnos = mysqli_query($conexion, $sql_turnos);
+                $sql_turnos = "SELECT COUNT (t.id) as cantidad FROM turnos as t inner join centros_medicos as cm on t.centro_medico = cm.id WHERE cm.id = '$centro_medico'";
+                $resultado_turnos = mysqli_query($conexion, $sql_turnos);
 
-                    if (mysqli_affected_rows($conexion) > 0) {
-                        $fila_turnos = mysqli_fetch_assoc($resultado_turnos);
-                        $cantidad_turnos -= $fila_turnos['cantidad'];
-                    }
-
-                    if ($cantidad_turnos > 0) {
-                        $sql_nuevo_turno = "INSERT INTO turnos (fecha,id_usuario,centro_medico) values('$fecha','$numero_de_usuario','$centro_medico')";
-                        $resultado_nuevo_turno = mysqli_query($conexion, $sql_nuevo_turno);
-                        $nuevo_turno = true;
-                    } else {
-                        $error = "<div class='w3-panel w3-red animated shake'><p>No hay mas turnos disponibles para esta fecha</p></div>";
-                    }
-                } else {
-                    $error = "<div class='w3-panel w3-red animated shake'><p>La fecha ingresada es incorrecta</p></div>";
+                if (mysqli_affected_rows($conexion) > 0) {
+                    $fila_turnos = mysqli_fetch_assoc($resultado_turnos);
+                    $cantidad_turnos -= $fila_turnos['cantidad'];
                 }
 
+                if ($cantidad_turnos > 0) {
+                    $sql_nuevo_turno = "INSERT INTO turnos (fecha,id_usuario,centro_medico) values('$fecha','$numero_de_usuario','$centro_medico')";
+                    $resultado_nuevo_turno = mysqli_query($conexion, $sql_nuevo_turno);
+                    $nuevo_turno = true;
+                } else {
+                    $error = "<div class='w3-panel w3-red animated shake'><p>No hay mas turnos disponibles para esta fecha</p></div>";
+                }
+            } else {
+                $error = "<div class='w3-panel w3-red animated shake'><p>La fecha ingresada es incorrecta</p></div>";
             }
 
-
-        } else {
-            $error = "<div class='w3-panel w3-yellow animated shake'><p>Ya tiene un turno pendiente</p></div>";
         }
 
 
-}else {
+    } else {
+        $error = "<div class='w3-panel w3-yellow animated shake'><p>Ya tiene un turno pendiente</p></div>";
+    }
 
+}else {
     echo "<div class='mensaje-yahecho'>El usuario ya realizó el chequeo médico.</div>";
     include "pie.html";
     die;
@@ -127,8 +127,10 @@ if ($nuevo_turno != true){
 </div>
 <?php
 }else if ($nuevo_turno == true){
-    echo "<p>El turno fue reservado correctamente</p>";
-    echo "<a href='inicio.php' class='w3-button w3-round-xlarge w3-blue'>Volver al inicio</a>";
+    echo "<div class=w3-container banda'>
+          <p>El turno fue reservado correctamente</p>
+          <a href='inicio.php' class='w3-button w3-round-xlarge w3-blue'>Volver al inicio</a>
+          </div>";
 }
 ?>
 

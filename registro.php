@@ -41,7 +41,7 @@
             $mensaje_error .= "<p>Debe ingresar un E-mail</p>";
             $validaciones = false;
         }
-        elseif(!$campos_vacios = valida_email($email)) {
+        elseif(!$estructura_mail = valida_email($email)) {
             $mensaje_error .= "<p>Verifique la correcta escritura del email</p>";
             $validaciones = false;
         }

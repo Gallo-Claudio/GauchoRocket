@@ -27,7 +27,7 @@ $(document).ready(function() {
                 <div class="caja">
                 <label class="acompaniante">Nombre: </label><input type="text" name="nombre[]" value=""><br>
                 <label class="acompaniante">Apellido: </label><input type="text" name="apellido[]" value=""><br>
-                <label class="acompaniante">E-mail: </label><input type="email" name="email[]" value="">
+                <label class="acompaniante">E-mail: </label><input type="text" name="email[]" value="">
                 </div>`
             }
         }

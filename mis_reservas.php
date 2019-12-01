@@ -57,7 +57,7 @@ if(mysqli_affected_rows($conexion) == 0){
     <p><span><span class="w3-button w3-round-xlarge w3-blue btn1 reserva2">Pagar</span></span>Se aprobo el chequeo médico, ya puede pagar la reserva</p>
     <p><span class="aprobado">Aprobada</span>Se ha aprobado el pago. En espera de la ventana de tiempo correspondiente para realizar el Check-in</p>
     <p><span><span class="w3-button w3-round-xlarge w3-green btn1 reserva2">Check-in</span></span>Ya puede realizar el Check-in</p>
-    <p><span class="ok">OK - Apto para abordar la nave</span>El Check-in ys esta realizado. Esta en condiciones para abordar la nave cuando corresponda</p>
+    <p><span class="ok">OK - Apto para abordar la nave</span>El Check-in ya esta realizado. Esta en condiciones para abordar la nave cuando corresponda</p>
     <p><span class="alerta">Reserva CAIDA por falta de Check-In</span>Se cancela la reserva por no haber cumplimentado en tiempo el Check-in</p>
     <p><span class="atencion">Lista de espera</span>La reserva se haya en lista de espera</p>
     <p><span>El viaje ya partió</span></p>
