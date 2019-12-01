@@ -305,5 +305,43 @@
     }
 
 
+    //*******************************************
+    // Facturacion Mensual
+    //*******************************************
+    function facturacion_mensual($mes, $anio){
+        global $conexion;
+        $sql_facturacion_mensual = "select sum(monto_pago) as total, cabinaNombre, fecha_pago from facturacion as f
+                                    inner join reservas as r
+                                    on f.id_reserva = r.id
+                                    inner join capacidad as c
+                                    on r.idCapacidadCabina = c.id
+                                    inner join cabina as cab
+                                    on c.tipo_cabina = cab.id
+                                    where month(f.fecha_pago) = ".$mes."
+                                    and year(f.fecha_pago) = ".$anio."
+                                    group by cab.cabinaNombre
+                                    order by cab.cabinaNombre asc";
 
+        return $sql_resultado_facturacion_mensual = mysqli_query($conexion, $sql_facturacion_mensual);
+    }
+
+
+    //*******************************************
+    // Cabina mas vendida
+    //*******************************************
+    function cabina_mas_vendida($mes, $anio){
+        global $conexion;
+        $sql_cabina_mas_vendida = "select cabinaNombre, count(idCapacidadCabina) as cantidad from cabina as c
+                                    inner join capacidad as cap 
+                                    on c.id = cap.tipo_cabina
+                                    inner join reservas as r
+                                    on cap.id = r.idCapacidadCabina
+                                    inner join viajes as v on 
+                                    r.id_viajes = v.id
+                                    where month (fecha_hora) = ".$mes."
+                                    and year (fecha_hora) = ".$anio."
+                                    group by cabinaNombre";
+
+        return $sql_resultado_cabina_mas_vendida = mysqli_query($conexion, $sql_cabina_mas_vendida);
+    }
 ?>
