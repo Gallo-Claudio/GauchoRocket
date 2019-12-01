@@ -11,7 +11,7 @@ $(document).ready(function() {
 
 				let resultados = JSON.parse(response);
 				let listado = '';
-console.log(response);
+// console.log(response);
 				resultados.forEach(resultado => {
 					listado += `<tr><td>
 								${resultado.codigo_vuelo}												

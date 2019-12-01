@@ -380,8 +380,25 @@ p.aviso_qr {
     margin-top: 80px;
     margin-bottom: 30px;
 }
-
-
+.detalle-fac {
+    margin-top: 35px;
+}
+.facturacion_mensual {
+    font-size: 15px;
+    font-weight: bold;
+}
+input.facturacion {
+    width: 400px;
+    margin-left: 55px;
+    margin-bottom: 25px;
+}
+.aclaracion{
+    margin-top: 0px;
+    margin-bottom: 70px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 
 
