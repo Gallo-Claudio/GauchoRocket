@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once "conexion.php";
-
+$ran=rand(1,10000);
 $sql_cabina_mas_vendida = " select DISTINCT c.cabinaNombre,count(r.idCapacidadCabina)as CabinaMasVendida,
                             year(v.fecha_hora) as anio, monthname(v.fecha_hora) as mes from cabina as c
                             inner join capacidad as cap 
@@ -55,21 +55,26 @@ $sql_resultado_equipos = mysqli_query($conexion,$sql_equipos);
                 <td width="221"><b>Cantidad de veces vendidas</b></td>
                 <td width="176"><b>Mes</b></td>
                 <td width="73"><b>Año</b></td>
+                <td width="73"><b>Factura</b></td>
             </tr>
 
-<?php
 
-while ($final_cabina_mas_vendida = mysqli_fetch_assoc($resultado_cabina_mas_vendida)){
-    echo "<tr>
-<center>
-                <td>".$final_cabina_mas_vendida['cabinaNombre']."</td>\n 
-                <td> ".$final_cabina_mas_vendida['CabinaMasVendida']."</td>\n
-                <td>".$final_cabina_mas_vendida['mes']."</td>\n
-                <td>".$final_cabina_mas_vendida['anio']."</td>
-</center>
-          </tr>";
+        <?php
+        while ($final_busqueda = mysqli_fetch_assoc($resultado_cabina_mas_vendida)) {
+                    echo "<tr>
+        <td>" . $final_busqueda['cabinaNombre'] . "</td> 
+        <td>" . $final_busqueda['CabinaMasVendida'] . "</td> 
+        <td>" . $final_busqueda['anio'] . "</td> 
+        <td>" . $final_busqueda['mes'] . "</td> 
+        <td><a href='facturaCabinaMasVendida.php?id=" . $ran .
+                        "&cabinaNombre=" . $final_busqueda['cabinaNombre'] .
+                        "&CabinaMasVendida=" . $final_busqueda['CabinaMasVendida'] .
+                        "&anio=" . $final_busqueda['anio'] .
+                        "&mes=" . $final_busqueda['mes'] . "'>Factura</a></td> 
+
+      </tr>";
                 }
-      ?>
+    ?>
         </table><br>
 
 <center><button class="w3-button w3-round-xlarge w3-dark-grey" type="submit">
@@ -85,6 +90,7 @@ while ($final_cabina_mas_vendida = mysqli_fetch_assoc($resultado_cabina_mas_vend
             <td width="157"><b>Facturación</b></td>
             <td width="221"><b>Mes</b></td>
             <td width="176"><b>Año</b></td>
+            <td width="73"><b>Factura</b></td>
         </tr>
 
         <?php
@@ -96,6 +102,7 @@ while ($final_cabina_mas_vendida = mysqli_fetch_assoc($resultado_cabina_mas_vend
                 <td> $ ".$final_resultado_facturacion_mensual['facturacionMensual']."</td>\n 
                 <td>".$final_resultado_facturacion_mensual['mes']."</td>\n
                 <td>".$final_resultado_facturacion_mensual['anio']."</td>
+                
 </center>
           </tr>";
         }

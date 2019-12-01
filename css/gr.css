@@ -337,6 +337,33 @@ p.usuario {
     clear: both;
     margin-top: -50px;
 }
+p.aviso_qr {
+    width: 180px;
+    display: inline-block;
+    margin-right: 35px;
+}
+.detalle p {
+    display: block;
+    text-align: left;
+    line-height: 11px;
+    font-size: 14px;
+}
+.detalle span {
+    width: 300px;
+    display: inline-block;
+}
+.reserva2 {
+    padding-top: 2px;
+    width: 80px !important;
+    height: 15px;
+}
+.mis_reservas {
+    width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 
 
 
@@ -484,4 +511,12 @@ label.w3-large.registro {
 }
 .dialogo {
     padding: 5px 35px !important;
+}
+
+
+.detalle {
+    padding-top: inherit !important;
+    width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
 }
