@@ -1,35 +1,43 @@
 <?php
 session_start();
-require 'conexion.php';
+require_once 'conexion.php';
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+    header("location:login.php");
+}
 
-$tarjeta = $_POST['num_tarjeta'];
-$tipo_tarjeta = $_POST['tipo_tarjeta'];
-$titular_tarjeta = $_POST['titular_tarjeta'];
-$fecha_expiracion = $_POST['fecha_expiracion'];
-$anio_expiracion = $_POST['anio_expiracion'];
-$codigo_seguridad = $_POST['codigo_seguridad'];
-$total_a_pagar = $_POST['total_a_pagar'];
-$id_reserva = $_POST['id_reserva'];
+$tarjeta = isset($_POST['num_tarjeta']) ? $_POST['num_tarjeta'] : '';
+$tipo_tarjeta = isset($_POST['tipo_tarjeta']) ? $_POST['tipo_tarjeta'] : '';
+$titular_tarjeta = isset($_POST['titular_tarjeta']) ? $_POST['titular_tarjeta'] : '';
+$fecha_expiracion = isset($_POST['fecha_expiracion']) ? $_POST['fecha_expiracion'] : '';
+$anio_expiracion = isset($_POST['anio_expiracion']) ? $_POST['anio_expiracion'] : '';
+$codigo_seguridad = isset($_POST['codigo_seguridad']) ? $_POST['codigo_seguridad'] : '';
+$total_a_pagar = isset($_POST['total_a_pagar']) ? $_POST['total_a_pagar'] : '';
+$id_reserva = isset($_POST['id_reserva']) ? $_POST['id_reserva'] : '';
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 $anio_actual = (int)date("Y");
 $mes_actual = (int)date("m");
 $fecha_de_pago = date("Y-m-d");
 $campos_vacios = false;
 $error="";
+$estado = "";
+$num_tarjeta = "";
 
         $contador =1;
-        foreach ($tarjeta as $grupo_4_digitos){
-            if(empty($grupo_4_digitos)){
-                $error .= "<p>Complete los dígitos del ".$contador."º grupo de números de la tarjeta</p>";
-                $campos_vacios = true;
-                $class_error_alerta ="animated shake w3-red";
+        if(is_array($tarjeta)){ // verifica que sea un array. Si llega vacia, No verifica   ** https://stackoverflow.com/questions/2630013/invalid-argument-supplied-for-foreach  ** https://thisinterestsme.com/invalid-argument-supplied-for-foreach/
+            foreach ($tarjeta as $grupo_4_digitos){
+                if(empty($grupo_4_digitos)){
+                    $error .= "<p>Complete los dígitos del ".$contador."º grupo de números de la tarjeta</p>";
+                    $campos_vacios = true;
+                    $class_error_alerta ="animated shake w3-red";
+                }
+                if(!empty($grupo_4_digitos) && strlen($grupo_4_digitos) < 4){
+                    $error .= "<p>El ".$contador."º grupo de números de la tarjeta no tiene 4 dígitos</p>";
+                    $campos_vacios = true;
+                    $class_error_alerta ="animated shake w3-red";
+                }
+                $contador++;
             }
-            if(!empty($grupo_4_digitos) && strlen($grupo_4_digitos) < 4){
-                $error .= "<p>El ".$contador."º grupo de números de la tarjeta no tiene 4 dígitos</p>";
-                $campos_vacios = true;
-                $class_error_alerta ="animated shake w3-red";
-            }
-            $contador++;
         }
         if (empty($tipo_tarjeta)) {
             $error .= "<p>Seleccione el tipo de tarjeta</p>";

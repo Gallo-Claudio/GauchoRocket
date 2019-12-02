@@ -1,16 +1,20 @@
 <?php
 session_start();
-require_once "conexion.php";
 $usuario = $_SESSION['username'];
 if(!isset($usuario)){
     header("location:login.php");
 }
+$rol = $_SESSION['rol'];
+if($rol != 2){
+    header("location:login.php");
+}
+require_once "conexion.php";
 $sql_estaciones= "select * from estaciones";
 $resultado_estaciones = mysqli_query($conexion, $sql_estaciones);
 $registro_estaciones = mysqli_fetch_all($resultado_estaciones);
-$fecha_actual = date("Y-m-d");
+$fecha_actual = date("Y-m-d H:i:s");
 //$fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
-$fecha_minimo = date("Y-m-d");
+$fecha_minimo = date("Y-m-d H:i:s");
 $error_fecha = "";
 
 ?>

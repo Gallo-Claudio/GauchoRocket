@@ -1,14 +1,17 @@
 <?php
 session_start();
-require_once "conexion.php";
-require_once "funciones.php";
 $usuario = $_SESSION['username'];
 if(!isset($usuario)){
     header("location:login.php");
 }
+$rol = $_SESSION['rol'];
+if($rol != 2){
+    header("location:login.php");
+}
+require_once "conexion.php";
+require_once "funciones.php";
 
-//$codigo_reserva = 'CR515';   // LO DEBO RECIBIR POR POST - Ahora lo hardcodeo
-$codigo_reserva = $_GET['reserva'];   // LO DEBO RECIBIR POR POST - Ahora lo hardcodeo
+$codigo_reserva = isset($_GET['reserva']) ? $_GET['reserva'] : '';
 
 $sql_datos_reserva = "select cantidad, id_viajes, idCapacidadCabina, filas, columnas, estacion_origen, estacion_destino, naveNombre, cabinaNombre from reservas
                         inner join capacidad

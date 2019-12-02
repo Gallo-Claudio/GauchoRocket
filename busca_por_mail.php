@@ -1,6 +1,15 @@
 <?php
+session_start();
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+    header("location:login.php");
+}
+$rol = $_SESSION['rol'];
+if($rol != 1){
+    header("location:login.php");
+}
 require_once "conexion.php";
-$email = $_POST['email'];
+$email = isset($_POST['email']) ? $_POST['email'] : '';
 
 //******************************************************
 // Solo busca entre los los clientes que tengan facturas

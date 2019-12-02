@@ -14,6 +14,10 @@ $usuario = $_SESSION['username'];
 if(!isset($usuario)){
     header("location:login.php");
 }
+$rol = $_SESSION['rol'];
+if($rol != 2){
+    header("location:login.php");
+}
 $id_usuario_session = $_SESSION['id'];
 $error="";
 require 'conexion.php';

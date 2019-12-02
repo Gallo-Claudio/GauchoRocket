@@ -1,7 +1,15 @@
 <?php
 session_start();
+$usuario = $_SESSION['username'];
+if(!isset($usuario)){
+    header("location:login.php");
+}
+$rol = $_SESSION['rol'];
+if($rol != 2){
+    header("location:login.php");
+}
 $id_usuario = $_SESSION['id'];
-$cod_reserva = $_GET['reserva'];
+$cod_reserva = isset($_GET['reserva']) ? $_GET['reserva'] : '';
 $error="";
 require 'conexion.php';
 require_once "funciones.php";

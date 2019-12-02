@@ -5,7 +5,8 @@ $usuario = $_SESSION['username'];
 if(!isset($usuario)){
     header("location:login.php");
 }
-$id_cliente = $_GET['id'];
+$id_cliente = isset($_GET['id']) ? $_GET['id'] : '';
+
 $ran=rand(1,10000);
 
 $sql_facturas = "SELECT monto_pago, nombre, apellido, fecha_pago, reservas.cod_reserva from reservas as r

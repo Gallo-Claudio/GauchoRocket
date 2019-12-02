@@ -6,7 +6,10 @@ $usuario = $_SESSION['username'];
 if(!isset($usuario)){
     header("location:login.php");
 }
-
+$rol = $_SESSION['rol'];
+if($rol != 1){
+    header("location:login.php");
+}
 $mes = isset($_POST['mes']) ? $_POST['mes'] : '';
 $anio = isset($_POST['anio']) ? $_POST['anio'] : '';
 

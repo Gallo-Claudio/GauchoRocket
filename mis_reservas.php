@@ -1,11 +1,15 @@
 <?php
 session_start();
-require_once "conexion.php";
-require "funciones.php";
 $usuario = $_SESSION['username'];
 if(!isset($usuario)){
     header("location:login.php");
 }
+$rol = $_SESSION['rol'];
+if($rol != 2){
+    header("location:login.php");
+}
+require_once "conexion.php";
+require "funciones.php";
 $id_usuario = $_SESSION['id'];
 $sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.lista_espera, r.check_in, r.id, v.tipo_viaje as id_tipo_viaje,
                  cantidad, circuito_id, id_viajes, idCapacidadCabina, (filas*columnas) as capacidadCabina, estacion_origen,
@@ -24,7 +28,8 @@ $sql_reservas = "SELECT r.cod_reserva, v.codigo_vuelo, v.fecha_hora, r.pago, r.l
                  on r.estacion_origen = est1.id
                  inner join estaciones as est2
                  on r.estacion_destino = est2.id
-                 WHERE r.id_usuario = '$id_usuario'";
+                 WHERE r.id_usuario = '$id_usuario'
+                 order by fecha_hora asc";
 $resultado_reservas = mysqli_query($conexion,$sql_reservas);
 $sinReservas = false;
 date_default_timezone_set('America/Argentina/Buenos_Aires');
@@ -86,7 +91,7 @@ if($sinReservas == false){
     </tr>
     <?php
     while ($fila_reservas = mysqli_fetch_assoc($resultado_reservas)) {
-        $fecha_vuelo = date("Y-m-d",strtotime($fila_reservas['fecha_hora']));
+        $fecha_vuelo = date("Y-m-d H:i:s",strtotime($fila_reservas['fecha_hora']));
 //        $hora_vuelo = date("G-i-s",strtotime($fila_reservas['fecha_hora']));
 //        $hora_checkIn = date("G-i-s",strtotime($fila_reservas['fecha_hora']."- 2 hour"));
         $fecha_checkIn_inicio = date("Y-m-d H:i:s", strtotime($fila_reservas['fecha_hora']."- 2 days"));

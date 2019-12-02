@@ -1,17 +1,19 @@
 <?php
 session_start();
-$error="";
-require_once "conexion.php";
-require_once "funciones.php";
-
 $usuario = $_SESSION['username'];
 if(!isset($usuario)){
     header("location:login.php");
 }
-
-$id_viaje = $_GET['viaje'];
-$id_destino = $_GET['destino'];
-$id_circuito = $_GET['circuito'];
+$rol = $_SESSION['rol'];
+if($rol != 2){
+    header("location:login.php");
+}
+$error="";
+require_once "conexion.php";
+require_once "funciones.php";
+$id_viaje = isset($_GET['viaje']) ? $_GET['viaje'] : '';
+$id_destino = isset($_GET['destino']) ? $_GET['destino'] : '';
+$id_circuito = isset($_GET['circuito']) ? $_GET['circuito'] : '';
 $id_usuario = $_SESSION['id'];
 $reserva_realizada = false;
 

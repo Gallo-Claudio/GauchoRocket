@@ -2,8 +2,6 @@
 require_once "conexion.php";
 
 $codigo_reserva = isset($_GET['codigo_reserva']) ? $_GET['codigo_reserva'] : '';
-
-
 $cantidad_asientos_seleccionados = isset($_POST['asiento']) ? $_POST['asiento'] : '';
 $cantidad_asientos_reservados = $_POST['cantidad_asientos_reservados'];
 $menu = isset($_POST['menu']) ? $_POST['menu'] : '';
@@ -17,7 +15,7 @@ $validaciones=true;
 $class_error_alerta='';
 
 
-$sql_control_reserva = "select check_in from reservas where cod_reserva ='$codigo_reserva'";
+$sql_control_reserva = "select check_in, codigo_vuelo from reservas where cod_reserva ='$codigo_reserva'";
 $resultado_control_reserva = mysqli_query($conexion, $sql_control_reserva);
 $fila_control_reserva = mysqli_fetch_assoc($resultado_control_reserva);
 $control_reserva = $fila_control_reserva['check_in'];

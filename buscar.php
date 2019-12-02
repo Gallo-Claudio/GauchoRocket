@@ -33,7 +33,7 @@ $and = determinarCircuito($cantidad, $sentido, $and, $origen, $destino);
 
 
 if(empty($fecha_salida)){
-    $hoy = date("Y-m-d");
+    $hoy = date("Y-m-d H:i:s");
     $opcion_fecha ="where fecha_hora > '$hoy%'";
 }
 else{
