@@ -56,7 +56,7 @@ if(mysqli_affected_rows($conexion) == 0){
 <div class="w3-container banda">
     <p class="w3-xxlarge w3-center">Mis Reservas</p>
 </div>
-<div class="w3-container banda detalle">
+<div class="w3-container banda descripcion2">
     <p><span class="atencion">Pendiente de chequeo médico</span>Todavia no ha realizado el chequeo correspondiente</p>
     <p><span class="alerta">Reserva CANCELADA - No apto para el viaje</span>Se cancela la reserva por no obtener el apto médico necesario para el viaje</p>
     <p><span><span class="w3-button w3-round-xlarge w3-blue btn1 reserva2">Pagar</span></span>Se aprobo el chequeo médico, ya puede pagar la reserva</p>

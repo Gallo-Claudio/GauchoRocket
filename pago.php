@@ -72,17 +72,17 @@ $total_a_pagar = $precio * $cantidad_asientos;
 <div class="w3-container banda">
     <p class="w3-xxlarge w3-center">Pago de reservas</p><br>
     <div class="datos-reserva">
-        Datos de la reserva<br><br>
-        Reserva: <?php echo $cod_reserva ?><br>
-        Cabina: <?php echo $cabina ?><br>
-        Precio por asiento: <?php echo $precio ?><br>
-        Cantidad de asientos: <?php echo $cantidad_asientos ?><br>
-        Nave: <?php echo $naveNombre ?><br>
-        Fecha y hora: <?php echo $fecha_hora ?><br>
-        Código de vuelo: <?php echo $codigo_vuelo ?><br>
-        Origen: <?php echo $nombre_estacion_origen ?><br>
-        Destino: <?php echo $nombre_estacion_destino ?><br>
-        TOTAL: <?php echo $total_a_pagar ?><br>
+        <p>Datos de la reserva</p>
+        Reserva: <b><?php echo $cod_reserva ?></b><br>
+        Cabina: <b><?php echo $cabina ?></b><br>
+        Precio por asiento: <b><?php echo $precio ?></b><br>
+        Cantidad de asientos: <b><?php echo $cantidad_asientos ?></b><br>
+        Nave: <b><?php echo $naveNombre ?></b><br>
+        Fecha y hora: <b><?php echo $fecha_hora ?></b><br>
+        Código de vuelo: <b><?php echo $codigo_vuelo ?></b><br>
+        Origen: <b><?php echo $nombre_estacion_origen ?></b><br>
+        Destino: <b><?php echo $nombre_estacion_destino ?></b><br>
+        TOTAL: <b><?php echo $total_a_pagar ?><br>
     </div>
 </div>
 <?php

@@ -48,7 +48,7 @@ $error_fecha = "";
         <div role="tabpanel" class="tab-pane fade in active" id="about">
 
             <!-- ORBITALES -->
-            <h2>Vuelos Orbitales</h2>
+            <p class="detalle_tipo_viaje">Vuelos Orbitales</p>
             <p class="descripcion">Los vuelos Orbitales salen todos los días de la semana, desde dos localidades diferentes.</p>
 
             <form id="orbital">
@@ -77,7 +77,7 @@ $error_fecha = "";
 
         <!-- ENTRE DESTINOS -->
         <div role="tabpanel" class="tab-pane fade" id="specs">
-            <h2>Vuelos entre Destinos</h2>
+            <p class="detalle_tipo_viaje">Vuelos entre Destinos</p>
             <p class="descripcion">Estos vuelos se realizán todos los días de la semana.</p>
             <div class="distribucion">
                 <form id="destinos">
@@ -135,7 +135,7 @@ $error_fecha = "";
 
         <!-- TOURS -->
         <div role="tabpanel" class="tab-pane fade" id="reviews">
-            <h2>Tours</h2>
+            <p class="detalle_tipo_viaje">Tours</p>
             <p class="descripcion">Estos vuelos se realizan solamente los días domingos</p>
             <form id="tours">
                 <?php echo "<p>$error_fecha</p>"; ?>

@@ -70,6 +70,8 @@ footer img {
      padding: 0px 30px 15px 30px;
      border-top: 1px solid #fff;
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+    padding-top: 40px;
+    padding-bottom: 40px;
  }
 .iso-logo {
     margin-left: 50px;
@@ -216,6 +218,7 @@ label.buscador {
     width: 120px;
     font-size: 14px;
     height: 30px;
+    text-align: inherit;
 }
 th.reservas {
     width: 170px;
@@ -337,19 +340,20 @@ p.usuario {
 .iso-logo_encabezado {
     clear: both;
     margin-top: -50px;
+    color: #fff0 !important;
 }
 p.aviso_qr {
     width: 180px;
     display: inline-block;
     margin-right: 35px;
 }
-.detalle p {
+.descripcion2 p {
     display: block;
     text-align: left;
     line-height: 11px;
     font-size: 14px;
 }
-.detalle span {
+.descripcion2 span {
     width: 300px;
     display: inline-block;
 }
@@ -398,6 +402,11 @@ input.facturacion {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
+}
+.detalle_tipo_viaje {
+    font-size: 25px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 
@@ -480,6 +489,9 @@ span.reservado {
     border-radius: 18px;
     margin-left: auto;
     margin-right: auto;
+    font-size: 17px;
+    padding-left: 68px;
+    padding-right: 68px;
 }
 .destacado {
     background-color: #a9fb357a;
@@ -516,7 +528,11 @@ img.image-qr {
     color: #185ad0;
     font-size: 25px;
 }
-
+.datos-reserva p {
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+}
 
 
 
@@ -550,4 +566,14 @@ label.w3-large.registro {
     width: 1400px;
     margin-left: auto;
     margin-right: auto;
+}
+.descripcion2 {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    background-color: #f1eeee;
+    margin-top: -40px;
 }
