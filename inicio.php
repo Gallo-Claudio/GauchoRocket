@@ -41,7 +41,7 @@ switch ($rol) {
         $chequeo_medico = $fila_verifica_chequeoMedico['se_chequeo'];
 
 
-        if($chequeo_medico != true){
+        if($chequeo_medico == 0){
             $sql_turno = "SELECT fecha FROM turnos WHERE id_usuario = '$numero_de_usuario'";
             $resultado_turno = mysqli_query($conexion,$sql_turno);
             $fila_turno = mysqli_fetch_assoc($resultado_turno);

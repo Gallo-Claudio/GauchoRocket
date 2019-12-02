@@ -2,9 +2,13 @@
 $error="";
 require 'conexion.php';
 
-$nombre = $_GET['n'];
-$apellido = $_GET['a'];
-$email = $_GET['e'];
+$nombre = isset($_GET['n']) ? $_GET['n'] : '';
+$apellido = isset($_GET['a']) ? $_GET['a'] : '';
+$email = isset($_GET['e']) ? $_GET['e'] : '';
+//$nombre = $_GET['n'];
+//$apellido = $_GET['a'];
+//$email = $_GET['e'];
+$usuario="";
 
     if (isset($_POST['enviar'])) {
         $nombre = $_POST['nombre'];

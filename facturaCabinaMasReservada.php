@@ -5,22 +5,10 @@ require_once "vendor/autoload.php";
 
 $idf = $_GET ['id'];
 $cabinaNombre = $_GET ['cabinaNombre'];
-$anio = $_GET ['anio'];
-$mes = $_GET['mes'];
-$CabinaMasVendida = $_GET['CabinaMasVendida'];
-
-
-$usuario = $_SESSION['username'];
+$cantidad = $_GET ['cantidad'];
+$porcentaje = $_GET ['porcentaje'];
 $date= date("Y-m-d");
 
-$sql = "SELECT apellido FROM usuarios where id = $idf";
-$resultado_apellido = mysqli_query($conexion,$sql);
-$final = mysqli_fetch_assoc($resultado_apellido);
-
-$sql_reservas = "select estaciones.nombre as Origen, r.estacion_destino,r.cod_reserva as CodigoReserva from reservas as r
-inner join estaciones on
-r.estacion_origen = estaciones.id
-where pago = 1 and id_usuario = $idf;";
 
 $resultado_reservas = mysqli_query($conexion, $sql_reservas);
 $final_reservas = mysqli_fetch_assoc($resultado_reservas);
@@ -67,21 +55,18 @@ $mpdf -> writeHtml("<p>Gaucho Rocket</p><br>Factura<br><br>  <table>
                     <td><hr></td>
                 </tr>
                   <tr>
-                    <td>Mes:</td>
-                    <td>$mes</td>
-                </tr>
-                  <tr>
-                    <td>Año:</td>
-                    <td>$anio</td>
-                </tr>
-                <tr>
-                    <td>Cabina mas vendida:</td>
+                    <td>Cabina:</td>
                     <td>$cabinaNombre</td>
                 </tr>
                   <tr>
-                    <td>Cantidad de veces vendidas:</td>
-                    <td>$CabinaMasVendida</td>
+                    <td>Veces reservada:</td>
+                    <td>$cantidad</td>
                 </tr>
+                    <tr>
+                    <td>Porcentaje:</td>
+                    <td>$porcentaje</td>
+                </tr>
+              
                 
             </table><br>",\Mpdf\HTMLParserMode::HTML_BODY);
 $mpdf ->Output();

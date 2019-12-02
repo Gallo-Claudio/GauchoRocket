@@ -32,7 +32,7 @@ console.log(response);
 								${resultado.circuito}												
 								</td>
 								<td class="btn-reserva">
-								<button class='w3-button w3-round-xlarge w3-green reserva' type='submit'><a href='reservas.php?viaje=${resultado.id}&destino=${resultado.destino}&circuito=${resultado.circuito_id}'>Reservar</button>											
+								<a class='w3-button w3-round-xlarge w3-green reserva' href='reservas.php?viaje=${resultado.id}&destino=${resultado.destino}&circuito=${resultado.circuito_id}'>Reservar</a>											
 								</td></tr>`
 				})
 				$('#resultados').html(listado);

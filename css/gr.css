@@ -69,6 +69,7 @@ footer img {
      margin-bottom: 50px;
      padding: 0px 30px 15px 30px;
      border-top: 1px solid #fff;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
  }
 .iso-logo {
     margin-left: 50px;
@@ -362,7 +363,23 @@ p.aviso_qr {
     margin-left: auto;
     margin-right: auto;
 }
-
+.codigo-qr{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
+}
+.fact_mensual {
+    width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+.fact_mensual input[type="text"] {
+    margin-right: 40px;
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
 
 
 
@@ -467,10 +484,7 @@ form#ubicacion_asientos input[type="submit"] {
     height: 30px;
 }
 img.image-qr {
-    margin-right: auto;
-    margin-left: auto;
-    display: block;
-    margin-top: 70px;
+    margin-top: 20px;
 }
 #codigo a img {
     width: 100px;

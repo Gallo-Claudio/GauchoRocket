@@ -12,6 +12,10 @@ $id_estacion_destino = $_POST['id_destino'];
 $codigo_vuelo = $_POST['codigo_vuelo'];
 $id_circuito = $_POST['id_circuito'];
 
+$error_form_acompaniante_nombre ='';
+$error_form_acompaniante_apellido ='';
+$error_form_acompaniante_email ='';
+$estado ='';
 
 /****************************************************************************************************************************/
 /* Se obtiene capacidad de las cabinas y otros datos ************************************************************************/
@@ -86,30 +90,30 @@ $reserva_realizada = false;
 
         foreach ($nombre as $valor) {
             if(empty($valor)){
-                $error_form_acompañante_nombre = "<br>- Falta/n nombre/s";
+                $error_form_acompaniante_nombre = "<br>- Falta/n nombre/s";
                 $posicion_dato='vacio';
             }
         }
         foreach ($apellido as $valor) {
             if(empty($valor)){
-                $error_form_acompañante_apellido = "<br>- Falta/n apellido/s";
+                $error_form_acompaniante_apellido = "<br>- Falta/n apellido/s";
                 $posicion_dato='vacio';
             }
         }
         foreach ($email as $valor) {
             if(empty($valor)){
-                $error_form_acompañante_email = "<br>- Falta/n email/s";
+                $error_form_acompaniante_email = "<br>- Falta/n email/s";
                 $posicion_dato='vacio';
             }
-//            elseif(!$campos_vacios = valida_email($email)) {
-//                $error_form_acompañante_email = "<br>- Verifique la correcta escritura del/los email/s";
-//                $posicion_dato='vacio';
-//            }
+            elseif(!$estructura_mail = valida_email($valor)) {
+                $error_form_acompaniante_email = "<br>- Verifique la correcta escritura del/los email/s";
+                $posicion_dato='vacio';
+            }
         }
 
        if($posicion_dato=='vacio') {
            $error .= "Debe completar todos los datos del formulario";
-           $error .= $error_form_acompañante_nombre.$error_form_acompañante_apellido.$error_form_acompañante_email;
+           $error .= $error_form_acompaniante_nombre.$error_form_acompaniante_apellido.$error_form_acompaniante_email;
            $class_error_alerta ="animated shake w3-red";
            $campos_form_vacios = true;
        }
