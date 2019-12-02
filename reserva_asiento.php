@@ -19,6 +19,7 @@ $sql_control_reserva = "select check_in, codigo_vuelo from reservas where cod_re
 $resultado_control_reserva = mysqli_query($conexion, $sql_control_reserva);
 $fila_control_reserva = mysqli_fetch_assoc($resultado_control_reserva);
 $control_reserva = $fila_control_reserva['check_in'];
+$codigo_vuelo = $fila_control_reserva['codigo_vuelo'];
 
 if ($control_reserva == 0) {
 
@@ -48,7 +49,7 @@ if ($control_reserva == 0) {
     if ($validaciones == true) {
 
         foreach ($_POST['asiento'] as $ubicacion_asiento) {
-            $sql_ubicacion_asientos = "INSERT INTO ubicacion (codigo_reserva, asiento) VALUES ('$codigo_reserva','$ubicacion_asiento')";
+            $sql_ubicacion_asientos = "INSERT INTO ubicacion (codigo_vuelo, codigo_reserva, asiento) VALUES ('$codigo_vuelo','$codigo_reserva','$ubicacion_asiento')";
             $resultado = mysqli_query($conexion, $sql_ubicacion_asientos);
             $asientos .= $ubicacion_asiento . "<br>";
         }

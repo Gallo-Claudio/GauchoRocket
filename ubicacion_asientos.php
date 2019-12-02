@@ -13,7 +13,7 @@ require_once "funciones.php";
 
 $codigo_reserva = isset($_GET['reserva']) ? $_GET['reserva'] : '';
 
-$sql_datos_reserva = "select cantidad, id_viajes, idCapacidadCabina, filas, columnas, estacion_origen, estacion_destino, naveNombre, cabinaNombre from reservas
+$sql_datos_reserva = "select cantidad, id_viajes, idCapacidadCabina, filas, columnas, estacion_origen, estacion_destino, naveNombre, cabinaNombre, codigo_vuelo from reservas
                         inner join capacidad
                         on reservas.idCapacidadCabina = capacidad.id
                         inner join modelos_naves
@@ -33,6 +33,7 @@ $estacion_origen = $datos_reserva['estacion_origen'];
 $estacion_destino = $datos_reserva['estacion_destino'];
 $naveNombre = $datos_reserva['naveNombre'];
 $cabinaNombre = $datos_reserva['cabinaNombre'];
+$codigo_vuelo = $datos_reserva['codigo_vuelo'];
 
 
 $sql_datos_nave = "select * from viajes
@@ -55,7 +56,7 @@ $resultado_menu = mysqli_query($conexion, $sql_menu);
 
 
 /* consulto la bd para ver que asientos ya hay reservados */
-$sql= "select asiento from ubicacion where codigo_reserva ='$codigo_reserva'";
+$sql= "select asiento from ubicacion where codigo_vuelo ='$codigo_vuelo'";
 $resultado = mysqli_query($conexion, $sql);
 
 $registro = mysqli_fetch_assoc($resultado);
