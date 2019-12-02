@@ -14,24 +14,19 @@ else {
 }
 
 $and = " and circuito_id in ";
-
-/* obtengo de acuerdo al destino los numeros de los circuitos (ida y vuelta) que pasan por la estacion */
-$sql_sentido = "select circuito_id from circuitos_estaciones
-                    where estacion_id = '$destino'";
-$resultado_sentido = mysqli_query($conexion, $sql_sentido);
-$sentido = mysqli_fetch_all($resultado_sentido);
-// si el valor de cantidad es 2 estoy obteniendo los valores de ida/vuelta de un circuito
-// si el valor de cantidad es 4 estoy recibiendo los valores de ida/vuelta de los dos circuitos
-$cantidad = count($sentido);
-
-// Determino que valor enviar a la consulta de acuerdo a si recibi los valores de 1 o de 2 circuitos
-// y de si es de ida (origen<destino) o de vuelta (origen>destino)
-// caso especial el primer if --> el viaje es orbital o tour
-
-
-$and = determinarCircuito($cantidad, $sentido, $and, $origen, $destino);
-
-
+if($tipo_viajes == 3) {    //Si es Entre Destinos
+    if($destino > $origen){  //Si es de Ida
+        $and .= "(1,2)";
+    }else{                   //Si es de vuelta
+        $and .= "(5,6)";
+    }
+}else{                  // Si es Orbital o Tour
+    if($origen ==1) {   //Si sale de BS AS
+        $and .= "(3)";
+    }else if ($origen == 2){   //Si sale de Ankara
+        $and .= "(4)";
+    }
+}
 if(empty($fecha_salida)){
     $hoy = date("Y-m-d H:i:s");
     $opcion_fecha ="where fecha_hora > '$hoy%'";
@@ -50,7 +45,7 @@ $sql = "select viajes.id, fecha_hora, duracion, naveNombre, codigo_vuelo, circui
                 ".$opcion_fecha."
                 and tipo_viaje = '$tipo_viajes'
                 and origen = '$origen'" . $and.
-                "order by fecha_hora asc";
+    "order by fecha_hora asc";
 
 $resultado = mysqli_query($conexion, $sql);
 
@@ -71,65 +66,4 @@ while ($fila = mysqli_fetch_array($resultado)) {
 
 $jsonstring = json_encode($json);
 echo $jsonstring;
-
-
-
-function estaEnCincoCircuitos($cantidad) {
-    return $cantidad == 5;
-}
-
-
-function circuitoBuenosAires(array $sentido, $and) {
-    $a = $sentido[2][0];
-    $and .= "('" . $a . "')";
-    return $and;
-}
-
-
-function estaEnMenosDe3Circuitos($cantidad) {
-    return $cantidad < 3;
-}
-
-
-function circuitoDeDosTramos($origen, $destino, array $sentido, $and) {
-    ($origen < $destino) ? $a = $sentido[0][0] : $a = $sentido[1][0];
-    $and .= "('" . $a . "')";
-    return $and;
-}
-
-
-function esDeIda($origen, $destino) {
-    return $origen < $destino;
-}
-
-
-function elCircuitoEsDeIda(array $sentido, $and) {
-    $a = $sentido[0][0];
-    $b = $sentido[1][0];
-    $and .= "('" . $a . "','" . $b . "')";
-    return $and;
-}
-
-function esDeVuelta(array $sentido, $and) {
-    $a = $sentido[2][0];
-    $b = $sentido[3][0];
-    $and .= "('" . $a . "','" . $b . "')";
-    return $and;
-}
-
-
-function determinarCircuito($cantidad, array $sentido, $and, $origen, $destino) {
-//SMELL: el codigo esta atado al orden de las columnas de la tabla y accede por indice mediante un count
-    if (estaEnCincoCircuitos($cantidad)) {
-        $and = circuitoBuenosAires($sentido, $and);
-    } elseif (estaEnMenosDe3Circuitos($cantidad)) {
-        $and = circuitoDeDosTramos($origen, $destino, $sentido, $and);
-    } elseif (esDeIda($origen, $destino)) {
-        $and = elCircuitoEsDeIda($sentido, $and);
-    } else {
-        $and = esDeVuelta($sentido, $and);
-    }
-    return $and;
-}
-
 ?>
