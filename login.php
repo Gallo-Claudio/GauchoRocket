@@ -15,14 +15,16 @@ if (isset($_POST['enviar'])) {
             $error = "<div class='w3-panel w3-red'><p>Los datos ingresados son incorrectos</p></div>";
             $clase ="animated shake";
         } else {
-            $resultado = mysqli_fetch_assoc($consulta); /*Todos los datos que trae los guardo aca*/
+            $resultado = mysqli_fetch_assoc($consulta);
             if ($resultado['clave'] == $clave) {
                 $id_usuario = $resultado['id_usuario'];
+
                 $sql_confirmacion_mail = "select confirmacion_mail from usuarios where id='$id_usuario'";
                 $resultado_confirmacion_mail = mysqli_query($conexion, $sql_confirmacion_mail);
                 $fila_confirmacion_mail = mysqli_fetch_assoc($resultado_confirmacion_mail);
                 $confirmacion_mail = $fila_confirmacion_mail['confirmacion_mail'];
 
+                // Confirmo que el usuario haya validado el mail
                 if($confirmacion_mail==0){
                     $error = "<div class='w3-panel w3-red'><p>El email no esta validado. Complete el proceso para poder ingresar al sistema</p></div>";
                     $clase ="animated shake";
