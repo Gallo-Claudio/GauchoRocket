@@ -69,7 +69,9 @@ $(document).ready(function() {
 	})
 
 
-	/***************/
+
+	/**********************************/
+	/* Devuelve listado de estaciones */
 
     $('#origen').on('change', function(event) {
         event.preventDefault();

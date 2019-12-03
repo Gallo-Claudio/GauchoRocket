@@ -5,7 +5,7 @@ $tipo_viajes = $_POST['tipo_viajes'];
 $fecha_salida = $_POST['fecha_salida'];
 $origen = $_POST['origen'];
 
-
+// Segun el tipo de viaje, determino el destino
 if ($tipo_viajes == 2) {    // 2 son vuelos Orbitales
     $destino = $origen;
 }
@@ -13,6 +13,7 @@ else {
     $destino = $_POST['destino'];
 }
 
+// Segun el tipo de viaje, determino en que circuitos realizar la busqueda
 $and = " and circuito_id in ";
 if($tipo_viajes == 3) {    //Si es Entre Destinos
     if($destino > $origen){  //Si es de Ida
@@ -27,6 +28,7 @@ if($tipo_viajes == 3) {    //Si es Entre Destinos
         $and .= "(4)";
     }
 }
+
 if(empty($fecha_salida)){
     $hoy = date("Y-m-d H:i:s");
     $opcion_fecha ="where fecha_hora > '$hoy%'";
