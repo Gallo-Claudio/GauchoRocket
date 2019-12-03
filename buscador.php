@@ -12,7 +12,7 @@ require_once "conexion.php";
 $sql_estaciones= "select * from estaciones";
 $resultado_estaciones = mysqli_query($conexion, $sql_estaciones);
 $registro_estaciones = mysqli_fetch_all($resultado_estaciones);
-$fecha_actual = date("Y-m-d H:i:s");
+//$fecha_actual = date("Y-m-d H:i:s");
 //$fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 1 days"));
 $fecha_minimo = date("Y-m-d H:i:s");
 $error_fecha = "";
