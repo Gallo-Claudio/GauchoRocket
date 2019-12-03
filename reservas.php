@@ -89,12 +89,9 @@ $nombre_estacion_destino = determina_nombre_estacion($id_destino);
                     <th class='reservas'>Precio del pasajes</th>
                     <th class='reservas'></th>
                   </tr>
-                  <tr>
-                    <td class='reservas'>".$fila_viaje['cabinaNombre']."</td>
-                    <td class='reservas'>".$fila_viaje['precio']."</td>
-                    <td class='reservas'><input type='radio' name='idCapacidadCabina' value='".$fila_viaje['idCapacidadCabina']."'></td>
-                  </tr>";
+                  <tr>";
 
+        mysqli_data_seek($resultado_viaje, 0);
         while ($fila_viaje = mysqli_fetch_assoc($resultado_viaje)){
             echo "<tr>
                             <td class='reservas'>".$fila_viaje['cabinaNombre']."</td>
