@@ -80,19 +80,20 @@ $array = explode(",", $reg);
 <body>
 <?php include "header.php" ?>
 <div class="w3-container banda">
-    <p class="w3-xxlarge w3-center">Selección de asientos</p>
+    <p class="w3-xxlarge w3-center selec-asientos">Selección de asientos</p>
+    <div class="datos-reserva">
+        <p class="w3-xlarge">Datos de la reserva</p><br>
+        Reserva: <b><?php echo $codigo_reserva ?></b><br>
+        Vuelo: <b><?php echo $codigo_vuelo ?></b><br>
+        Fecha/Hora: <b><?php echo $fecha_hora ?></b><br>
+        Origen: <b><?php echo $nombre_estacion_origen ?></b><br>
+        Destino: <b><?php echo $nombre_estacion_destino ?></b><br>
+        Nave: <b><?php echo $naveNombre ?></b><br>
+        Cabina: <b><?php echo $cabinaNombre ?></b><br>
+        <span class="destacado">Reserva para: <b><?php echo $cantidad_asientos_reservados ?></b> persona/s</span>
+    </div>
 </div>
-<div class="datos-reserva">
-    <p class="w3-xlarge">Datos de la reserva</p><br>
-    Reserva: <?php echo $codigo_reserva ?><br>
-    Vuelo: <?php echo $codigo_vuelo ?><br>
-    Fecha/Hora: <?php echo $fecha_hora ?><br>
-    Origen: <?php echo $nombre_estacion_origen ?><br>
-    Destino: <?php echo $nombre_estacion_destino ?><br>
-    Nave: <?php echo $naveNombre ?><br>
-    Cabina: <?php echo $cabinaNombre ?><br>
-    <span class="destacado">Reserva para: <?php echo $cantidad_asientos_reservados ?> personas</span>
-</div>
+
 
 <form id="ubicacion_asientos">
 

@@ -492,6 +492,7 @@ span.reservado {
     font-size: 17px;
     padding-left: 68px;
     padding-right: 68px;
+    color: #333;
 }
 .destacado {
     background-color: #a9fb357a;
@@ -529,10 +530,15 @@ img.image-qr {
     font-size: 25px;
 }
 .datos-reserva p {
-    font-size: 20px;
+    font-size: 20px !important;
     font-weight: bold;
     display: block;
 }
+.selec-asientos {
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
 
 
 

@@ -82,7 +82,7 @@ $total_a_pagar = $precio * $cantidad_asientos;
         Código de vuelo: <b><?php echo $codigo_vuelo ?></b><br>
         Origen: <b><?php echo $nombre_estacion_origen ?></b><br>
         Destino: <b><?php echo $nombre_estacion_destino ?></b><br>
-        TOTAL: <b><?php echo $total_a_pagar ?><br>
+        TOTAL: <b>$<?php echo $total_a_pagar ?><br>
     </div>
 </div>
 <?php

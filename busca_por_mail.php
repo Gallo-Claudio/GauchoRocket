@@ -14,23 +14,23 @@ $email = isset($_POST['email']) ? $_POST['email'] : '';
 //******************************************************
 // Solo busca entre los los clientes que tengan facturas
 //******************************************************
-//$busqueda_cliente = "select credenciales.id, nombre, apellido, email from credenciales
-//                    inner join usuarios
-//                    on credenciales.id_usuario = usuarios.id
-//                    inner join reservas
-//                    on reservas.id_usuario = credenciales.id
-//                    inner join facturacion
-//                    on reservas.id = facturacion.id_reserva
-//                    where email like '%$email%'";
+$busqueda_cliente = "select distinct credenciales.id, nombre, apellido, email from credenciales
+                    inner join usuarios
+                    on credenciales.id_usuario = usuarios.id
+                    inner join reservas
+                    on reservas.id_usuario = credenciales.id
+                    inner join facturacion
+                    on reservas.id = facturacion.id_reserva
+                    where email like '%$email%'";
 
 
 //*****************************************************
 // busca entre todos los clientes, tengan o no facturas
 //*****************************************************
-$busqueda_cliente = "select credenciales.id, nombre, apellido, email from credenciales
-                         inner join usuarios
-                         on credenciales.id_usuario = usuarios.id
-                         where email like '%$email%'";
+//$busqueda_cliente = "select credenciales.id, nombre, apellido, email from credenciales
+//                         inner join usuarios
+//                         on credenciales.id_usuario = usuarios.id
+//                         where email like '%$email%'";
 $resultado_busqueda_cliente = mysqli_query($conexion, $busqueda_cliente);
 
 $json = array();

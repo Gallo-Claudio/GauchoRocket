@@ -173,7 +173,7 @@ if($sinReservas == false){
         } else if ($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] != 1 && $hoy < $fecha_checkIn_inicio) {
             $boton = "<span class='aprobado'>Aprobada</span>";
 
-        } else if ($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] == 1 && $hoy >= $fecha_checkIn_inicio && $hoy <= $fecha_checkIn_fin) {
+        } else if ($fila_reservas['pago'] == 1 && $fila_reservas['lista_espera'] != 1 && $fila_reservas['check_in'] == 1 && $hoy >= $fecha_checkIn_inicio) {
             $boton = "<span class='ok'>OK - Apto para abordar la nave - QR 
                       <a href='codigo-qr.php?codigo_reserva=".$codigo_reserva."'><img src='img/qr/codigo-".$codigo_reserva.".png' width='50px'></a></span>";
 
