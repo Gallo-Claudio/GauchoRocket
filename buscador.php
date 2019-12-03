@@ -14,7 +14,6 @@ $resultado_estaciones = mysqli_query($conexion, $sql_estaciones);
 $registro_estaciones = mysqli_fetch_all($resultado_estaciones);
 //$fecha_actual = date("Y-m-d H:i:s");
 $fecha_minimo = date("Y-m-d",strtotime($fecha_actual."+ 0 days"));
-//$fecha_minimo = date("Y-m-d H:i:s");
 $error_fecha = "";
 
 ?>
@@ -52,8 +51,6 @@ $error_fecha = "";
             <p class="descripcion">Los vuelos Orbitales salen todos los días de la semana, desde dos localidades diferentes.</p>
 
             <form id="orbital">
-                <?php echo "<p>$error_fecha</p>"; ?>
-
                 <input id="tipo_viajes" name="tipo_viajes" type="hidden" value="2">
                 <div class="selector">
                     <label for='fecha_salida' class="buscador">Fecha Salida:</label>
@@ -81,7 +78,6 @@ $error_fecha = "";
             <p class="descripcion">Estos vuelos se realizán todos los días de la semana.</p>
             <div class="distribucion">
                 <form id="destinos">
-                    <?php echo "<p>$error_fecha</p>"; ?>
 
                     <input name="tipo_viajes" type="hidden" value="3">
                     <div class="selector">
@@ -138,7 +134,6 @@ $error_fecha = "";
             <p class="detalle_tipo_viaje">Tours</p>
             <p class="descripcion">Estos vuelos se realizan solamente los días domingos</p>
             <form id="tours">
-                <?php echo "<p>$error_fecha</p>"; ?>
 
                 <input name="tipo_viajes" type="hidden" value="1">
                 <input name="origen" type="hidden" value="1">
